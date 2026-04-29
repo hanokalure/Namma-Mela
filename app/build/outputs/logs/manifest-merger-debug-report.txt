@@ -1,0 +1,418 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:2:1-25:12
+INJECTED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:2:1-25:12
+INJECTED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:2:1-25:12
+INJECTED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:2:1-25:12
+MERGED from [com.github.bumptech.glide:compose:1.0.0-beta01] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\ed2aff08a48079904877d76fd39cd6a3\transformed\compose-1.0.0-beta01\AndroidManifest.xml:2:1-7:12
+MERGED from [io.coil-kt:coil-compose:2.5.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\495911ff5137cd31d6bd1b869843ed5d\transformed\coil-compose-2.5.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.room:room-ktx:2.6.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\744a509c9bc6cb9ca495c5a9037bf496\transformed\room-ktx-2.6.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.room:room-runtime:2.6.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\719a890ffa9c75b4f6a5216bb833aa49\transformed\room-runtime-2.6.1\AndroidManifest.xml:17:1-31:12
+MERGED from [com.github.bumptech.glide:ktx:1.0.0-beta01] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\5be525c6bef688a3e4addf108e1eb257\transformed\ktx-1.0.0-beta01\AndroidManifest.xml:2:1-7:12
+MERGED from [io.coil-kt:coil-compose-base:2.5.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\4b827381c448590fa198e1da60797f86\transformed\coil-compose-base-2.5.0\AndroidManifest.xml:2:1-7:12
+MERGED from [io.coil-kt:coil:2.5.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\254c29e1234e57f01acb207103f35835\transformed\coil-2.5.0\AndroidManifest.xml:2:1-7:12
+MERGED from [com.google.accompanist:accompanist-drawablepainter:0.32.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\95c43e572822a6025f07278be9467752\transformed\accompanist-drawablepainter-0.32.0\AndroidManifest.xml:17:1-23:12
+MERGED from [androidx.hilt:hilt-navigation-compose:1.1.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e7bc07112802d9af6fb1512b41a82f5c\transformed\hilt-navigation-compose-1.1.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.hilt:hilt-navigation:1.1.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\4b91c0daa92be8daf052676a6ecf7789\transformed\hilt-navigation-1.1.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.navigation:navigation-common:2.7.6] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\0588f6ce6017727cde8497d1878ae93a\transformed\navigation-common-2.7.6\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-runtime:2.7.6] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\ea6d91ad007b2b8c154c1d14b3921501\transformed\navigation-runtime-2.7.6\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-common-ktx:2.7.6] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\2c3587114317aeaf34316cf65c76d89b\transformed\navigation-common-ktx-2.7.6\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.7.6] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\05f03327a7496a74fbab3c00f56c9808\transformed\navigation-runtime-ktx-2.7.6\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.navigation:navigation-compose:2.7.6] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\68b639b8f3adebd35efb18e1672e7c83\transformed\navigation-compose-2.7.6\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material3:material3:1.1.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\b19d02e2bcb85a2a41c807b81194fa5d\transformed\material3-1.1.2\AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.dagger:hilt-android:2.48] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\d2a00a65da66976c6552cc92da2c4085\transformed\hilt-android-2.48\AndroidManifest.xml:16:1-19:12
+MERGED from [com.github.bumptech.glide:recyclerview-integration:5.0.0-rc01] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\3ff59bd6770c5ff24a7ffe1372865ce3\transformed\recyclerview-integration-5.0.0-rc01\AndroidManifest.xml:2:1-7:12
+MERGED from [com.github.bumptech.glide:glide:5.0.0-rc01] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\b22c891729072a4d0939591020352907\transformed\glide-5.0.0-rc01\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.fragment:fragment:1.6.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\a1a85af05e43de9a85e8689ac7b9e1f7\transformed\fragment-1.6.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.activity:activity:1.8.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\61f23d8f1e833013275b7bc756f8e5f9\transformed\activity-1.8.2\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.activity:activity-ktx:1.8.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\1fcb4dd18402cbfd0786b8900c0e915d\transformed\activity-ktx-1.8.2\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-ripple-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\a9dd82257a57e044f304b99c55d4081a\transformed\material-ripple-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-icons-core-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\d39e5b58445e705c3a444be6cfd6dfea\transformed\material-icons-core-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-icons-extended-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\976edd23931540dcbd5829a067dfbf9f\transformed\material-icons-extended-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\177deedc4948cdb9f5ab3db756f72e04\transformed\material-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.animation:animation-core-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\c32aebec509958b5c95713af3edab129\transformed\animation-core-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.animation:animation-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\42de1fd14104b7b1bf51a9fdc4c00b56\transformed\animation-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\f752b95f5bbb6ab625bb980f4589f0e3\transformed\foundation-layout-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.foundation:foundation-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\7b52c81b612de87cc783706e300fd292\transformed\foundation-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-tooling-data-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\78337d886c3bc2f3e78f9390e99e1e5c\transformed\ui-tooling-data-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-unit-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\2c7d5cd1e848615ad74203378c523b8b\transformed\ui-unit-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-geometry-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\3e7177f7ee4a1d263671e7ec5ab161f7\transformed\ui-geometry-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-util-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\71eb78815073247856ffe34be68bdad6\transformed\ui-util-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-text-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\4fb02acf3d3aa2898487cbe5b7656b29\transformed\ui-text-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\a023cec507739bcc465adb35a7bb31b3\transformed\ui-tooling-preview-release\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.ui:ui-graphics-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\af9c7776df15b5a00c2c978be089f1b0\transformed\ui-graphics-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-tooling-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\8a3c7df4caf95a79d280363218288eb5\transformed\ui-tooling-release\AndroidManifest.xml:17:1-28:12
+MERGED from [androidx.activity:activity-compose:1.8.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\d5d63c307b0b47f833f16cba5d31b49e\transformed\activity-compose-1.8.2\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\d1f79535c3281e6178eb3e972f89091a\transformed\loader-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.emoji2:emoji2:1.4.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\cc226f79e3b7834abb49f0c5c714cd20\transformed\emoji2-1.4.0\AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\8379184dc6022a47d91dc7c22a540d97\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\d0dbb64c6f53bf115a8e858607a24183\transformed\lifecycle-livedata-2.6.2\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\0fa38c37a2b744cb6bb204113f260dc7\transformed\lifecycle-livedata-core-2.6.2\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\c3dde5ff110fc24383c5171009f23827\transformed\lifecycle-viewmodel-ktx-2.6.2\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\fce3419f64fad1b404ad8830714d1e13\transformed\savedstate-ktx-1.2.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.savedstate:savedstate:1.2.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\1ec735f7d6f749ab2efdfaf1e5f25f95\transformed\savedstate-1.2.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\9e7486bf7b760c17c85aef3b7124847b\transformed\lifecycle-viewmodel-2.6.2\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\ad3f90cfe770dcf5e91100588158b0c0\transformed\lifecycle-viewmodel-savedstate-2.6.2\AndroidManifest.xml:17:1-22:12
+MERGED from [io.coil-kt:coil-base:2.5.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\c13985aff77e1987885d684da398c76f\transformed\coil-base-2.5.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\4dbda47667bf75e9c0045395719523c3\transformed\customview-poolingcontainer-1.0.0\AndroidManifest.xml:17:1-23:12
+MERGED from [androidx.core:core-ktx:1.12.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e75d750453629abc4c74947f14de42ea\transformed\core-ktx-1.12.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.autofill:autofill:1.0.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\4b7bf742786eb070c8442fcfa158c316\transformed\autofill-1.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\4a253f2ffcbe5b2779b4af0940bce16c\transformed\viewpager-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\20d4c7bb7286270c62a86a87e4e7d9b8\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\d020ad4a3d5cdcdc92598b5fb0154900\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\4dc85bd7dacb85662e532bce8fafb553\transformed\vectordrawable-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\98fad3e0e014a7dbf1b46793ba2cbde6\transformed\customview-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core:1.12.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\7efaa572b1d86acd7c23d238ed7f5d51\transformed\core-1.12.0\AndroidManifest.xml:17:1-30:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\eca569bf2403bc8ef4379622792c5dcf\transformed\lifecycle-runtime-2.6.2\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\33214060d8e3a57240c8236dcaf1f563\transformed\lifecycle-runtime-ktx-2.6.2\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\b369c607832490f09afefa60dd95cfaf\transformed\lifecycle-viewmodel-compose-2.6.2\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.ui:ui-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\eea4befc6d364c3b684c7292dbdd8123\transformed\ui-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\59c24b9bc643e441438a36136fe70089\transformed\runtime-saveable-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.runtime:runtime-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\2ccaf0617c0748e6e1a5736e90f097f1\transformed\runtime-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.sqlite:sqlite-framework:2.4.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\67216e81c60709434c65a4c9a525706c\transformed\sqlite-framework-2.4.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.sqlite:sqlite:2.4.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\0c2b5f57e0bc9092c862b9a5864c1af6\transformed\sqlite-2.4.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.annotation:annotation-experimental:1.3.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\a708e3b45374e994ea92d2a0b7d604b2\transformed\annotation-experimental-1.3.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.arch.core:core-runtime:2.2.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\817908f1b9a59bf94e4272d5c21a5dc3\transformed\core-runtime-2.2.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\f784cdafb509a7677e7e361058f980b4\transformed\interpolator-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\1034fc68378e861870df01b0ec0d9bd7\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:17:1-27:12
+MERGED from [com.github.bumptech.glide:gifdecoder:5.0.0-rc01] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\bef064ecd3623ede586b89a746f6cfa9\transformed\gifdecoder-5.0.0-rc01\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.exifinterface:exifinterface:1.3.6] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\94ec8448fdaaa2b5a9419a2ff3cb67e3\transformed\exifinterface-1.3.6\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:17:1-55:12
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\3d192e7cd901f29e64d2f6aa7ef853b5\transformed\startup-runtime-1.1.1\AndroidManifest.xml:17:1-33:12
+MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\ec7fd80db4dab2607ace308b59f1ead7\transformed\tracing-1.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.dagger:dagger-lint-aar:2.48] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\9f7444fac3f9a86e6e1a376faa372b09\transformed\dagger-lint-aar-2.48\AndroidManifest.xml:16:1-19:12
+	package
+		INJECTED from C:\Namma-Mela\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from C:\Namma-Mela\app\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from C:\Namma-Mela\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.INTERNET
+ADDED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:4:5-67
+	android:name
+		ADDED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:4:22-64
+application
+ADDED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:6:5-23:19
+INJECTED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:6:5-23:19
+MERGED from [androidx.room:room-runtime:2.6.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\719a890ffa9c75b4f6a5216bb833aa49\transformed\room-runtime-2.6.1\AndroidManifest.xml:23:5-29:19
+MERGED from [androidx.room:room-runtime:2.6.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\719a890ffa9c75b4f6a5216bb833aa49\transformed\room-runtime-2.6.1\AndroidManifest.xml:23:5-29:19
+MERGED from [androidx.compose.ui:ui-tooling-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\8a3c7df4caf95a79d280363218288eb5\transformed\ui-tooling-release\AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.compose.ui:ui-tooling-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\8a3c7df4caf95a79d280363218288eb5\transformed\ui-tooling-release\AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.emoji2:emoji2:1.4.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\cc226f79e3b7834abb49f0c5c714cd20\transformed\emoji2-1.4.0\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.emoji2:emoji2:1.4.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\cc226f79e3b7834abb49f0c5c714cd20\transformed\emoji2-1.4.0\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\8379184dc6022a47d91dc7c22a540d97\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\8379184dc6022a47d91dc7c22a540d97\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.core:core:1.12.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\7efaa572b1d86acd7c23d238ed7f5d51\transformed\core-1.12.0\AndroidManifest.xml:28:5-89
+MERGED from [androidx.core:core:1.12.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\7efaa572b1d86acd7c23d238ed7f5d51\transformed\core-1.12.0\AndroidManifest.xml:28:5-89
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\1034fc68378e861870df01b0ec0d9bd7\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\1034fc68378e861870df01b0ec0d9bd7\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\3d192e7cd901f29e64d2f6aa7ef853b5\transformed\startup-runtime-1.1.1\AndroidManifest.xml:25:5-31:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\3d192e7cd901f29e64d2f6aa7ef853b5\transformed\startup-runtime-1.1.1\AndroidManifest.xml:25:5-31:19
+	android:extractNativeLibs
+		INJECTED from C:\Namma-Mela\app\src\main\AndroidManifest.xml
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.12.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\7efaa572b1d86acd7c23d238ed7f5d51\transformed\core-1.12.0\AndroidManifest.xml:28:18-86
+	android:supportsRtl
+		ADDED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:12:9-35
+	android:label
+		ADDED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:10:9-41
+	android:roundIcon
+		ADDED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:11:9-54
+	android:icon
+		ADDED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:9:9-43
+	android:allowBackup
+		ADDED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:8:9-35
+	android:theme
+		ADDED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:13:9-47
+	android:name
+		ADDED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:7:9-37
+activity#com.nammamela.app.MainActivity
+ADDED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:14:9-22:20
+	android:exported
+		ADDED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:16:13-36
+	android:theme
+		ADDED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:17:13-51
+	android:name
+		ADDED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:15:13-41
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:18:13-21:29
+action#android.intent.action.MAIN
+ADDED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:19:17-69
+	android:name
+		ADDED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:19:25-66
+category#android.intent.category.LAUNCHER
+ADDED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:20:17-77
+	android:name
+		ADDED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:20:27-74
+uses-sdk
+INJECTED from C:\Namma-Mela\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Namma-Mela\app\src\main\AndroidManifest.xml
+INJECTED from C:\Namma-Mela\app\src\main\AndroidManifest.xml
+MERGED from [com.github.bumptech.glide:compose:1.0.0-beta01] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\ed2aff08a48079904877d76fd39cd6a3\transformed\compose-1.0.0-beta01\AndroidManifest.xml:5:5-44
+MERGED from [com.github.bumptech.glide:compose:1.0.0-beta01] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\ed2aff08a48079904877d76fd39cd6a3\transformed\compose-1.0.0-beta01\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-compose:2.5.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\495911ff5137cd31d6bd1b869843ed5d\transformed\coil-compose-2.5.0\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-compose:2.5.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\495911ff5137cd31d6bd1b869843ed5d\transformed\coil-compose-2.5.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.room:room-ktx:2.6.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\744a509c9bc6cb9ca495c5a9037bf496\transformed\room-ktx-2.6.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.room:room-ktx:2.6.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\744a509c9bc6cb9ca495c5a9037bf496\transformed\room-ktx-2.6.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.room:room-runtime:2.6.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\719a890ffa9c75b4f6a5216bb833aa49\transformed\room-runtime-2.6.1\AndroidManifest.xml:21:5-44
+MERGED from [androidx.room:room-runtime:2.6.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\719a890ffa9c75b4f6a5216bb833aa49\transformed\room-runtime-2.6.1\AndroidManifest.xml:21:5-44
+MERGED from [com.github.bumptech.glide:ktx:1.0.0-beta01] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\5be525c6bef688a3e4addf108e1eb257\transformed\ktx-1.0.0-beta01\AndroidManifest.xml:5:5-44
+MERGED from [com.github.bumptech.glide:ktx:1.0.0-beta01] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\5be525c6bef688a3e4addf108e1eb257\transformed\ktx-1.0.0-beta01\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-compose-base:2.5.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\4b827381c448590fa198e1da60797f86\transformed\coil-compose-base-2.5.0\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-compose-base:2.5.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\4b827381c448590fa198e1da60797f86\transformed\coil-compose-base-2.5.0\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil:2.5.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\254c29e1234e57f01acb207103f35835\transformed\coil-2.5.0\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil:2.5.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\254c29e1234e57f01acb207103f35835\transformed\coil-2.5.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.accompanist:accompanist-drawablepainter:0.32.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\95c43e572822a6025f07278be9467752\transformed\accompanist-drawablepainter-0.32.0\AndroidManifest.xml:21:5-44
+MERGED from [com.google.accompanist:accompanist-drawablepainter:0.32.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\95c43e572822a6025f07278be9467752\transformed\accompanist-drawablepainter-0.32.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.hilt:hilt-navigation-compose:1.1.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e7bc07112802d9af6fb1512b41a82f5c\transformed\hilt-navigation-compose-1.1.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.hilt:hilt-navigation-compose:1.1.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e7bc07112802d9af6fb1512b41a82f5c\transformed\hilt-navigation-compose-1.1.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.hilt:hilt-navigation:1.1.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\4b91c0daa92be8daf052676a6ecf7789\transformed\hilt-navigation-1.1.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.hilt:hilt-navigation:1.1.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\4b91c0daa92be8daf052676a6ecf7789\transformed\hilt-navigation-1.1.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-common:2.7.6] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\0588f6ce6017727cde8497d1878ae93a\transformed\navigation-common-2.7.6\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-common:2.7.6] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\0588f6ce6017727cde8497d1878ae93a\transformed\navigation-common-2.7.6\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-runtime:2.7.6] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\ea6d91ad007b2b8c154c1d14b3921501\transformed\navigation-runtime-2.7.6\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-runtime:2.7.6] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\ea6d91ad007b2b8c154c1d14b3921501\transformed\navigation-runtime-2.7.6\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-common-ktx:2.7.6] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\2c3587114317aeaf34316cf65c76d89b\transformed\navigation-common-ktx-2.7.6\AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-common-ktx:2.7.6] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\2c3587114317aeaf34316cf65c76d89b\transformed\navigation-common-ktx-2.7.6\AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.7.6] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\05f03327a7496a74fbab3c00f56c9808\transformed\navigation-runtime-ktx-2.7.6\AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.7.6] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\05f03327a7496a74fbab3c00f56c9808\transformed\navigation-runtime-ktx-2.7.6\AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-compose:2.7.6] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\68b639b8f3adebd35efb18e1672e7c83\transformed\navigation-compose-2.7.6\AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-compose:2.7.6] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\68b639b8f3adebd35efb18e1672e7c83\transformed\navigation-compose-2.7.6\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material3:material3:1.1.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\b19d02e2bcb85a2a41c807b81194fa5d\transformed\material3-1.1.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.material3:material3:1.1.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\b19d02e2bcb85a2a41c807b81194fa5d\transformed\material3-1.1.2\AndroidManifest.xml:20:5-44
+MERGED from [com.google.dagger:hilt-android:2.48] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\d2a00a65da66976c6552cc92da2c4085\transformed\hilt-android-2.48\AndroidManifest.xml:18:3-42
+MERGED from [com.google.dagger:hilt-android:2.48] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\d2a00a65da66976c6552cc92da2c4085\transformed\hilt-android-2.48\AndroidManifest.xml:18:3-42
+MERGED from [com.github.bumptech.glide:recyclerview-integration:5.0.0-rc01] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\3ff59bd6770c5ff24a7ffe1372865ce3\transformed\recyclerview-integration-5.0.0-rc01\AndroidManifest.xml:5:5-44
+MERGED from [com.github.bumptech.glide:recyclerview-integration:5.0.0-rc01] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\3ff59bd6770c5ff24a7ffe1372865ce3\transformed\recyclerview-integration-5.0.0-rc01\AndroidManifest.xml:5:5-44
+MERGED from [com.github.bumptech.glide:glide:5.0.0-rc01] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\b22c891729072a4d0939591020352907\transformed\glide-5.0.0-rc01\AndroidManifest.xml:5:5-44
+MERGED from [com.github.bumptech.glide:glide:5.0.0-rc01] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\b22c891729072a4d0939591020352907\transformed\glide-5.0.0-rc01\AndroidManifest.xml:5:5-44
+MERGED from [androidx.fragment:fragment:1.6.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\a1a85af05e43de9a85e8689ac7b9e1f7\transformed\fragment-1.6.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.fragment:fragment:1.6.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\a1a85af05e43de9a85e8689ac7b9e1f7\transformed\fragment-1.6.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.8.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\61f23d8f1e833013275b7bc756f8e5f9\transformed\activity-1.8.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.8.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\61f23d8f1e833013275b7bc756f8e5f9\transformed\activity-1.8.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity-ktx:1.8.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\1fcb4dd18402cbfd0786b8900c0e915d\transformed\activity-ktx-1.8.2\AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-ktx:1.8.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\1fcb4dd18402cbfd0786b8900c0e915d\transformed\activity-ktx-1.8.2\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-ripple-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\a9dd82257a57e044f304b99c55d4081a\transformed\material-ripple-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-ripple-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\a9dd82257a57e044f304b99c55d4081a\transformed\material-ripple-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-core-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\d39e5b58445e705c3a444be6cfd6dfea\transformed\material-icons-core-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-core-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\d39e5b58445e705c3a444be6cfd6dfea\transformed\material-icons-core-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-extended-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\976edd23931540dcbd5829a067dfbf9f\transformed\material-icons-extended-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-extended-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\976edd23931540dcbd5829a067dfbf9f\transformed\material-icons-extended-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\177deedc4948cdb9f5ab3db756f72e04\transformed\material-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\177deedc4948cdb9f5ab3db756f72e04\transformed\material-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-core-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\c32aebec509958b5c95713af3edab129\transformed\animation-core-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-core-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\c32aebec509958b5c95713af3edab129\transformed\animation-core-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\42de1fd14104b7b1bf51a9fdc4c00b56\transformed\animation-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\42de1fd14104b7b1bf51a9fdc4c00b56\transformed\animation-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\f752b95f5bbb6ab625bb980f4589f0e3\transformed\foundation-layout-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\f752b95f5bbb6ab625bb980f4589f0e3\transformed\foundation-layout-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\7b52c81b612de87cc783706e300fd292\transformed\foundation-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\7b52c81b612de87cc783706e300fd292\transformed\foundation-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-data-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\78337d886c3bc2f3e78f9390e99e1e5c\transformed\ui-tooling-data-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-data-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\78337d886c3bc2f3e78f9390e99e1e5c\transformed\ui-tooling-data-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-unit-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\2c7d5cd1e848615ad74203378c523b8b\transformed\ui-unit-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-unit-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\2c7d5cd1e848615ad74203378c523b8b\transformed\ui-unit-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-geometry-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\3e7177f7ee4a1d263671e7ec5ab161f7\transformed\ui-geometry-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-geometry-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\3e7177f7ee4a1d263671e7ec5ab161f7\transformed\ui-geometry-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-util-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\71eb78815073247856ffe34be68bdad6\transformed\ui-util-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-util-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\71eb78815073247856ffe34be68bdad6\transformed\ui-util-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-text-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\4fb02acf3d3aa2898487cbe5b7656b29\transformed\ui-text-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-text-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\4fb02acf3d3aa2898487cbe5b7656b29\transformed\ui-text-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\a023cec507739bcc465adb35a7bb31b3\transformed\ui-tooling-preview-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\a023cec507739bcc465adb35a7bb31b3\transformed\ui-tooling-preview-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-graphics-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\af9c7776df15b5a00c2c978be089f1b0\transformed\ui-graphics-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-graphics-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\af9c7776df15b5a00c2c978be089f1b0\transformed\ui-graphics-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\8a3c7df4caf95a79d280363218288eb5\transformed\ui-tooling-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\8a3c7df4caf95a79d280363218288eb5\transformed\ui-tooling-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity-compose:1.8.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\d5d63c307b0b47f833f16cba5d31b49e\transformed\activity-compose-1.8.2\AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-compose:1.8.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\d5d63c307b0b47f833f16cba5d31b49e\transformed\activity-compose-1.8.2\AndroidManifest.xml:5:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\d1f79535c3281e6178eb3e972f89091a\transformed\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\d1f79535c3281e6178eb3e972f89091a\transformed\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.emoji2:emoji2:1.4.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\cc226f79e3b7834abb49f0c5c714cd20\transformed\emoji2-1.4.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.emoji2:emoji2:1.4.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\cc226f79e3b7834abb49f0c5c714cd20\transformed\emoji2-1.4.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\8379184dc6022a47d91dc7c22a540d97\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\8379184dc6022a47d91dc7c22a540d97\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\d0dbb64c6f53bf115a8e858607a24183\transformed\lifecycle-livedata-2.6.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\d0dbb64c6f53bf115a8e858607a24183\transformed\lifecycle-livedata-2.6.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\0fa38c37a2b744cb6bb204113f260dc7\transformed\lifecycle-livedata-core-2.6.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\0fa38c37a2b744cb6bb204113f260dc7\transformed\lifecycle-livedata-core-2.6.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\c3dde5ff110fc24383c5171009f23827\transformed\lifecycle-viewmodel-ktx-2.6.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\c3dde5ff110fc24383c5171009f23827\transformed\lifecycle-viewmodel-ktx-2.6.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\fce3419f64fad1b404ad8830714d1e13\transformed\savedstate-ktx-1.2.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\fce3419f64fad1b404ad8830714d1e13\transformed\savedstate-ktx-1.2.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\1ec735f7d6f749ab2efdfaf1e5f25f95\transformed\savedstate-1.2.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\1ec735f7d6f749ab2efdfaf1e5f25f95\transformed\savedstate-1.2.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\9e7486bf7b760c17c85aef3b7124847b\transformed\lifecycle-viewmodel-2.6.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\9e7486bf7b760c17c85aef3b7124847b\transformed\lifecycle-viewmodel-2.6.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\ad3f90cfe770dcf5e91100588158b0c0\transformed\lifecycle-viewmodel-savedstate-2.6.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\ad3f90cfe770dcf5e91100588158b0c0\transformed\lifecycle-viewmodel-savedstate-2.6.2\AndroidManifest.xml:20:5-44
+MERGED from [io.coil-kt:coil-base:2.5.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\c13985aff77e1987885d684da398c76f\transformed\coil-base-2.5.0\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-base:2.5.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\c13985aff77e1987885d684da398c76f\transformed\coil-base-2.5.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\4dbda47667bf75e9c0045395719523c3\transformed\customview-poolingcontainer-1.0.0\AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\4dbda47667bf75e9c0045395719523c3\transformed\customview-poolingcontainer-1.0.0\AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.core:core-ktx:1.12.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e75d750453629abc4c74947f14de42ea\transformed\core-ktx-1.12.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-ktx:1.12.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e75d750453629abc4c74947f14de42ea\transformed\core-ktx-1.12.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.autofill:autofill:1.0.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\4b7bf742786eb070c8442fcfa158c316\transformed\autofill-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.autofill:autofill:1.0.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\4b7bf742786eb070c8442fcfa158c316\transformed\autofill-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\4a253f2ffcbe5b2779b4af0940bce16c\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\4a253f2ffcbe5b2779b4af0940bce16c\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\20d4c7bb7286270c62a86a87e4e7d9b8\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\20d4c7bb7286270c62a86a87e4e7d9b8\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\d020ad4a3d5cdcdc92598b5fb0154900\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\d020ad4a3d5cdcdc92598b5fb0154900\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\4dc85bd7dacb85662e532bce8fafb553\transformed\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\4dc85bd7dacb85662e532bce8fafb553\transformed\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\98fad3e0e014a7dbf1b46793ba2cbde6\transformed\customview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\98fad3e0e014a7dbf1b46793ba2cbde6\transformed\customview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.12.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\7efaa572b1d86acd7c23d238ed7f5d51\transformed\core-1.12.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.12.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\7efaa572b1d86acd7c23d238ed7f5d51\transformed\core-1.12.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\eca569bf2403bc8ef4379622792c5dcf\transformed\lifecycle-runtime-2.6.2\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\eca569bf2403bc8ef4379622792c5dcf\transformed\lifecycle-runtime-2.6.2\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\33214060d8e3a57240c8236dcaf1f563\transformed\lifecycle-runtime-ktx-2.6.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\33214060d8e3a57240c8236dcaf1f563\transformed\lifecycle-runtime-ktx-2.6.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\b369c607832490f09afefa60dd95cfaf\transformed\lifecycle-viewmodel-compose-2.6.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\b369c607832490f09afefa60dd95cfaf\transformed\lifecycle-viewmodel-compose-2.6.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\eea4befc6d364c3b684c7292dbdd8123\transformed\ui-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\eea4befc6d364c3b684c7292dbdd8123\transformed\ui-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\59c24b9bc643e441438a36136fe70089\transformed\runtime-saveable-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\59c24b9bc643e441438a36136fe70089\transformed\runtime-saveable-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\2ccaf0617c0748e6e1a5736e90f097f1\transformed\runtime-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\2ccaf0617c0748e6e1a5736e90f097f1\transformed\runtime-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.sqlite:sqlite-framework:2.4.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\67216e81c60709434c65a4c9a525706c\transformed\sqlite-framework-2.4.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.sqlite:sqlite-framework:2.4.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\67216e81c60709434c65a4c9a525706c\transformed\sqlite-framework-2.4.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.sqlite:sqlite:2.4.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\0c2b5f57e0bc9092c862b9a5864c1af6\transformed\sqlite-2.4.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.sqlite:sqlite:2.4.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\0c2b5f57e0bc9092c862b9a5864c1af6\transformed\sqlite-2.4.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.3.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\a708e3b45374e994ea92d2a0b7d604b2\transformed\annotation-experimental-1.3.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.3.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\a708e3b45374e994ea92d2a0b7d604b2\transformed\annotation-experimental-1.3.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.2.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\817908f1b9a59bf94e4272d5c21a5dc3\transformed\core-runtime-2.2.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.2.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\817908f1b9a59bf94e4272d5c21a5dc3\transformed\core-runtime-2.2.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\f784cdafb509a7677e7e361058f980b4\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\f784cdafb509a7677e7e361058f980b4\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\1034fc68378e861870df01b0ec0d9bd7\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\1034fc68378e861870df01b0ec0d9bd7\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [com.github.bumptech.glide:gifdecoder:5.0.0-rc01] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\bef064ecd3623ede586b89a746f6cfa9\transformed\gifdecoder-5.0.0-rc01\AndroidManifest.xml:5:5-44
+MERGED from [com.github.bumptech.glide:gifdecoder:5.0.0-rc01] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\bef064ecd3623ede586b89a746f6cfa9\transformed\gifdecoder-5.0.0-rc01\AndroidManifest.xml:5:5-44
+MERGED from [androidx.exifinterface:exifinterface:1.3.6] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\94ec8448fdaaa2b5a9419a2ff3cb67e3\transformed\exifinterface-1.3.6\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.6] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\94ec8448fdaaa2b5a9419a2ff3cb67e3\transformed\exifinterface-1.3.6\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:21:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:21:5-44
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\3d192e7cd901f29e64d2f6aa7ef853b5\transformed\startup-runtime-1.1.1\AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\3d192e7cd901f29e64d2f6aa7ef853b5\transformed\startup-runtime-1.1.1\AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\ec7fd80db4dab2607ace308b59f1ead7\transformed\tracing-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\ec7fd80db4dab2607ace308b59f1ead7\transformed\tracing-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.dagger:dagger-lint-aar:2.48] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\9f7444fac3f9a86e6e1a376faa372b09\transformed\dagger-lint-aar-2.48\AndroidManifest.xml:18:3-42
+MERGED from [com.google.dagger:dagger-lint-aar:2.48] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\9f7444fac3f9a86e6e1a376faa372b09\transformed\dagger-lint-aar-2.48\AndroidManifest.xml:18:3-42
+	android:targetSdkVersion
+		INJECTED from C:\Namma-Mela\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Namma-Mela\app\src\main\AndroidManifest.xml
+service#androidx.room.MultiInstanceInvalidationService
+ADDED from [androidx.room:room-runtime:2.6.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\719a890ffa9c75b4f6a5216bb833aa49\transformed\room-runtime-2.6.1\AndroidManifest.xml:24:9-28:63
+	android:exported
+		ADDED from [androidx.room:room-runtime:2.6.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\719a890ffa9c75b4f6a5216bb833aa49\transformed\room-runtime-2.6.1\AndroidManifest.xml:27:13-37
+	tools:ignore
+		ADDED from [androidx.room:room-runtime:2.6.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\719a890ffa9c75b4f6a5216bb833aa49\transformed\room-runtime-2.6.1\AndroidManifest.xml:28:13-60
+	android:directBootAware
+		ADDED from [androidx.room:room-runtime:2.6.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\719a890ffa9c75b4f6a5216bb833aa49\transformed\room-runtime-2.6.1\AndroidManifest.xml:26:13-43
+	android:name
+		ADDED from [androidx.room:room-runtime:2.6.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\719a890ffa9c75b4f6a5216bb833aa49\transformed\room-runtime-2.6.1\AndroidManifest.xml:25:13-74
+activity#androidx.compose.ui.tooling.PreviewActivity
+ADDED from [androidx.compose.ui:ui-tooling-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\8a3c7df4caf95a79d280363218288eb5\transformed\ui-tooling-release\AndroidManifest.xml:23:9-25:39
+	android:exported
+		ADDED from [androidx.compose.ui:ui-tooling-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\8a3c7df4caf95a79d280363218288eb5\transformed\ui-tooling-release\AndroidManifest.xml:25:13-36
+	android:name
+		ADDED from [androidx.compose.ui:ui-tooling-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\8a3c7df4caf95a79d280363218288eb5\transformed\ui-tooling-release\AndroidManifest.xml:24:13-71
+provider#androidx.startup.InitializationProvider
+ADDED from [androidx.emoji2:emoji2:1.4.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\cc226f79e3b7834abb49f0c5c714cd20\transformed\emoji2-1.4.0\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\8379184dc6022a47d91dc7c22a540d97\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\8379184dc6022a47d91dc7c22a540d97\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\3d192e7cd901f29e64d2f6aa7ef853b5\transformed\startup-runtime-1.1.1\AndroidManifest.xml:26:9-30:34
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\3d192e7cd901f29e64d2f6aa7ef853b5\transformed\startup-runtime-1.1.1\AndroidManifest.xml:26:9-30:34
+	tools:node
+		ADDED from [androidx.emoji2:emoji2:1.4.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\cc226f79e3b7834abb49f0c5c714cd20\transformed\emoji2-1.4.0\AndroidManifest.xml:28:13-31
+	android:authorities
+		ADDED from [androidx.emoji2:emoji2:1.4.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\cc226f79e3b7834abb49f0c5c714cd20\transformed\emoji2-1.4.0\AndroidManifest.xml:26:13-68
+	android:exported
+		ADDED from [androidx.emoji2:emoji2:1.4.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\cc226f79e3b7834abb49f0c5c714cd20\transformed\emoji2-1.4.0\AndroidManifest.xml:27:13-37
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.4.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\cc226f79e3b7834abb49f0c5c714cd20\transformed\emoji2-1.4.0\AndroidManifest.xml:25:13-67
+meta-data#androidx.emoji2.text.EmojiCompatInitializer
+ADDED from [androidx.emoji2:emoji2:1.4.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\cc226f79e3b7834abb49f0c5c714cd20\transformed\emoji2-1.4.0\AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.emoji2:emoji2:1.4.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\cc226f79e3b7834abb49f0c5c714cd20\transformed\emoji2-1.4.0\AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.4.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\cc226f79e3b7834abb49f0c5c714cd20\transformed\emoji2-1.4.0\AndroidManifest.xml:30:17-75
+meta-data#androidx.lifecycle.ProcessLifecycleInitializer
+ADDED from [androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\8379184dc6022a47d91dc7c22a540d97\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\8379184dc6022a47d91dc7c22a540d97\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\8379184dc6022a47d91dc7c22a540d97\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:30:17-78
+permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\7efaa572b1d86acd7c23d238ed7f5d51\transformed\core-1.12.0\AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.12.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\7efaa572b1d86acd7c23d238ed7f5d51\transformed\core-1.12.0\AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.12.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\7efaa572b1d86acd7c23d238ed7f5d51\transformed\core-1.12.0\AndroidManifest.xml:23:9-81
+permission#com.nammamela.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\7efaa572b1d86acd7c23d238ed7f5d51\transformed\core-1.12.0\AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.12.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\7efaa572b1d86acd7c23d238ed7f5d51\transformed\core-1.12.0\AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.12.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\7efaa572b1d86acd7c23d238ed7f5d51\transformed\core-1.12.0\AndroidManifest.xml:23:9-81
+uses-permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\7efaa572b1d86acd7c23d238ed7f5d51\transformed\core-1.12.0\AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.12.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\7efaa572b1d86acd7c23d238ed7f5d51\transformed\core-1.12.0\AndroidManifest.xml:26:22-94
+uses-permission#com.nammamela.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\7efaa572b1d86acd7c23d238ed7f5d51\transformed\core-1.12.0\AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.12.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\7efaa572b1d86acd7c23d238ed7f5d51\transformed\core-1.12.0\AndroidManifest.xml:26:22-94
+meta-data#androidx.profileinstaller.ProfileInstallerInitializer
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+receiver#androidx.profileinstaller.ProfileInstallReceiver
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
+	android:enabled
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
+	android:exported
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
+	android:permission
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
+	android:directBootAware
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
+intent-filter#action:name:androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
+action#androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
+intent-filter#action:name:androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
+action#androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
+intent-filter#action:name:androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
+action#androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
+intent-filter#action:name:androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
+action#androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\e6d5c38bb501a9d99a6bc598ee5580e4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
