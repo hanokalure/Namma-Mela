@@ -33,12 +33,24 @@ import java.util.concurrent.TimeUnit
 fun FanWallScreen(viewModel: FanWallViewModel = hiltViewModel()) {
     val comments by viewModel.comments.collectAsState()
     val inputText by viewModel.inputText.collectAsState()
+    val onlineCount by viewModel.onlineCount.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(NammaDarkBrown)
-    ) {
+    LaunchedEffect(Unit) {
+        viewModel.errorEvent.collect { message ->
+            snackbarHostState.showSnackbar(message = message)
+        }
+    }
+
+    Scaffold(
+        containerColor = NammaDarkBrown,
+        snackbarHost = { SnackbarHost(snackbarHostState) }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
         // Header Area with Heritage flair
         Box(
             modifier = Modifier
@@ -72,7 +84,7 @@ fun FanWallScreen(viewModel: FanWallViewModel = hiltViewModel()) {
                 Row(modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
                     Box(modifier = Modifier.size(6.dp).clip(CircleShape).background(Color.Green))
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("12.4k Online", color = Color.White, style = MaterialTheme.typography.labelSmall)
+                    Text("$onlineCount Online", color = Color.White, style = MaterialTheme.typography.labelSmall)
                 }
             }
         }
@@ -150,6 +162,8 @@ fun FanWallScreen(viewModel: FanWallViewModel = hiltViewModel()) {
         }
     }
 }
+}
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

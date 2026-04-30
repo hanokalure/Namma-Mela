@@ -54,4 +54,10 @@ class PlayDetailViewModel @Inject constructor(
                 }
         }
     }
+
+    fun submitRating(rating: Float) {
+        viewModelScope.launch {
+            repository.updatePlayRating(playId, rating)
+        }
+    }
 }

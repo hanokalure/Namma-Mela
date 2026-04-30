@@ -22,4 +22,7 @@ interface CommentDao {
 
     @Delete
     suspend fun deleteComment(comment: Comment)
+
+    @Query("DELETE FROM comments")
+    suspend fun deleteAllComments()
 }

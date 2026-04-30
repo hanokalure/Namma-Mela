@@ -37,4 +37,5 @@ sealed class Screen(val route: String) {
     object ManageSeats : Screen("manage_seats/{playId}") {
         fun createRoute(playId: Int) = "manage_seats/$playId"
     }
+    object ManagerInsights : Screen("manager_insights")
 }

@@ -1,6 +1,12 @@
 R_DEF: Internal format may change without notice
 local
+color namma_dark_brown
+color namma_gold
+color namma_maroon
+color white
 drawable ic_launcher_background
+drawable ic_launcher_foreground
+drawable namma_mela_logo
 mipmap ic_launcher
 mipmap ic_launcher_round
 string app_name

@@ -141,6 +141,15 @@ class SeatBookingViewModel @Inject constructor(
                 )
                 val bookingId = repository.insertBooking(booking)
                 
+                // Add Notification
+                repository.insertNotification(
+                    com.nammamela.app.domain.model.Notification(
+                        title = "Booking Confirmed!",
+                        message = "Your seats (${booking.seats}) are reserved for the drama. Enjoy the show!",
+                        type = "BOOKING"
+                    )
+                )
+                
                 _selectedSeats.value = emptyList()
                 _isLoading.value = false
                 _uiEvent.emit(UiEvent.BookingSuccess(bookingId.toInt()))

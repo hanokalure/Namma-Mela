@@ -15,8 +15,12 @@ import com.nammamela.app.data.local.dao.ActorDao;
 import com.nammamela.app.data.local.dao.ActorDao_Impl;
 import com.nammamela.app.data.local.dao.BookingDao;
 import com.nammamela.app.data.local.dao.BookingDao_Impl;
+import com.nammamela.app.data.local.dao.CategoryDao;
+import com.nammamela.app.data.local.dao.CategoryDao_Impl;
 import com.nammamela.app.data.local.dao.CommentDao;
 import com.nammamela.app.data.local.dao.CommentDao_Impl;
+import com.nammamela.app.data.local.dao.NotificationDao;
+import com.nammamela.app.data.local.dao.NotificationDao_Impl;
 import com.nammamela.app.data.local.dao.PlayDao;
 import com.nammamela.app.data.local.dao.PlayDao_Impl;
 import com.nammamela.app.data.local.dao.SeatDao;
@@ -50,20 +54,26 @@ public final class AppDatabase_Impl extends AppDatabase {
 
   private volatile UserDao _userDao;
 
+  private volatile NotificationDao _notificationDao;
+
+  private volatile CategoryDao _categoryDao;
+
   @Override
   @NonNull
   protected SupportSQLiteOpenHelper createOpenHelper(@NonNull final DatabaseConfiguration config) {
-    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(2) {
+    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(5) {
       @Override
       public void createAllTables(@NonNull final SupportSQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS `plays` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `duration` TEXT NOT NULL, `description` TEXT NOT NULL, `genre` TEXT NOT NULL, `posterUrl` TEXT, `rating` REAL NOT NULL, `timestamp` INTEGER NOT NULL, `isActive` INTEGER NOT NULL)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `plays` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `duration` TEXT NOT NULL, `description` TEXT NOT NULL, `genre` TEXT NOT NULL, `posterUrl` TEXT, `rating` REAL NOT NULL, `showTime` TEXT NOT NULL, `timestamp` INTEGER NOT NULL, `isActive` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `actors` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `playId` INTEGER NOT NULL, `name` TEXT NOT NULL, `role` TEXT NOT NULL, `imageUrl` TEXT, `category` TEXT NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `seats` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `playId` INTEGER NOT NULL, `row` TEXT NOT NULL, `column` INTEGER NOT NULL, `status` TEXT NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `comments` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `userId` INTEGER NOT NULL, `username` TEXT NOT NULL, `userHandle` TEXT NOT NULL, `content` TEXT NOT NULL, `timestamp` INTEGER NOT NULL, `likes` INTEGER NOT NULL, `fires` INTEGER NOT NULL, `replies` INTEGER NOT NULL, `imageUrl` TEXT)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `bookings` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `userId` INTEGER NOT NULL, `playId` INTEGER NOT NULL, `seats` TEXT NOT NULL, `totalPrice` REAL NOT NULL, `timestamp` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `users` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `handle` TEXT NOT NULL, `email` TEXT NOT NULL, `password` TEXT NOT NULL, `role` TEXT NOT NULL, `imageUrl` TEXT, `companyName` TEXT, `location` TEXT, `phone` TEXT)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `notifications` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `message` TEXT NOT NULL, `type` TEXT NOT NULL, `timestamp` INTEGER NOT NULL, `isRead` INTEGER NOT NULL)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `categories` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `isSelected` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'bd48c939dbb85ec5c8f9abf45ce5a152')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dad44b2962f78c94cd8f74156e5373c8')");
       }
 
       @Override
@@ -74,6 +84,8 @@ public final class AppDatabase_Impl extends AppDatabase {
         db.execSQL("DROP TABLE IF EXISTS `comments`");
         db.execSQL("DROP TABLE IF EXISTS `bookings`");
         db.execSQL("DROP TABLE IF EXISTS `users`");
+        db.execSQL("DROP TABLE IF EXISTS `notifications`");
+        db.execSQL("DROP TABLE IF EXISTS `categories`");
         final List<? extends RoomDatabase.Callback> _callbacks = mCallbacks;
         if (_callbacks != null) {
           for (RoomDatabase.Callback _callback : _callbacks) {
@@ -117,7 +129,7 @@ public final class AppDatabase_Impl extends AppDatabase {
       @NonNull
       public RoomOpenHelper.ValidationResult onValidateSchema(
           @NonNull final SupportSQLiteDatabase db) {
-        final HashMap<String, TableInfo.Column> _columnsPlays = new HashMap<String, TableInfo.Column>(9);
+        final HashMap<String, TableInfo.Column> _columnsPlays = new HashMap<String, TableInfo.Column>(10);
         _columnsPlays.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsPlays.put("title", new TableInfo.Column("title", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsPlays.put("duration", new TableInfo.Column("duration", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
@@ -125,6 +137,7 @@ public final class AppDatabase_Impl extends AppDatabase {
         _columnsPlays.put("genre", new TableInfo.Column("genre", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsPlays.put("posterUrl", new TableInfo.Column("posterUrl", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsPlays.put("rating", new TableInfo.Column("rating", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPlays.put("showTime", new TableInfo.Column("showTime", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsPlays.put("timestamp", new TableInfo.Column("timestamp", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsPlays.put("isActive", new TableInfo.Column("isActive", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysPlays = new HashSet<TableInfo.ForeignKey>(0);
@@ -223,9 +236,38 @@ public final class AppDatabase_Impl extends AppDatabase {
                   + " Expected:\n" + _infoUsers + "\n"
                   + " Found:\n" + _existingUsers);
         }
+        final HashMap<String, TableInfo.Column> _columnsNotifications = new HashMap<String, TableInfo.Column>(6);
+        _columnsNotifications.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsNotifications.put("title", new TableInfo.Column("title", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsNotifications.put("message", new TableInfo.Column("message", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsNotifications.put("type", new TableInfo.Column("type", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsNotifications.put("timestamp", new TableInfo.Column("timestamp", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsNotifications.put("isRead", new TableInfo.Column("isRead", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysNotifications = new HashSet<TableInfo.ForeignKey>(0);
+        final HashSet<TableInfo.Index> _indicesNotifications = new HashSet<TableInfo.Index>(0);
+        final TableInfo _infoNotifications = new TableInfo("notifications", _columnsNotifications, _foreignKeysNotifications, _indicesNotifications);
+        final TableInfo _existingNotifications = TableInfo.read(db, "notifications");
+        if (!_infoNotifications.equals(_existingNotifications)) {
+          return new RoomOpenHelper.ValidationResult(false, "notifications(com.nammamela.app.domain.model.Notification).\n"
+                  + " Expected:\n" + _infoNotifications + "\n"
+                  + " Found:\n" + _existingNotifications);
+        }
+        final HashMap<String, TableInfo.Column> _columnsCategories = new HashMap<String, TableInfo.Column>(3);
+        _columnsCategories.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsCategories.put("name", new TableInfo.Column("name", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsCategories.put("isSelected", new TableInfo.Column("isSelected", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysCategories = new HashSet<TableInfo.ForeignKey>(0);
+        final HashSet<TableInfo.Index> _indicesCategories = new HashSet<TableInfo.Index>(0);
+        final TableInfo _infoCategories = new TableInfo("categories", _columnsCategories, _foreignKeysCategories, _indicesCategories);
+        final TableInfo _existingCategories = TableInfo.read(db, "categories");
+        if (!_infoCategories.equals(_existingCategories)) {
+          return new RoomOpenHelper.ValidationResult(false, "categories(com.nammamela.app.domain.model.Category).\n"
+                  + " Expected:\n" + _infoCategories + "\n"
+                  + " Found:\n" + _existingCategories);
+        }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "bd48c939dbb85ec5c8f9abf45ce5a152", "8f45726e5ddc183fdabfbc5e972d3264");
+    }, "dad44b2962f78c94cd8f74156e5373c8", "a2b5c08d8621e5bab2010dc1fdc999ed");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;
@@ -236,7 +278,7 @@ public final class AppDatabase_Impl extends AppDatabase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     final HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "plays","actors","seats","comments","bookings","users");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "plays","actors","seats","comments","bookings","users","notifications","categories");
   }
 
   @Override
@@ -251,6 +293,8 @@ public final class AppDatabase_Impl extends AppDatabase {
       _db.execSQL("DELETE FROM `comments`");
       _db.execSQL("DELETE FROM `bookings`");
       _db.execSQL("DELETE FROM `users`");
+      _db.execSQL("DELETE FROM `notifications`");
+      _db.execSQL("DELETE FROM `categories`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();
@@ -271,6 +315,8 @@ public final class AppDatabase_Impl extends AppDatabase {
     _typeConvertersMap.put(CommentDao.class, CommentDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(BookingDao.class, BookingDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(UserDao.class, UserDao_Impl.getRequiredConverters());
+    _typeConvertersMap.put(NotificationDao.class, NotificationDao_Impl.getRequiredConverters());
+    _typeConvertersMap.put(CategoryDao.class, CategoryDao_Impl.getRequiredConverters());
     return _typeConvertersMap;
   }
 
@@ -369,6 +415,34 @@ public final class AppDatabase_Impl extends AppDatabase {
           _userDao = new UserDao_Impl(this);
         }
         return _userDao;
+      }
+    }
+  }
+
+  @Override
+  public NotificationDao getNotificationDao() {
+    if (_notificationDao != null) {
+      return _notificationDao;
+    } else {
+      synchronized(this) {
+        if(_notificationDao == null) {
+          _notificationDao = new NotificationDao_Impl(this);
+        }
+        return _notificationDao;
+      }
+    }
+  }
+
+  @Override
+  public CategoryDao getCategoryDao() {
+    if (_categoryDao != null) {
+      return _categoryDao;
+    } else {
+      synchronized(this) {
+        if(_categoryDao == null) {
+          _categoryDao = new CategoryDao_Impl(this);
+        }
+        return _categoryDao;
       }
     }
   }

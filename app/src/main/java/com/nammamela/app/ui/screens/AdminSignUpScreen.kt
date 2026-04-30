@@ -15,18 +15,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.nammamela.app.ui.components.NammaMelaButton
+import com.nammamela.app.ui.components.AdminInputField
 import com.nammamela.app.ui.theme.*
+import com.nammamela.app.viewmodel.AuthViewModel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AdminSignUpScreen(
     onSignUpClick: () -> Unit,
     onLoginClick: () -> Unit,
-    onClose: () -> Unit
+    onClose: () -> Unit,
+    viewModel: AuthViewModel = hiltViewModel()
 ) {
     var managerName by remember { mutableStateOf("") }
     var companyName by remember { mutableStateOf("") }
@@ -35,9 +39,24 @@ fun AdminSignUpScreen(
     var password by remember { mutableStateOf("") }
     var secretKey by remember { mutableStateOf("") }
     
-    var errorMsg by remember { mutableStateOf<String?>(null) }
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(Unit) {
+        viewModel.errorEvent.collect { message ->
+            snackbarHostState.showSnackbar(message)
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.loginSuccess.collect { success ->
+            if (success) onSignUpClick()
+        }
+    }
+
+    val scope = rememberCoroutineScope()
 
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         containerColor = NammaDarkBrown,
         topBar = {
             CenterAlignedTopAppBar(
@@ -91,22 +110,23 @@ fun AdminSignUpScreen(
             Spacer(modifier = Modifier.height(16.dp))
             AdminInputField("Secret Manager Key", secretKey, { secretKey = it }, Icons.Default.VpnKey)
 
-            if (errorMsg != null) {
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(errorMsg!!, color = Color.Red, style = MaterialTheme.typography.bodySmall)
-            }
-
             Spacer(modifier = Modifier.height(40.dp))
 
             NammaMelaButton(
                 text = "REGISTER COMPANY 🎟",
                 onClick = {
                     if (secretKey != "MELA2026") {
-                        errorMsg = "Invalid Secret Manager Key!"
-                    } else if (managerName.isEmpty() || companyName.isEmpty()) {
-                        errorMsg = "Please fill all required fields."
+                        scope.launch { snackbarHostState.showSnackbar("Invalid Secret Manager Key!") }
                     } else {
-                        onSignUpClick()
+                        viewModel.signUp(
+                            name = managerName,
+                            email = email,
+                            pass = password,
+                            role = com.nammamela.app.domain.model.UserRole.ADMIN,
+                            companyName = companyName,
+                            location = location,
+                            autoLogin = false
+                        )
                     }
                 }
             )
@@ -118,36 +138,5 @@ fun AdminSignUpScreen(
             
             Spacer(modifier = Modifier.height(40.dp))
         }
-    }
-}
-
-@Composable
-fun AdminInputField(
-    label: String,
-    value: String,
-    onValueChange: (String) -> Unit,
-    icon: ImageVector,
-    isPassword: Boolean = false
-) {
-    Column {
-        Text(label, color = NammaWarmWhite.copy(0.4f), style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold))
-        Spacer(modifier = Modifier.height(8.dp))
-        OutlinedTextField(
-            value = value,
-            onValueChange = onValueChange,
-            modifier = Modifier.fillMaxWidth(),
-            leadingIcon = { Icon(icon, null, tint = NammaGold.copy(0.4f)) },
-            visualTransformation = if (isPassword) PasswordVisualTransformation() else androidx.compose.ui.text.input.VisualTransformation.None,
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = NammaGold,
-                unfocusedBorderColor = NammaWarmWhite.copy(0.1f),
-                focusedContainerColor = NammaSurfaceLow,
-                unfocusedContainerColor = NammaSurfaceLow,
-                focusedTextColor = NammaWarmWhite,
-                unfocusedTextColor = NammaWarmWhite
-            ),
-            shape = RoundedCornerShape(12.dp),
-            singleLine = true
-        )
     }
 }

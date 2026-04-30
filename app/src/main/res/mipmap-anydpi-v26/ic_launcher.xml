@@ -2,16 +2,8 @@
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
     <background android:drawable="@drawable/ic_launcher_background" />
     <foreground>
-        <inset android:inset="16%">
-            <vector
-                android:width="108dp"
-                android:height="108dp"
-                android:viewportWidth="108"
-                android:viewportHeight="108">
-                <path
-                    android:fillColor="#FFD700"
-                    android:pathData="M54,20L20,54L54,88L88,54L54,20Z" />
-            </vector>
+        <inset android:inset="14%">
+            <item android:drawable="@drawable/namma_mela_logo" />
         </inset>
     </foreground>
 </adaptive-icon>

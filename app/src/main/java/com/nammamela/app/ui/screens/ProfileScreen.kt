@@ -31,7 +31,8 @@ import com.nammamela.app.viewmodel.ProfileViewModel
 fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel(),
     onMyBookingsClick: () -> Unit,
-    onLogoutClick: () -> Unit
+    onLogoutClick: () -> Unit,
+    onAdminDashboardClick: () -> Unit
 ) {
     val user by viewModel.user.collectAsState()
     val bookings by viewModel.bookings.collectAsState()
@@ -147,6 +148,8 @@ fun ProfileScreen(
                     ProfileMenuItem(Icons.Outlined.Payment, "Payment Methods", "Manage your saved cards and wallets") {}
                     Divider(modifier = Modifier.padding(horizontal = 20.dp), color = NammaWarmWhite.copy(0.05f))
                     ProfileMenuItem(Icons.Outlined.Settings, "Preferences", "App theme, notifications and language") {}
+                    Divider(modifier = Modifier.padding(horizontal = 20.dp), color = NammaWarmWhite.copy(0.05f))
+                    ProfileMenuItem(Icons.Outlined.AdminPanelSettings, "Manager Console", "Access insights and control theater map") { onAdminDashboardClick() }
                 }
             }
 

@@ -10,12 +10,18 @@ import androidx.compose.ui.Modifier
 import com.nammamela.app.navigation.NammaMelaNavGraph
 import com.nammamela.app.ui.theme.NammaMelaTheme
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     
+    @javax.inject.Inject
+    lateinit var repository: com.nammamela.app.domain.repository.AppRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
         
         setContent {
             NammaMelaTheme {

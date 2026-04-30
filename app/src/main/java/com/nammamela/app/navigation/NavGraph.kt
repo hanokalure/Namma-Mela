@@ -62,7 +62,7 @@ fun NammaMelaNavGraph(navController: NavHostController) {
         composable(Screen.AdminSignUp.route) {
             AdminSignUpScreen(
                 onSignUpClick = {
-                    navController.navigate(Screen.AdminDashboard.route) {
+                    navController.navigate(Screen.AdminLogin.route) {
                         popUpTo(Screen.AdminSignUp.route) { inclusive = true }
                     }
                 },
@@ -83,6 +83,7 @@ fun NammaMelaNavGraph(navController: NavHostController) {
                 onNavigateToSearch = { navController.navigate(Screen.Search.route) },
                 onNavigateToNotifications = { navController.navigate(Screen.Notifications.route) },
                 onMyBookingsClick = { navController.navigate(Screen.MyBookings.route) },
+                onAdminDashboardClick = { navController.navigate(Screen.AdminDashboard.route) },
                 onLogoutClick = { 
                     navController.navigate(Screen.Login.route) {
                         popUpTo(Screen.Main.route) { inclusive = true }
@@ -170,8 +171,13 @@ fun NammaMelaNavGraph(navController: NavHostController) {
                 onNavigateToUploadPlay = { navController.navigate(Screen.UploadPlay.route) },
                 onNavigateToManageCast = { playId -> navController.navigate(Screen.ManageCast.createRoute(playId)) },
                 onNavigateToManageSeats = { playId -> navController.navigate(Screen.ManageSeats.createRoute(playId)) },
+                onNavigateToInsights = { navController.navigate(Screen.ManagerInsights.route) },
                 onNavigateBack = { navController.popBackStack() }
             )
+        }
+
+        composable(Screen.ManagerInsights.route) {
+            ManagerDashboardScreen(onNavigateBack = { navController.popBackStack() })
         }
 
         composable(Screen.UploadPlay.route) {

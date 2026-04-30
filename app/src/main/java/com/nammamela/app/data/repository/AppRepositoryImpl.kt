@@ -14,7 +14,9 @@ class AppRepositoryImpl @Inject constructor(
     private val seatDao: SeatDao,
     private val commentDao: CommentDao,
     private val bookingDao: BookingDao,
-    private val userDao: UserDao
+    private val userDao: UserDao,
+    private val notificationDao: NotificationDao,
+    private val categoryDao: CategoryDao
 ) : AppRepository {
 
     override fun getAllPlays(): Flow<List<Play>> = playDao.getAllPlays()
@@ -42,10 +44,42 @@ class AppRepositoryImpl @Inject constructor(
     override suspend fun deleteComment(comment: Comment) = commentDao.deleteComment(comment)
 
     override fun getBookingsForUser(userId: Int): Flow<List<Booking>> = bookingDao.getBookingsForUser(userId)
+    override fun getAllBookings(): Flow<List<Booking>> = bookingDao.getAllBookings()
     override fun getBookingsWithPlayForUser(userId: Int): Flow<List<BookingWithPlay>> = bookingDao.getBookingsWithPlayForUser(userId)
     override fun getBookingWithPlayById(bookingId: Int): Flow<BookingWithPlay?> = bookingDao.getBookingWithPlayById(bookingId)
     override suspend fun insertBooking(booking: Booking): Long = bookingDao.insertBooking(booking)
 
     override fun getUserById(userId: Int): Flow<User?> = userDao.getUserById(userId)
+    override suspend fun getUserByEmail(email: String): User? = userDao.getUserByEmail(email)
     override suspend fun insertUser(user: User) = userDao.insertUser(user)
+    override suspend fun updateUser(user: User) = userDao.updateUser(user)
+
+    override fun getAllNotifications(): Flow<List<Notification>> = notificationDao.getAllNotifications()
+    override suspend fun insertNotification(notification: Notification) = notificationDao.insertNotification(notification)
+    override suspend fun markNotificationAsRead(id: Int) = notificationDao.markAsRead(id)
+    override suspend fun deleteNotification(notification: Notification) = notificationDao.deleteNotification(notification)
+
+    override fun getAllCategories(): Flow<List<Category>> = categoryDao.getAllCategories()
+    override suspend fun insertCategories(categories: List<Category>) = categoryDao.insertCategories(categories)
+
+    override suspend fun updatePlayRating(playId: Int, newRating: Float) {
+        playDao.getPlayByIdOnce(playId)?.let { play ->
+            playDao.updatePlay(play.copy(rating = newRating))
+        }
+    }
+
+    override suspend fun wipeDatabase() {
+        playDao.deleteAllPlays() 
+        actorDao.deleteAllActors()
+        userDao.deleteAllUsers()
+        bookingDao.deleteAllBookings()
+        commentDao.deleteAllComments()
+        notificationDao.deleteAllNotifications()
+        categoryDao.deleteAllCategories()
+        // Seats are usually linked to plays via ID, but we can clear them too if needed
+    }
+
+    override suspend fun seedDatabase() {
+        // CONTENT REMOVED AS REQUESTED: Starting from scratch.
+    }
 }

@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,32 +23,42 @@ class HomeViewModel @Inject constructor(
     private val _plays = MutableStateFlow<List<Play>>(emptyList())
     val plays: StateFlow<List<Play>> = _plays.asStateFlow()
 
+    private val _categories = MutableStateFlow<List<com.nammamela.app.domain.model.Category>>(emptyList())
+    val categories: StateFlow<List<com.nammamela.app.domain.model.Category>> = _categories.asStateFlow()
+
+    private val _fanFavorites = MutableStateFlow<List<com.nammamela.app.domain.model.Actor>>(emptyList())
+    val fanFavorites: StateFlow<List<com.nammamela.app.domain.model.Actor>> = _fanFavorites.asStateFlow()
+
+    private val _errorEvent = MutableSharedFlow<String>()
+    val errorEvent = _errorEvent.asSharedFlow()
+
     init {
-        loadPlays()
+        loadData()
     }
 
-    private fun loadPlays() {
+    private fun loadData() {
         viewModelScope.launch {
             repository.getAllPlays()
                 .map { list ->
-                    // Sort by timestamp and take the 3 most recent for the slider
                     list.sortedByDescending { it.timestamp }.take(3)
                 }
                 .catch { 
-                    // Prevent crash on DB errors, fallback to empty/mock
+                    _errorEvent.emit("Failed to load plays")
                     emit(emptyList()) 
                 }
                 .collect { playList ->
-                    if (playList.isEmpty()) {
-                        _plays.value = listOf(
-                            Play(id = 1, title = "SATI-SAVITRI", duration = "180 mins", description = "A legendary tale of devotion and courage.", genre = "Mythology", posterUrl = null, rating = 4.9f),
-                            Play(id = 2, title = "BHAKTA PRAHLADA", duration = "165 mins", description = "The story of the young devotee and Lord Narasimha.", genre = "Classic", posterUrl = null, rating = 4.8f),
-                            Play(id = 3, title = "MALAYALA MANTRI", duration = "150 mins", description = "A witty political drama with sharp dialogue.", genre = "Comedy", posterUrl = null, rating = 4.7f)
-                        )
-                    } else {
-                        _plays.value = playList
-                    }
+                    _plays.value = playList
                 }
+        }
+
+        viewModelScope.launch {
+            repository.getAllCategories().collect { _categories.value = it }
+        }
+
+        viewModelScope.launch {
+            repository.getAllActors()
+                .map { it.take(5) } // Show first 5 as favorites
+                .collect { _fanFavorites.value = it }
         }
     }
 }

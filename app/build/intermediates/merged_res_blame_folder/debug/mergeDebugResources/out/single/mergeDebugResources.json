@@ -1,14 +1,38 @@
 [
     {
-        "merged": "com.nammamela.app-debug-4:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "com.nammamela.app-main-6:/mipmap-anydpi-v26/ic_launcher_round.xml"
+        "merged": "C:\\Users\\hanok\\.gradle\\daemon\\9.0-milestone-1\\com.nammamela.app-debug-4:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\hanok\\.gradle\\daemon\\9.0-milestone-1\\com.nammamela.app-main-6:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
     },
     {
-        "merged": "com.nammamela.app-debug-4:/drawable_ic_launcher_background.xml.flat",
-        "source": "com.nammamela.app-main-6:/drawable/ic_launcher_background.xml"
+        "merged": "C:\\Users\\hanok\\.gradle\\daemon\\9.0-milestone-1\\com.nammamela.app-debug-4:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\hanok\\.gradle\\daemon\\9.0-milestone-1\\com.nammamela.app-main-6:\\mipmap-anydpi-v26\\ic_launcher.xml"
     },
     {
-        "merged": "com.nammamela.app-debug-4:/mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "com.nammamela.app-main-6:/mipmap-anydpi-v26/ic_launcher.xml"
+        "merged": "com.nammamela.app-debug-4:/mipmap_ic_launcher.xml.flat",
+        "source": "com.nammamela.app-main-6:/mipmap/ic_launcher.xml"
+    },
+    {
+        "merged": "com.nammamela.app-debug-4:/mipmap_ic_launcher_round.xml.flat",
+        "source": "com.nammamela.app-main-6:/mipmap/ic_launcher_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\hanok\\.gradle\\daemon\\9.0-milestone-1\\com.nammamela.app-debug-4:\\drawable_namma_mela_logo.png.flat",
+        "source": "C:\\Users\\hanok\\.gradle\\daemon\\9.0-milestone-1\\com.nammamela.app-main-6:\\drawable\\namma_mela_logo.png"
+    },
+    {
+        "merged": "C:\\Users\\hanok\\.gradle\\daemon\\9.0-milestone-1\\com.nammamela.app-debug-4:\\mipmap_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\hanok\\.gradle\\daemon\\9.0-milestone-1\\com.nammamela.app-main-6:\\mipmap\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\hanok\\.gradle\\daemon\\9.0-milestone-1\\com.nammamela.app-debug-4:\\mipmap_ic_launcher.xml.flat",
+        "source": "C:\\Users\\hanok\\.gradle\\daemon\\9.0-milestone-1\\com.nammamela.app-main-6:\\mipmap\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\hanok\\.gradle\\daemon\\9.0-milestone-1\\com.nammamela.app-debug-4:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\hanok\\.gradle\\daemon\\9.0-milestone-1\\com.nammamela.app-main-6:\\drawable\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\hanok\\.gradle\\daemon\\9.0-milestone-1\\com.nammamela.app-debug-4:\\drawable_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\hanok\\.gradle\\daemon\\9.0-milestone-1\\com.nammamela.app-main-6:\\drawable\\ic_launcher_foreground.png"
     }
 ]

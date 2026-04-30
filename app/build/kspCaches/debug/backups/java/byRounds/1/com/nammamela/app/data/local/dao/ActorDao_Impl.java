@@ -7,6 +7,7 @@ import androidx.room.EntityDeletionOrUpdateAdapter;
 import androidx.room.EntityInsertionAdapter;
 import androidx.room.RoomDatabase;
 import androidx.room.RoomSQLiteQuery;
+import androidx.room.SharedSQLiteStatement;
 import androidx.room.util.CursorUtil;
 import androidx.room.util.DBUtil;
 import androidx.sqlite.db.SupportSQLiteStatement;
@@ -36,6 +37,8 @@ public final class ActorDao_Impl implements ActorDao {
   private final EntityDeletionOrUpdateAdapter<Actor> __deletionAdapterOfActor;
 
   private final EntityDeletionOrUpdateAdapter<Actor> __updateAdapterOfActor;
+
+  private final SharedSQLiteStatement __preparedStmtOfDeleteAllActors;
 
   public ActorDao_Impl(@NonNull final RoomDatabase __db) {
     this.__db = __db;
@@ -97,6 +100,14 @@ public final class ActorDao_Impl implements ActorDao {
         statement.bindLong(7, entity.getId());
       }
     };
+    this.__preparedStmtOfDeleteAllActors = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "DELETE FROM actors";
+        return _query;
+      }
+    };
   }
 
   @Override
@@ -148,6 +159,29 @@ public final class ActorDao_Impl implements ActorDao {
           return Unit.INSTANCE;
         } finally {
           __db.endTransaction();
+        }
+      }
+    }, $completion);
+  }
+
+  @Override
+  public Object deleteAllActors(final Continuation<? super Unit> $completion) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfDeleteAllActors.acquire();
+        try {
+          __db.beginTransaction();
+          try {
+            _stmt.executeUpdateDelete();
+            __db.setTransactionSuccessful();
+            return Unit.INSTANCE;
+          } finally {
+            __db.endTransaction();
+          }
+        } finally {
+          __preparedStmtOfDeleteAllActors.release(_stmt);
         }
       }
     }, $completion);

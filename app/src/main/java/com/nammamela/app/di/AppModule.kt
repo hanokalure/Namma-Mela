@@ -53,14 +53,24 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideNotificationDao(db: AppDatabase): NotificationDao = db.notificationDao
+
+    @Provides
+    @Singleton
+    fun provideCategoryDao(db: AppDatabase): CategoryDao = db.categoryDao
+
+    @Provides
+    @Singleton
     fun provideAppRepository(
         playDao: PlayDao,
         actorDao: ActorDao,
         seatDao: SeatDao,
         commentDao: CommentDao,
         bookingDao: BookingDao,
-        userDao: UserDao
+        userDao: UserDao,
+        notificationDao: NotificationDao,
+        categoryDao: CategoryDao
     ): AppRepository {
-        return AppRepositoryImpl(playDao, actorDao, seatDao, commentDao, bookingDao, userDao)
+        return AppRepositoryImpl(playDao, actorDao, seatDao, commentDao, bookingDao, userDao, notificationDao, categoryDao)
     }
 }

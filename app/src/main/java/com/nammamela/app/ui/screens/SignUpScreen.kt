@@ -9,6 +9,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -23,108 +25,133 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.nammamela.app.ui.components.NammaMelaButton
 import com.nammamela.app.ui.theme.*
+import com.nammamela.app.viewmodel.AuthViewModel
 
 @Composable
 fun SignUpScreen(
     onSignUpClick: () -> Unit,
     onLoginClick: () -> Unit,
-    onClose: () -> Unit
+    onClose: () -> Unit,
+    viewModel: AuthViewModel = hiltViewModel()
 ) {
     var fullName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    
+    val snackbarHostState = remember { SnackbarHostState() }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(NammaDarkBrown)
-    ) {
-        Column(
+    LaunchedEffect(Unit) {
+        viewModel.errorEvent.collect { message ->
+            snackbarHostState.showSnackbar(message)
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.loginSuccess.collect { success ->
+            if (success) onSignUpClick()
+        }
+    }
+
+    Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+        containerColor = NammaDarkBrown
+    ) { padding ->
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(padding)
         ) {
-            Spacer(modifier = Modifier.height(24.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.weight(1f)) {
-                    Text("🎪", fontSize = 24.sp)
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text("NAMMA-MELA", color = NammaGold, fontWeight = FontWeight.Black, style = MaterialTheme.typography.titleLarge, letterSpacing = 2.sp)
-                }
-                IconButton(onClick = onClose) {
-                    Icon(Icons.Default.Close, null, tint = NammaWarmWhite.copy(0.7f))
-                }
-            }
+                Spacer(modifier = Modifier.height(24.dp))
 
-            Spacer(modifier = Modifier.height(32.dp))
-
-            Text(
-                "Join the\nSpectacle",
-                color = NammaWarmWhite,
-                style = MaterialTheme.typography.displayLarge.copy(fontSize = 40.sp, fontWeight = FontWeight.Bold),
-                textAlign = TextAlign.Center
-            )
-            
-            Spacer(modifier = Modifier.height(40.dp))
-
-            Surface(
-                color = NammaSurfaceLow,
-                shape = RoundedCornerShape(32.dp),
-                modifier = Modifier.fillMaxWidth(),
-                border = androidx.compose.foundation.BorderStroke(1.dp, NammaWarmWhite.copy(0.05f))
-            ) {
-                Column(modifier = Modifier.padding(24.dp)) {
-                    SignUpFieldRow(
-                        label = "Full Name",
-                        value = fullName,
-                        onValueChange = { fullName = it },
-                        placeholder = "E.g. Basavaraj Patil"
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    SignUpFieldRow(
-                        label = "Email Address",
-                        value = email,
-                        onValueChange = { email = it },
-                        placeholder = "name@example.com",
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    SignUpFieldRow(
-                        label = "Password",
-                        value = password,
-                        onValueChange = { password = it },
-                        placeholder = "••••••••",
-                        visualTransformation = PasswordVisualTransformation(),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
-                    )
-
-                    Spacer(modifier = Modifier.height(32.dp))
-
-                    NammaMelaButton(text = "CREATE ACCOUNT", onClick = onSignUpClick)
-
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                        Text("Already have an account? ", color = NammaWarmWhite.copy(0.5f))
-                        Text(
-                            "Login",
-                            color = NammaGold,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.clickable { onLoginClick() }
-                        )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.weight(1f)) {
+                        Text("🎪", fontSize = 24.sp)
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text("NAMMA-MELA", color = NammaGold, fontWeight = FontWeight.Black, style = MaterialTheme.typography.titleLarge, letterSpacing = 2.sp)
+                    }
+                    IconButton(onClick = onClose) {
+                        Icon(Icons.Default.Close, null, tint = NammaWarmWhite.copy(0.7f))
                     }
                 }
-            }
 
-            Spacer(modifier = Modifier.height(40.dp))
+                Spacer(modifier = Modifier.height(32.dp))
+
+                Text(
+                    "Join the\nSpectacle",
+                    color = NammaWarmWhite,
+                    style = MaterialTheme.typography.displayLarge.copy(fontSize = 40.sp, fontWeight = FontWeight.Bold),
+                    textAlign = TextAlign.Center
+                )
+                
+                Spacer(modifier = Modifier.height(40.dp))
+
+                Surface(
+                    color = NammaSurfaceLow,
+                    shape = RoundedCornerShape(32.dp),
+                    modifier = Modifier.fillMaxWidth(),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, NammaWarmWhite.copy(0.05f))
+                ) {
+                    Column(modifier = Modifier.padding(24.dp)) {
+                        SignUpFieldRow(
+                            label = "Full Name",
+                            value = fullName,
+                            onValueChange = { fullName = it },
+                            placeholder = "E.g. Basavaraj Patil"
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        SignUpFieldRow(
+                            label = "Email Address",
+                            value = email,
+                            onValueChange = { email = it },
+                            placeholder = "name@example.com",
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        SignUpFieldRow(
+                            label = "Password",
+                            value = password,
+                            onValueChange = { password = it },
+                            placeholder = "••••••••",
+                            isPassword = true,
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+                        )
+
+                        Spacer(modifier = Modifier.height(32.dp))
+
+                        NammaMelaButton(
+                            text = "CREATE ACCOUNT", 
+                            onClick = { viewModel.signUp(fullName, email, password) }
+                        )
+
+                        Spacer(modifier = Modifier.height(20.dp))
+
+                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                            Text("Already have an account? ", color = NammaWarmWhite.copy(0.5f))
+                            Text(
+                                "Login",
+                                color = NammaGold,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.clickable { onLoginClick() }
+                            )
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(40.dp))
+            }
         }
     }
 }
@@ -135,16 +162,29 @@ fun SignUpFieldRow(
     value: String,
     onValueChange: (String) -> Unit,
     placeholder: String,
-    visualTransformation: VisualTransformation = VisualTransformation.None,
+    isPassword: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default
 ) {
+    var passwordVisible by remember { mutableStateOf(false) }
+    
     Text(label, color = NammaGold, style = MaterialTheme.typography.labelLarge)
     Spacer(modifier = Modifier.height(8.dp))
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
         placeholder = { Text(placeholder, color = NammaWarmWhite.copy(0.35f)) },
-        visualTransformation = visualTransformation,
+        visualTransformation = if (isPassword && !passwordVisible) PasswordVisualTransformation() else VisualTransformation.None,
+        trailingIcon = if (isPassword) {
+            {
+                IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                    Icon(
+                        if (passwordVisible) androidx.compose.material.icons.Icons.Filled.VisibilityOff else androidx.compose.material.icons.Icons.Filled.Visibility,
+                        null,
+                        tint = NammaGold.copy(0.4f)
+                    )
+                }
+            }
+        } else null,
         keyboardOptions = keyboardOptions,
         modifier = Modifier.fillMaxWidth(),
         colors = OutlinedTextFieldDefaults.colors(

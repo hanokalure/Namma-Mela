@@ -12,9 +12,7 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -46,6 +44,17 @@ fun PlayDetailScreen(
     val isLoading by viewModel.isLoading.collectAsState()
 
     val scrollState = rememberScrollState()
+    var showRatingDialog by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
+
+    if (showRatingDialog) {
+        RatingDialog(
+            onDismiss = { showRatingDialog = false },
+            onSubmit = { rating ->
+                viewModel.submitRating(rating)
+                showRatingDialog = false
+            }
+        )
+    }
 
     if (isLoading) {
         Box(modifier = Modifier.fillMaxSize().background(NammaDarkBrown), contentAlignment = Alignment.Center) {
@@ -71,12 +80,12 @@ fun PlayDetailScreen(
                         horizontalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         OutlinedButton(
-                            onClick = onReviewClick,
+                            onClick = { showRatingDialog = true },
                             modifier = Modifier.weight(1f).height(56.dp),
                             shape = RoundedCornerShape(16.dp),
                             border = BorderStroke(1.dp, NammaGold.copy(0.3f))
                         ) {
-                            Text("Reviews", color = NammaGold)
+                            Text("Rate Show", color = NammaGold)
                         }
                         NammaMelaButton(
                             text = "Reserve Seat 🎟",
@@ -246,4 +255,46 @@ fun CastAvatar(actor: Actor) {
         Text(text = actor.name, color = Color.White, style = MaterialTheme.typography.labelMedium)
         Text(text = actor.category, color = NammaGold.copy(0.5f), style = MaterialTheme.typography.labelSmall)
     }
+}
+
+@Composable
+fun RatingDialog(onDismiss: () -> Unit, onSubmit: (Float) -> Unit) {
+    var rating by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(0f) }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        containerColor = NammaSurfaceLow,
+        title = { Text("Rate this Drama", color = NammaGold) },
+        text = {
+            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
+                Text("How was tonight's performance?", color = NammaWarmWhite.copy(0.7f))
+                Spacer(modifier = Modifier.height(16.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    (1..5).forEach { index ->
+                        IconButton(onClick = { rating = index.toFloat() }) {
+                            Icon(
+                                imageVector = Icons.Default.Star,
+                                contentDescription = null,
+                                tint = if (index <= rating) NammaGold else Color.White.copy(0.1f),
+                                modifier = Modifier.size(32.dp)
+                            )
+                        }
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(
+                onClick = { if (rating > 0) onSubmit(rating) },
+                enabled = rating > 0
+            ) {
+                Text("SUBMIT", color = NammaGold)
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("CANCEL", color = NammaWarmWhite.copy(0.5f))
+            }
+        }
+    )
 }

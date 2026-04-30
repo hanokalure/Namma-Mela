@@ -25,4 +25,7 @@ interface ActorDao {
 
     @Delete
     suspend fun deleteActor(actor: Actor)
+
+    @Query("DELETE FROM actors")
+    suspend fun deleteAllActors()
 }

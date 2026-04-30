@@ -17,9 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -46,10 +44,20 @@ fun HomeScreen(
     onNavigateToNotifications: () -> Unit
 ) {
     val plays by viewModel.plays.collectAsState()
+    val categories by viewModel.categories.collectAsState()
+    val fanFavorites by viewModel.fanFavorites.collectAsState()
     val scrollState = rememberScrollState()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(Unit) {
+        viewModel.errorEvent.collect { message ->
+            snackbarHostState.showSnackbar(message)
+        }
+    }
 
     Scaffold(
-        containerColor = NammaDarkBrown
+        containerColor = NammaDarkBrown,
+        snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -126,8 +134,8 @@ fun HomeScreen(
                 contentPadding = PaddingValues(horizontal = 24.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                items(listOf("Drama", "Music", "Comedy", "Folk", "Classical")) { category ->
-                    CategoryChip(text = category, isSelected = category == "Drama")
+                items(categories) { category ->
+                    CategoryChip(text = category.name, isSelected = category.isSelected)
                 }
             }
             
@@ -150,8 +158,8 @@ fun HomeScreen(
                 contentPadding = PaddingValues(horizontal = 24.dp),
                 horizontalArrangement = Arrangement.spacedBy(24.dp)
             ) {
-                items(listOf("Arjun", "Meera", "Vikram", "Kiran", "Basu")) { name ->
-                    FanFavoriteAvatar(name = name)
+                items(fanFavorites) { actor ->
+                    FanFavoriteAvatar(name = actor.name)
                 }
             }
             
@@ -167,7 +175,6 @@ fun BannerSlider(
     onBannerClick: (Int) -> Unit,
     onBookClick: (Int) -> Unit
 ) {
-    // Correct API for newer Compose: pageCount is in rememberPagerState
     val pagerState = rememberPagerState(initialPage = 0) { plays.size }
     
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -216,7 +223,6 @@ fun FeaturedPlayBanner(play: Play, onBannerClick: () -> Unit, onBookClick: () ->
             .border(1.dp, NammaWarmWhite.copy(0.05f), RoundedCornerShape(24.dp))
             .clickable(onClick = onBannerClick)
     ) {
-        // GLIDE IMAGE FOR POSTER
         if (play.posterUrl != null) {
             GlideImage(
                 model = play.posterUrl,
@@ -225,7 +231,6 @@ fun FeaturedPlayBanner(play: Play, onBannerClick: () -> Unit, onBookClick: () ->
                 contentScale = ContentScale.Crop
             )
         } else {
-            // Fallback colorful background if no poster
             Box(
                 modifier = Modifier
                     .fillMaxSize()

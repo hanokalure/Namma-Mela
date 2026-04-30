@@ -42,16 +42,24 @@ fun AdminPlayManagementScreen(
     var description by remember { mutableStateOf("") }
     var genre by remember { mutableStateOf("") }
     var duration by remember { mutableStateOf("") }
+    var showTime by remember { mutableStateOf("10:00 PM") }
     var price by remember { mutableStateOf("150.00") }
 
     val selectedImageUri by viewModel.selectedImageUri.collectAsState()
     val isSaveSuccess by viewModel.isSaveSuccess.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     // Gallery Picker Launcher
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         viewModel.onImageSelected(uri)
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.errorEvent.collect { message ->
+            snackbarHostState.showSnackbar(message = message)
+        }
     }
 
     LaunchedEffect(isSaveSuccess) {
@@ -63,6 +71,7 @@ fun AdminPlayManagementScreen(
 
     Scaffold(
         containerColor = NammaDarkBrown,
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text("UPLOAD TONIGHT'S PLAY", color = NammaGold, style = MaterialTheme.typography.labelLarge.copy(letterSpacing = 2.sp)) },
@@ -73,9 +82,7 @@ fun AdminPlayManagementScreen(
                 },
                 actions = {
                     IconButton(onClick = { 
-                        if (title.isNotEmpty()) {
-                            viewModel.saveTonightPlay(title, description, genre, duration, price)
-                        }
+                        viewModel.saveTonightPlay(title, description, genre, duration, showTime, price)
                     }) {
                         Icon(Icons.Default.Save, null, tint = NammaGold)
                     }
@@ -136,6 +143,8 @@ fun AdminPlayManagementScreen(
                     AdminField("Duration", duration, { duration = it }, "3h 15m")
                 }
             }
+            Spacer(modifier = Modifier.height(20.dp))
+            AdminField("Show Timing", showTime, { showTime = it }, "e.g. 10:00 PM")
             
             Spacer(modifier = Modifier.height(32.dp))
             Text("BOX OFFICE SETTINGS", color = NammaGold, style = MaterialTheme.typography.labelSmall, letterSpacing = 2.sp)
@@ -169,9 +178,7 @@ fun AdminPlayManagementScreen(
             NammaMelaButton(
                 text = "OPEN BOOKINGS  🎟",
                 onClick = { 
-                    if (title.isNotEmpty()) {
-                        viewModel.saveTonightPlay(title, description, genre, duration, price)
-                    }
+                    viewModel.saveTonightPlay(title, description, genre, duration, showTime, price)
                 }
             )
             

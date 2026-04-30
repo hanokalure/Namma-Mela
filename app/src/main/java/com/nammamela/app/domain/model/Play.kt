@@ -13,6 +13,7 @@ data class Play(
     val genre: String,
     val posterUrl: String? = null,
     val rating: Float = 0f,
+    val showTime: String = "10:00 PM",
     val timestamp: Long = System.currentTimeMillis(),
     val isActive: Boolean = true // True for currently running show
 )

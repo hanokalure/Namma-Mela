@@ -14,6 +14,9 @@ interface BookingDao {
     @Query("SELECT * FROM bookings WHERE userId = :userId ORDER BY timestamp DESC")
     fun getBookingsForUser(userId: Int): Flow<List<Booking>>
 
+    @Query("SELECT * FROM bookings ORDER BY timestamp DESC")
+    fun getAllBookings(): Flow<List<Booking>>
+
     @Transaction
     @Query("SELECT * FROM bookings WHERE userId = :userId ORDER BY timestamp DESC")
     fun getBookingsWithPlayForUser(userId: Int): Flow<List<BookingWithPlay>>
@@ -24,4 +27,7 @@ interface BookingDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertBooking(booking: Booking): Long
+
+    @Query("DELETE FROM bookings")
+    suspend fun deleteAllBookings()
 }

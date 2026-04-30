@@ -43,6 +43,7 @@ fun MainScreen(
     onNavigateToSearch: () -> Unit,
     onNavigateToNotifications: () -> Unit,
     onMyBookingsClick: () -> Unit,
+    onAdminDashboardClick: () -> Unit,
     onLogoutClick: () -> Unit
 ) {
     val navController = rememberNavController()
@@ -134,7 +135,8 @@ fun MainScreen(
             composable(Screen.Profile.route) {
                 ProfileScreen(
                     onMyBookingsClick = onMyBookingsClick,
-                    onLogoutClick = onLogoutClick
+                    onLogoutClick = onLogoutClick,
+                    onAdminDashboardClick = onAdminDashboardClick
                 )
             }
         }

@@ -34,11 +34,30 @@ interface AppRepository {
 
     // Booking
     fun getBookingsForUser(userId: Int): Flow<List<Booking>>
+    fun getAllBookings(): Flow<List<Booking>>
     fun getBookingsWithPlayForUser(userId: Int): Flow<List<BookingWithPlay>>
     fun getBookingWithPlayById(bookingId: Int): Flow<BookingWithPlay?>
     suspend fun insertBooking(booking: Booking): Long
 
     // User
     fun getUserById(userId: Int): Flow<User?>
+    suspend fun getUserByEmail(email: String): User?
     suspend fun insertUser(user: User)
+    suspend fun updateUser(user: User)
+
+    // Notifications
+    fun getAllNotifications(): Flow<List<Notification>>
+    suspend fun insertNotification(notification: Notification)
+    suspend fun markNotificationAsRead(id: Int)
+    suspend fun deleteNotification(notification: Notification)
+
+    // Category
+    fun getAllCategories(): Flow<List<Category>>
+    suspend fun insertCategories(categories: List<Category>)
+
+    // Rating
+    suspend fun updatePlayRating(playId: Int, newRating: Float)
+
+    suspend fun wipeDatabase()
+    suspend fun seedDatabase()
 }

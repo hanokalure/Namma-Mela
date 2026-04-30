@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="namma_dark_brown">#1A0F0F</color>
+    <color name="namma_gold">#FFD700</color>
+    <color name="namma_maroon">#800000</color>
+    <color name="white">#FFFFFF</color>
     <string name="app_name">NammaMela</string>
     <style name="Theme.NammaMela" parent="android:Theme.Material.Light.NoActionBar"/>
 </resources>
