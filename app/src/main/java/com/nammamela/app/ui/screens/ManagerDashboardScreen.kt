@@ -1,6 +1,5 @@
 package com.nammamela.app.ui.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -22,6 +21,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.nammamela.app.ui.theme.*
 import com.nammamela.app.viewmodel.ManagerViewModel
+import com.nammamela.app.viewmodel.PlayInsight
+import com.nammamela.app.viewmodel.VENUE_SEAT_CAPACITY
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -29,7 +30,7 @@ fun ManagerDashboardScreen(
     viewModel: ManagerViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit
 ) {
-    val plays by viewModel.plays.collectAsState()
+    val insights by viewModel.insights.collectAsState()
     val totalBookings by viewModel.totalBookings.collectAsState()
     val totalRevenue by viewModel.totalRevenue.collectAsState()
 
@@ -57,7 +58,6 @@ fun ManagerDashboardScreen(
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
-            // Summary Cards
             item {
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     StatCard(
@@ -75,62 +75,18 @@ fun ManagerDashboardScreen(
                 }
             }
 
-            // Performance Header
             item {
                 Text(
-                    text = "DRAMA PERFORMANCE",
+                    text = "PERFORMANCE BY PLAY",
                     color = NammaGold,
                     style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 2.sp, fontWeight = FontWeight.Bold)
                 )
             }
 
-            // Play Stats List
-            items(plays) { play ->
-                Surface(
-                    color = NammaSurfaceLow,
-                    shape = RoundedCornerShape(16.dp),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(text = play.title, color = Color.White, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-                            Surface(color = NammaMaroon.copy(0.2f), shape = RoundedCornerShape(4.dp)) {
-                                Text(text = "${play.rating} ★", color = NammaGold, modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp), style = MaterialTheme.typography.labelSmall)
-                            }
-                        }
-                        
-                        Spacer(modifier = Modifier.height(12.dp))
-                        
-                        // Simulated Bar Chart
-                        val progress = (play.rating / 5f).coerceIn(0.1f, 1f)
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(8.dp)
-                                .background(Color.White.copy(0.05f), RoundedCornerShape(4.dp))
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth(progress)
-                                    .fillMaxHeight()
-                                    .background(NammaMaroon, RoundedCornerShape(4.dp))
-                            )
-                        }
-                        
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
-                            Text(text = "Fan Engagement", color = NammaWarmWhite.copy(0.4f), style = MaterialTheme.typography.labelSmall)
-                            Text(text = "${(progress * 100).toInt()}%", color = NammaGold, style = MaterialTheme.typography.labelSmall)
-                        }
-                    }
-                }
+            items(insights, key = { it.play.id }) { insight ->
+                PlayInsightCard(insight)
             }
-            
-            // Footer Info
+
             item {
                 Surface(
                     color = NammaGold.copy(0.05f),
@@ -141,13 +97,77 @@ fun ManagerDashboardScreen(
                         Icon(Icons.Default.Info, null, tint = NammaGold, modifier = Modifier.size(20.dp))
                         Spacer(modifier = Modifier.width(12.dp))
                         Text(
-                            text = "Data updates every night at 12:00 AM based on physical box office sync.",
+                            text = "Bookings and revenue are calculated from tickets sold in this app. Seat utilization compares tickets sold to the fixed hall size ($VENUE_SEAT_CAPACITY seats).",
                             color = NammaWarmWhite.copy(0.7f),
                             style = MaterialTheme.typography.bodySmall
                         )
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun PlayInsightCard(insight: PlayInsight) {
+    val play = insight.play
+    Surface(
+        color = NammaSurfaceLow,
+        shape = RoundedCornerShape(16.dp),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = play.title,
+                    color = Color.White,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.weight(1f)
+                )
+                Surface(color = NammaMaroon.copy(0.2f), shape = RoundedCornerShape(4.dp)) {
+                    Text(
+                        text = "${play.rating} ★",
+                        color = NammaGold,
+                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                        style = MaterialTheme.typography.labelSmall
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = "₹${insight.revenue.toInt()} revenue · ${insight.bookingCount} booking(s) · ${insight.ticketsSold} ticket(s)",
+                color = NammaWarmWhite.copy(0.55f),
+                style = MaterialTheme.typography.bodySmall
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Text(
+                text = "Seat utilization (${insight.ticketsSold} / $VENUE_SEAT_CAPACITY)",
+                color = NammaWarmWhite.copy(0.4f),
+                style = MaterialTheme.typography.labelSmall
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            LinearProgressIndicator(
+                progress = insight.utilization,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(8.dp),
+                color = NammaMaroon,
+                trackColor = Color.White.copy(0.08f),
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "${(insight.utilization * 100).toInt()}% of hall capacity",
+                color = NammaGold,
+                style = MaterialTheme.typography.labelSmall
+            )
         }
     }
 }

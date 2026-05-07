@@ -1,5 +1,6 @@
 package com.nammamela.app.viewmodel;
 
+import com.nammamela.app.data.session.UserSession;
 import com.nammamela.app.domain.repository.AppRepository;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
@@ -24,20 +25,25 @@ import javax.inject.Provider;
 public final class AuthViewModel_Factory implements Factory<AuthViewModel> {
   private final Provider<AppRepository> repositoryProvider;
 
-  public AuthViewModel_Factory(Provider<AppRepository> repositoryProvider) {
+  private final Provider<UserSession> userSessionProvider;
+
+  public AuthViewModel_Factory(Provider<AppRepository> repositoryProvider,
+      Provider<UserSession> userSessionProvider) {
     this.repositoryProvider = repositoryProvider;
+    this.userSessionProvider = userSessionProvider;
   }
 
   @Override
   public AuthViewModel get() {
-    return newInstance(repositoryProvider.get());
+    return newInstance(repositoryProvider.get(), userSessionProvider.get());
   }
 
-  public static AuthViewModel_Factory create(Provider<AppRepository> repositoryProvider) {
-    return new AuthViewModel_Factory(repositoryProvider);
+  public static AuthViewModel_Factory create(Provider<AppRepository> repositoryProvider,
+      Provider<UserSession> userSessionProvider) {
+    return new AuthViewModel_Factory(repositoryProvider, userSessionProvider);
   }
 
-  public static AuthViewModel newInstance(AppRepository repository) {
-    return new AuthViewModel(repository);
+  public static AuthViewModel newInstance(AppRepository repository, UserSession userSession) {
+    return new AuthViewModel(repository, userSession);
   }
 }

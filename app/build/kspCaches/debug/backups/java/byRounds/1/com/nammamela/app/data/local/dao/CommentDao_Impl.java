@@ -14,6 +14,7 @@ import androidx.sqlite.db.SupportSQLiteStatement;
 import com.nammamela.app.domain.model.Comment;
 import java.lang.Class;
 import java.lang.Exception;
+import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -244,6 +245,39 @@ public final class CommentDao_Impl implements CommentDao {
             }
             _item = new Comment(_tmpId,_tmpUserId,_tmpUsername,_tmpUserHandle,_tmpContent,_tmpTimestamp,_tmpLikes,_tmpFires,_tmpReplies,_tmpImageUrl);
             _result.add(_item);
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
+  @Override
+  public Flow<Integer> getCommentCountForUser(final int userId) {
+    final String _sql = "SELECT COUNT(*) FROM comments WHERE userId = ?";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    _statement.bindLong(_argIndex, userId);
+    return CoroutinesRoom.createFlow(__db, false, new String[] {"comments"}, new Callable<Integer>() {
+      @Override
+      @NonNull
+      public Integer call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final Integer _result;
+          if (_cursor.moveToFirst()) {
+            final int _tmp;
+            _tmp = _cursor.getInt(0);
+            _result = _tmp;
+          } else {
+            _result = 0;
           }
           return _result;
         } finally {

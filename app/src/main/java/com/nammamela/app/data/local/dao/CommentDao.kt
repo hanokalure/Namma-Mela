@@ -14,6 +14,9 @@ interface CommentDao {
     @Query("SELECT * FROM comments ORDER BY timestamp DESC")
     fun getAllComments(): Flow<List<Comment>>
 
+    @Query("SELECT COUNT(*) FROM comments WHERE userId = :userId")
+    fun getCommentCountForUser(userId: Int): Flow<Int>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertComment(comment: Comment)
 

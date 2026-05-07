@@ -16,17 +16,33 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.nammamela.app.ui.components.NammaMelaButton
 import com.nammamela.app.ui.theme.*
+import com.nammamela.app.viewmodel.ReviewViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReviewScreen(playId: Int, onNavigateBack: () -> Unit) {
+fun ReviewScreen(
+    onNavigateBack: () -> Unit,
+    viewModel: ReviewViewModel = hiltViewModel()
+) {
     var rating by remember { mutableStateOf(0) }
     var reviewText by remember { mutableStateOf("") }
+    val play by viewModel.play.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(Unit) {
+        viewModel.errorEvent.collect { message ->
+            snackbarHostState.showSnackbar(message)
+        }
+    }
+
+    val playTitle = play?.title ?: "this show"
 
     Scaffold(
         containerColor = NammaDeepTeal,
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text("THE FINAL ACT", color = NammaSaffron, style = MaterialTheme.typography.labelLarge.copy(letterSpacing = 2.sp)) },
@@ -51,7 +67,7 @@ fun ReviewScreen(playId: Int, onNavigateBack: () -> Unit) {
                 style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold)
             )
             Text(
-                "How was your experience watching Sati-Savitri?",
+                "How was your experience watching $playTitle?",
                 color = Color.White.copy(0.6f),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodyMedium
@@ -59,7 +75,6 @@ fun ReviewScreen(playId: Int, onNavigateBack: () -> Unit) {
 
             Spacer(modifier = Modifier.height(48.dp))
 
-            // Star Rating
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 for (i in 1..5) {
                     IconButton(onClick = { rating = i }) {
@@ -72,9 +87,9 @@ fun ReviewScreen(playId: Int, onNavigateBack: () -> Unit) {
                     }
                 }
             }
-            
+
             Text(
-                text = when(rating) {
+                text = when (rating) {
                     1 -> "Poor Performance"
                     2 -> "Needs Improvement"
                     3 -> "Good Act"
@@ -97,7 +112,7 @@ fun ReviewScreen(playId: Int, onNavigateBack: () -> Unit) {
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = NammaSaffron,
                     unfocusedBorderColor = Color.White.copy(0.1f),
-                    containerColor = NammaDarkTeal,
+                    containerColor = NammaDeepTeal,
                     focusedTextColor = Color.White,
                     unfocusedTextColor = Color.White
                 ),
@@ -108,10 +123,12 @@ fun ReviewScreen(playId: Int, onNavigateBack: () -> Unit) {
 
             NammaMelaButton(
                 text = "SUBMIT REVIEW  🎭",
-                onClick = onNavigateBack,
-                enabled = rating > 0
+                onClick = {
+                    viewModel.submitReview(rating, reviewText.trim()) { onNavigateBack() }
+                },
+                enabled = rating > 0 && play != null
             )
-            
+
             Spacer(modifier = Modifier.height(24.dp))
         }
     }

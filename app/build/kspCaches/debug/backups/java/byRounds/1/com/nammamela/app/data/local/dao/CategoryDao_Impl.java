@@ -1,6 +1,7 @@
 package com.nammamela.app.data.local.dao;
 
 import android.database.Cursor;
+import android.os.CancellationSignal;
 import androidx.annotation.NonNull;
 import androidx.room.CoroutinesRoom;
 import androidx.room.EntityInsertionAdapter;
@@ -143,6 +144,43 @@ public final class CategoryDao_Impl implements CategoryDao {
         _statement.release();
       }
     });
+  }
+
+  @Override
+  public Object getAllCategoriesOnce(final Continuation<? super List<Category>> $completion) {
+    final String _sql = "SELECT * FROM categories";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
+    final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
+    return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<List<Category>>() {
+      @Override
+      @NonNull
+      public List<Category> call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
+          final int _cursorIndexOfIsSelected = CursorUtil.getColumnIndexOrThrow(_cursor, "isSelected");
+          final List<Category> _result = new ArrayList<Category>(_cursor.getCount());
+          while (_cursor.moveToNext()) {
+            final Category _item;
+            final int _tmpId;
+            _tmpId = _cursor.getInt(_cursorIndexOfId);
+            final String _tmpName;
+            _tmpName = _cursor.getString(_cursorIndexOfName);
+            final boolean _tmpIsSelected;
+            final int _tmp;
+            _tmp = _cursor.getInt(_cursorIndexOfIsSelected);
+            _tmpIsSelected = _tmp != 0;
+            _item = new Category(_tmpId,_tmpName,_tmpIsSelected);
+            _result.add(_item);
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+          _statement.release();
+        }
+      }
+    }, $completion);
   }
 
   @NonNull

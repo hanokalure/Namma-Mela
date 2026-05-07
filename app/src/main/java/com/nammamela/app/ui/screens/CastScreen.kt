@@ -3,6 +3,7 @@ package com.nammamela.app.ui.screens
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -18,11 +19,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.nammamela.app.domain.model.Actor
+import com.nammamela.app.ui.components.ActorDetailsDialog
 import com.nammamela.app.ui.theme.*
 import com.nammamela.app.viewmodel.CastFilter
 import com.nammamela.app.viewmodel.CastViewModel
@@ -31,6 +36,14 @@ import com.nammamela.app.viewmodel.CastViewModel
 fun CastScreen(viewModel: CastViewModel = hiltViewModel()) {
     val filteredActors by viewModel.filteredActors.collectAsState()
     val filter by viewModel.filter.collectAsState()
+    var selectedActor by remember { mutableStateOf<Actor?>(null) }
+
+    selectedActor?.let { actor ->
+        ActorDetailsDialog(
+            actor = actor,
+            onDismiss = { selectedActor = null }
+        )
+    }
 
     Column(
         modifier = Modifier
@@ -99,7 +112,10 @@ fun CastScreen(viewModel: CastViewModel = hiltViewModel()) {
             modifier = Modifier.weight(1f)
         ) {
             items(filteredActors) { actor ->
-                ActorCard(actor = actor)
+                ActorCard(
+                    actor = actor,
+                    onClick = { selectedActor = actor }
+                )
             }
         }
     }
@@ -127,8 +143,13 @@ fun CastFilterChip(label: String, isSelected: Boolean, onClick: () -> Unit) {
     }
 }
 
+@OptIn(com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi::class)
 @Composable
-fun ActorCard(actor: Actor) {
+fun ActorCard(actor: Actor, onClick: () -> Unit) {
+    val pseudoRating = remember(actor.name) { 
+        val r = (actor.name.length % 10).toFloat() / 10f + 4.0f
+        String.format("%.1f", r)
+    }
     val badgeColor = when (actor.category.uppercase()) {
         "HERO" -> NammaMaroon
         "HEROINE" -> Color(0xFFAD1457)
@@ -142,6 +163,7 @@ fun ActorCard(actor: Actor) {
             .clip(RoundedCornerShape(20.dp))
             .background(NammaSurface)
             .border(1.dp, Color.White.copy(0.05f), RoundedCornerShape(20.dp))
+            .clickable(onClick = onClick)
     ) {
         Box {
             // Actor image area
@@ -151,6 +173,12 @@ fun ActorCard(actor: Actor) {
                     .height(160.dp)
                     .background(Color(0xFF2C1F1F))
             ) {
+                GlideImage(
+                    model = actor.imageUrl,
+                    contentDescription = actor.name,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
                 // Spotlight overlay
                 Box(
                     modifier = Modifier
@@ -184,11 +212,11 @@ fun ActorCard(actor: Actor) {
                 shape = RoundedCornerShape(50),
                 modifier = Modifier.align(Alignment.BottomEnd).padding(8.dp)
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)) {
-                    Icon(Icons.Default.Star, null, tint = NammaGold, modifier = Modifier.size(10.dp))
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text("4.8", color = Color.White, style = MaterialTheme.typography.labelSmall)
-                }
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)) {
+                Icon(Icons.Default.Star, null, tint = NammaGold, modifier = Modifier.size(10.dp))
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(pseudoRating, color = Color.White, style = MaterialTheme.typography.labelSmall)
+            }
             }
         }
 

@@ -52,9 +52,11 @@ fun SeatBookingScreen(
     val selectedSeats by viewModel.selectedSeats.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
-    
-    var selectedTime by remember { mutableStateOf("06:30 PM") }
-    val timeSlots = listOf("10:30 AM", "02:30 PM", "06:30 PM", "09:30 PM")
+
+    val play by viewModel.play.collectAsState()
+    val availableShowTimes by viewModel.availableShowTimes.collectAsState()
+    val selectedShowTime by viewModel.selectedShowTime.collectAsState()
+    val ticketPricePerSeat by viewModel.ticketPricePerSeat.collectAsState()
 
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collectLatest { event ->
@@ -167,13 +169,28 @@ fun SeatBookingScreen(
                     }
                 }
 
-                // Show Timings & Legend (Image Palette)
+                // Show timings from manager upload (comma-separated on play)
                 Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 12.dp)) {
-                    LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        items(timeSlots) { time ->
-                            val isTimeSelected = time == selectedTime
+                    if (!play?.title.isNullOrBlank()) {
+                        Text(
+                            text = "Show: ${play!!.title}",
+                            color = NammaWarmWhite.copy(0.6f),
+                            style = MaterialTheme.typography.labelSmall,
+                            modifier = Modifier.padding(bottom = 8.dp)
+                        )
+                    }
+                    if (availableShowTimes.isEmpty()) {
+                        Text(
+                            "No show times published for this play yet.",
+                            color = NammaWarmWhite.copy(0.5f),
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                    } else {
+                        LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            items(availableShowTimes, key = { it }) { time ->
+                            val isTimeSelected = time == selectedShowTime
                             Surface(
-                                onClick = { selectedTime = time },
+                                onClick = { viewModel.selectShowTime(time) },
                                 color = if (isTimeSelected) Color(0xFF2196F3) else NammaSurfaceLow,
                                 shape = RoundedCornerShape(8.dp),
                                 border = androidx.compose.foundation.BorderStroke(1.dp, if (isTimeSelected) Color(0xFF2196F3) else NammaWarmWhite.copy(0.1f))
@@ -186,8 +203,9 @@ fun SeatBookingScreen(
                                 )
                             }
                         }
+                        }
                     }
-                    
+
                     Spacer(modifier = Modifier.height(16.dp))
                     
                     Row(
@@ -204,9 +222,10 @@ fun SeatBookingScreen(
                 }
                 
                 if (selectedSeats.isNotEmpty()) {
+                    val total = selectedSeats.size * ticketPricePerSeat
                     NammaMelaButton(
-                        text = "BOOK NOW - ₹${selectedSeats.size * 150}",
-                        onClick = { viewModel.confirmReservation(userId = 1) },
+                        text = "BOOK NOW - ₹${total.toInt()}",
+                        onClick = { viewModel.confirmReservation() },
                         modifier = Modifier.padding(16.dp).fillMaxWidth()
                     )
                 }

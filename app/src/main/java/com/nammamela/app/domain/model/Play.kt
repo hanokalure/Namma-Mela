@@ -13,7 +13,10 @@ data class Play(
     val genre: String,
     val posterUrl: String? = null,
     val rating: Float = 0f,
-    val showTime: String = "10:00 PM",
+    /** Comma-separated show times entered by the manager, e.g. "7:00 PM, 10:30 PM" */
+    val showTime: String = "",
+    /** Ticket price in ₹ per seat for this play */
+    val ticketPrice: Double = 150.0,
     val timestamp: Long = System.currentTimeMillis(),
     val isActive: Boolean = true // True for currently running show
 )

@@ -27,6 +27,7 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.nammamela.app.domain.model.Actor
 import com.nammamela.app.domain.model.Play
+import com.nammamela.app.ui.components.ActorDetailsDialog
 import com.nammamela.app.ui.components.NammaMelaButton
 import com.nammamela.app.ui.theme.*
 import com.nammamela.app.viewmodel.PlayDetailViewModel
@@ -45,6 +46,7 @@ fun PlayDetailScreen(
 
     val scrollState = rememberScrollState()
     var showRatingDialog by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
+    var selectedActor by remember { mutableStateOf<Actor?>(null) }
 
     if (showRatingDialog) {
         RatingDialog(
@@ -53,6 +55,13 @@ fun PlayDetailScreen(
                 viewModel.submitRating(rating)
                 showRatingDialog = false
             }
+        )
+    }
+
+    selectedActor?.let { actor ->
+        ActorDetailsDialog(
+            actor = actor,
+            onDismiss = { selectedActor = null }
         )
     }
 
@@ -220,7 +229,10 @@ fun PlayDetailScreen(
                     } else {
                         LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                             items(cast) { actor ->
-                                CastAvatar(actor = actor)
+                                CastAvatar(
+                                    actor = actor,
+                                    onClick = { selectedActor = actor }
+                                )
                             }
                         }
                     }
@@ -234,8 +246,11 @@ fun PlayDetailScreen(
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun CastAvatar(actor: Actor) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+fun CastAvatar(actor: Actor, onClick: () -> Unit) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.clickable(onClick = onClick)
+    ) {
         Box(
             modifier = Modifier
                 .size(72.dp)
@@ -256,6 +271,7 @@ fun CastAvatar(actor: Actor) {
         Text(text = actor.category, color = NammaGold.copy(0.5f), style = MaterialTheme.typography.labelSmall)
     }
 }
+
 
 @Composable
 fun RatingDialog(onDismiss: () -> Unit, onSubmit: (Float) -> Unit) {

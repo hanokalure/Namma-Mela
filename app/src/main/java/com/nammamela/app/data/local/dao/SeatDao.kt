@@ -24,4 +24,7 @@ interface SeatDao {
 
     @Query("DELETE FROM seats WHERE playId = :playId")
     suspend fun deleteSeatsForPlay(playId: Int)
+
+    @Query("DELETE FROM seats")
+    suspend fun deleteAllSeats()
 }

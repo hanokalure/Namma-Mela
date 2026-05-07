@@ -43,13 +43,15 @@ public final class PlayDao_Impl implements PlayDao {
 
   private final SharedSQLiteStatement __preparedStmtOfDeleteAllPlays;
 
+  private final SharedSQLiteStatement __preparedStmtOfDeletePlayById;
+
   public PlayDao_Impl(@NonNull final RoomDatabase __db) {
     this.__db = __db;
     this.__insertionAdapterOfPlay = new EntityInsertionAdapter<Play>(__db) {
       @Override
       @NonNull
       protected String createQuery() {
-        return "INSERT OR REPLACE INTO `plays` (`id`,`title`,`duration`,`description`,`genre`,`posterUrl`,`rating`,`showTime`,`timestamp`,`isActive`) VALUES (nullif(?, 0),?,?,?,?,?,?,?,?,?)";
+        return "INSERT OR REPLACE INTO `plays` (`id`,`title`,`duration`,`description`,`genre`,`posterUrl`,`rating`,`showTime`,`ticketPrice`,`timestamp`,`isActive`) VALUES (nullif(?, 0),?,?,?,?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -67,16 +69,17 @@ public final class PlayDao_Impl implements PlayDao {
         }
         statement.bindDouble(7, entity.getRating());
         statement.bindString(8, entity.getShowTime());
-        statement.bindLong(9, entity.getTimestamp());
+        statement.bindDouble(9, entity.getTicketPrice());
+        statement.bindLong(10, entity.getTimestamp());
         final int _tmp = entity.isActive() ? 1 : 0;
-        statement.bindLong(10, _tmp);
+        statement.bindLong(11, _tmp);
       }
     };
     this.__updateAdapterOfPlay = new EntityDeletionOrUpdateAdapter<Play>(__db) {
       @Override
       @NonNull
       protected String createQuery() {
-        return "UPDATE OR ABORT `plays` SET `id` = ?,`title` = ?,`duration` = ?,`description` = ?,`genre` = ?,`posterUrl` = ?,`rating` = ?,`showTime` = ?,`timestamp` = ?,`isActive` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `plays` SET `id` = ?,`title` = ?,`duration` = ?,`description` = ?,`genre` = ?,`posterUrl` = ?,`rating` = ?,`showTime` = ?,`ticketPrice` = ?,`timestamp` = ?,`isActive` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -94,10 +97,11 @@ public final class PlayDao_Impl implements PlayDao {
         }
         statement.bindDouble(7, entity.getRating());
         statement.bindString(8, entity.getShowTime());
-        statement.bindLong(9, entity.getTimestamp());
+        statement.bindDouble(9, entity.getTicketPrice());
+        statement.bindLong(10, entity.getTimestamp());
         final int _tmp = entity.isActive() ? 1 : 0;
-        statement.bindLong(10, _tmp);
-        statement.bindLong(11, entity.getId());
+        statement.bindLong(11, _tmp);
+        statement.bindLong(12, entity.getId());
       }
     };
     this.__preparedStmtOfArchiveAllPlays = new SharedSQLiteStatement(__db) {
@@ -113,6 +117,14 @@ public final class PlayDao_Impl implements PlayDao {
       @NonNull
       public String createQuery() {
         final String _query = "DELETE FROM plays";
+        return _query;
+      }
+    };
+    this.__preparedStmtOfDeletePlayById = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "DELETE FROM plays WHERE id = ?";
         return _query;
       }
     };
@@ -201,6 +213,31 @@ public final class PlayDao_Impl implements PlayDao {
   }
 
   @Override
+  public Object deletePlayById(final int id, final Continuation<? super Unit> $completion) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfDeletePlayById.acquire();
+        int _argIndex = 1;
+        _stmt.bindLong(_argIndex, id);
+        try {
+          __db.beginTransaction();
+          try {
+            _stmt.executeUpdateDelete();
+            __db.setTransactionSuccessful();
+            return Unit.INSTANCE;
+          } finally {
+            __db.endTransaction();
+          }
+        } finally {
+          __preparedStmtOfDeletePlayById.release(_stmt);
+        }
+      }
+    }, $completion);
+  }
+
+  @Override
   public Flow<List<Play>> getAllPlays() {
     final String _sql = "SELECT * FROM plays ORDER BY timestamp DESC";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
@@ -218,6 +255,7 @@ public final class PlayDao_Impl implements PlayDao {
           final int _cursorIndexOfPosterUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "posterUrl");
           final int _cursorIndexOfRating = CursorUtil.getColumnIndexOrThrow(_cursor, "rating");
           final int _cursorIndexOfShowTime = CursorUtil.getColumnIndexOrThrow(_cursor, "showTime");
+          final int _cursorIndexOfTicketPrice = CursorUtil.getColumnIndexOrThrow(_cursor, "ticketPrice");
           final int _cursorIndexOfTimestamp = CursorUtil.getColumnIndexOrThrow(_cursor, "timestamp");
           final int _cursorIndexOfIsActive = CursorUtil.getColumnIndexOrThrow(_cursor, "isActive");
           final List<Play> _result = new ArrayList<Play>(_cursor.getCount());
@@ -243,13 +281,15 @@ public final class PlayDao_Impl implements PlayDao {
             _tmpRating = _cursor.getFloat(_cursorIndexOfRating);
             final String _tmpShowTime;
             _tmpShowTime = _cursor.getString(_cursorIndexOfShowTime);
+            final double _tmpTicketPrice;
+            _tmpTicketPrice = _cursor.getDouble(_cursorIndexOfTicketPrice);
             final long _tmpTimestamp;
             _tmpTimestamp = _cursor.getLong(_cursorIndexOfTimestamp);
             final boolean _tmpIsActive;
             final int _tmp;
             _tmp = _cursor.getInt(_cursorIndexOfIsActive);
             _tmpIsActive = _tmp != 0;
-            _item = new Play(_tmpId,_tmpTitle,_tmpDuration,_tmpDescription,_tmpGenre,_tmpPosterUrl,_tmpRating,_tmpShowTime,_tmpTimestamp,_tmpIsActive);
+            _item = new Play(_tmpId,_tmpTitle,_tmpDuration,_tmpDescription,_tmpGenre,_tmpPosterUrl,_tmpRating,_tmpShowTime,_tmpTicketPrice,_tmpTimestamp,_tmpIsActive);
             _result.add(_item);
           }
           return _result;
@@ -284,6 +324,7 @@ public final class PlayDao_Impl implements PlayDao {
           final int _cursorIndexOfPosterUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "posterUrl");
           final int _cursorIndexOfRating = CursorUtil.getColumnIndexOrThrow(_cursor, "rating");
           final int _cursorIndexOfShowTime = CursorUtil.getColumnIndexOrThrow(_cursor, "showTime");
+          final int _cursorIndexOfTicketPrice = CursorUtil.getColumnIndexOrThrow(_cursor, "ticketPrice");
           final int _cursorIndexOfTimestamp = CursorUtil.getColumnIndexOrThrow(_cursor, "timestamp");
           final int _cursorIndexOfIsActive = CursorUtil.getColumnIndexOrThrow(_cursor, "isActive");
           final List<Play> _result = new ArrayList<Play>(_cursor.getCount());
@@ -309,13 +350,15 @@ public final class PlayDao_Impl implements PlayDao {
             _tmpRating = _cursor.getFloat(_cursorIndexOfRating);
             final String _tmpShowTime;
             _tmpShowTime = _cursor.getString(_cursorIndexOfShowTime);
+            final double _tmpTicketPrice;
+            _tmpTicketPrice = _cursor.getDouble(_cursorIndexOfTicketPrice);
             final long _tmpTimestamp;
             _tmpTimestamp = _cursor.getLong(_cursorIndexOfTimestamp);
             final boolean _tmpIsActive;
             final int _tmp;
             _tmp = _cursor.getInt(_cursorIndexOfIsActive);
             _tmpIsActive = _tmp != 0;
-            _item = new Play(_tmpId,_tmpTitle,_tmpDuration,_tmpDescription,_tmpGenre,_tmpPosterUrl,_tmpRating,_tmpShowTime,_tmpTimestamp,_tmpIsActive);
+            _item = new Play(_tmpId,_tmpTitle,_tmpDuration,_tmpDescription,_tmpGenre,_tmpPosterUrl,_tmpRating,_tmpShowTime,_tmpTicketPrice,_tmpTimestamp,_tmpIsActive);
             _result.add(_item);
           }
           return _result;
@@ -347,6 +390,7 @@ public final class PlayDao_Impl implements PlayDao {
           final int _cursorIndexOfPosterUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "posterUrl");
           final int _cursorIndexOfRating = CursorUtil.getColumnIndexOrThrow(_cursor, "rating");
           final int _cursorIndexOfShowTime = CursorUtil.getColumnIndexOrThrow(_cursor, "showTime");
+          final int _cursorIndexOfTicketPrice = CursorUtil.getColumnIndexOrThrow(_cursor, "ticketPrice");
           final int _cursorIndexOfTimestamp = CursorUtil.getColumnIndexOrThrow(_cursor, "timestamp");
           final int _cursorIndexOfIsActive = CursorUtil.getColumnIndexOrThrow(_cursor, "isActive");
           final Play _result;
@@ -371,13 +415,15 @@ public final class PlayDao_Impl implements PlayDao {
             _tmpRating = _cursor.getFloat(_cursorIndexOfRating);
             final String _tmpShowTime;
             _tmpShowTime = _cursor.getString(_cursorIndexOfShowTime);
+            final double _tmpTicketPrice;
+            _tmpTicketPrice = _cursor.getDouble(_cursorIndexOfTicketPrice);
             final long _tmpTimestamp;
             _tmpTimestamp = _cursor.getLong(_cursorIndexOfTimestamp);
             final boolean _tmpIsActive;
             final int _tmp;
             _tmp = _cursor.getInt(_cursorIndexOfIsActive);
             _tmpIsActive = _tmp != 0;
-            _result = new Play(_tmpId,_tmpTitle,_tmpDuration,_tmpDescription,_tmpGenre,_tmpPosterUrl,_tmpRating,_tmpShowTime,_tmpTimestamp,_tmpIsActive);
+            _result = new Play(_tmpId,_tmpTitle,_tmpDuration,_tmpDescription,_tmpGenre,_tmpPosterUrl,_tmpRating,_tmpShowTime,_tmpTicketPrice,_tmpTimestamp,_tmpIsActive);
           } else {
             _result = null;
           }
@@ -415,6 +461,7 @@ public final class PlayDao_Impl implements PlayDao {
           final int _cursorIndexOfPosterUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "posterUrl");
           final int _cursorIndexOfRating = CursorUtil.getColumnIndexOrThrow(_cursor, "rating");
           final int _cursorIndexOfShowTime = CursorUtil.getColumnIndexOrThrow(_cursor, "showTime");
+          final int _cursorIndexOfTicketPrice = CursorUtil.getColumnIndexOrThrow(_cursor, "ticketPrice");
           final int _cursorIndexOfTimestamp = CursorUtil.getColumnIndexOrThrow(_cursor, "timestamp");
           final int _cursorIndexOfIsActive = CursorUtil.getColumnIndexOrThrow(_cursor, "isActive");
           final Play _result;
@@ -439,13 +486,15 @@ public final class PlayDao_Impl implements PlayDao {
             _tmpRating = _cursor.getFloat(_cursorIndexOfRating);
             final String _tmpShowTime;
             _tmpShowTime = _cursor.getString(_cursorIndexOfShowTime);
+            final double _tmpTicketPrice;
+            _tmpTicketPrice = _cursor.getDouble(_cursorIndexOfTicketPrice);
             final long _tmpTimestamp;
             _tmpTimestamp = _cursor.getLong(_cursorIndexOfTimestamp);
             final boolean _tmpIsActive;
             final int _tmp;
             _tmp = _cursor.getInt(_cursorIndexOfIsActive);
             _tmpIsActive = _tmp != 0;
-            _result = new Play(_tmpId,_tmpTitle,_tmpDuration,_tmpDescription,_tmpGenre,_tmpPosterUrl,_tmpRating,_tmpShowTime,_tmpTimestamp,_tmpIsActive);
+            _result = new Play(_tmpId,_tmpTitle,_tmpDuration,_tmpDescription,_tmpGenre,_tmpPosterUrl,_tmpRating,_tmpShowTime,_tmpTicketPrice,_tmpTimestamp,_tmpIsActive);
           } else {
             _result = null;
           }
@@ -476,6 +525,7 @@ public final class PlayDao_Impl implements PlayDao {
           final int _cursorIndexOfPosterUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "posterUrl");
           final int _cursorIndexOfRating = CursorUtil.getColumnIndexOrThrow(_cursor, "rating");
           final int _cursorIndexOfShowTime = CursorUtil.getColumnIndexOrThrow(_cursor, "showTime");
+          final int _cursorIndexOfTicketPrice = CursorUtil.getColumnIndexOrThrow(_cursor, "ticketPrice");
           final int _cursorIndexOfTimestamp = CursorUtil.getColumnIndexOrThrow(_cursor, "timestamp");
           final int _cursorIndexOfIsActive = CursorUtil.getColumnIndexOrThrow(_cursor, "isActive");
           final Play _result;
@@ -500,13 +550,15 @@ public final class PlayDao_Impl implements PlayDao {
             _tmpRating = _cursor.getFloat(_cursorIndexOfRating);
             final String _tmpShowTime;
             _tmpShowTime = _cursor.getString(_cursorIndexOfShowTime);
+            final double _tmpTicketPrice;
+            _tmpTicketPrice = _cursor.getDouble(_cursorIndexOfTicketPrice);
             final long _tmpTimestamp;
             _tmpTimestamp = _cursor.getLong(_cursorIndexOfTimestamp);
             final boolean _tmpIsActive;
             final int _tmp;
             _tmp = _cursor.getInt(_cursorIndexOfIsActive);
             _tmpIsActive = _tmp != 0;
-            _result = new Play(_tmpId,_tmpTitle,_tmpDuration,_tmpDescription,_tmpGenre,_tmpPosterUrl,_tmpRating,_tmpShowTime,_tmpTimestamp,_tmpIsActive);
+            _result = new Play(_tmpId,_tmpTitle,_tmpDuration,_tmpDescription,_tmpGenre,_tmpPosterUrl,_tmpRating,_tmpShowTime,_tmpTicketPrice,_tmpTimestamp,_tmpIsActive);
           } else {
             _result = null;
           }

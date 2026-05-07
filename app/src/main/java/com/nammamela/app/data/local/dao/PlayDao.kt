@@ -36,4 +36,7 @@ interface PlayDao {
 
     @Update
     suspend fun updatePlay(play: Play)
+
+    @Query("DELETE FROM plays WHERE id = :id")
+    suspend fun deletePlayById(id: Int)
 }

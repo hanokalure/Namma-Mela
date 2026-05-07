@@ -43,13 +43,15 @@ public final class BookingDao_Impl implements BookingDao {
 
   private final SharedSQLiteStatement __preparedStmtOfDeleteAllBookings;
 
+  private final SharedSQLiteStatement __preparedStmtOfDeleteBookingsForPlay;
+
   public BookingDao_Impl(@NonNull final RoomDatabase __db) {
     this.__db = __db;
     this.__insertionAdapterOfBooking = new EntityInsertionAdapter<Booking>(__db) {
       @Override
       @NonNull
       protected String createQuery() {
-        return "INSERT OR REPLACE INTO `bookings` (`id`,`userId`,`playId`,`seats`,`totalPrice`,`timestamp`) VALUES (nullif(?, 0),?,?,?,?,?)";
+        return "INSERT OR REPLACE INTO `bookings` (`id`,`userId`,`playId`,`seats`,`totalPrice`,`showTime`,`timestamp`) VALUES (nullif(?, 0),?,?,?,?,?,?)";
       }
 
       @Override
@@ -60,7 +62,8 @@ public final class BookingDao_Impl implements BookingDao {
         statement.bindLong(3, entity.getPlayId());
         statement.bindString(4, entity.getSeats());
         statement.bindDouble(5, entity.getTotalPrice());
-        statement.bindLong(6, entity.getTimestamp());
+        statement.bindString(6, entity.getShowTime());
+        statement.bindLong(7, entity.getTimestamp());
       }
     };
     this.__preparedStmtOfDeleteAllBookings = new SharedSQLiteStatement(__db) {
@@ -68,6 +71,14 @@ public final class BookingDao_Impl implements BookingDao {
       @NonNull
       public String createQuery() {
         final String _query = "DELETE FROM bookings";
+        return _query;
+      }
+    };
+    this.__preparedStmtOfDeleteBookingsForPlay = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "DELETE FROM bookings WHERE playId = ?";
         return _query;
       }
     };
@@ -115,6 +126,32 @@ public final class BookingDao_Impl implements BookingDao {
   }
 
   @Override
+  public Object deleteBookingsForPlay(final int playId,
+      final Continuation<? super Unit> $completion) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfDeleteBookingsForPlay.acquire();
+        int _argIndex = 1;
+        _stmt.bindLong(_argIndex, playId);
+        try {
+          __db.beginTransaction();
+          try {
+            _stmt.executeUpdateDelete();
+            __db.setTransactionSuccessful();
+            return Unit.INSTANCE;
+          } finally {
+            __db.endTransaction();
+          }
+        } finally {
+          __preparedStmtOfDeleteBookingsForPlay.release(_stmt);
+        }
+      }
+    }, $completion);
+  }
+
+  @Override
   public Flow<List<Booking>> getBookingsForUser(final int userId) {
     final String _sql = "SELECT * FROM bookings WHERE userId = ? ORDER BY timestamp DESC";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
@@ -131,6 +168,7 @@ public final class BookingDao_Impl implements BookingDao {
           final int _cursorIndexOfPlayId = CursorUtil.getColumnIndexOrThrow(_cursor, "playId");
           final int _cursorIndexOfSeats = CursorUtil.getColumnIndexOrThrow(_cursor, "seats");
           final int _cursorIndexOfTotalPrice = CursorUtil.getColumnIndexOrThrow(_cursor, "totalPrice");
+          final int _cursorIndexOfShowTime = CursorUtil.getColumnIndexOrThrow(_cursor, "showTime");
           final int _cursorIndexOfTimestamp = CursorUtil.getColumnIndexOrThrow(_cursor, "timestamp");
           final List<Booking> _result = new ArrayList<Booking>(_cursor.getCount());
           while (_cursor.moveToNext()) {
@@ -145,9 +183,11 @@ public final class BookingDao_Impl implements BookingDao {
             _tmpSeats = _cursor.getString(_cursorIndexOfSeats);
             final double _tmpTotalPrice;
             _tmpTotalPrice = _cursor.getDouble(_cursorIndexOfTotalPrice);
+            final String _tmpShowTime;
+            _tmpShowTime = _cursor.getString(_cursorIndexOfShowTime);
             final long _tmpTimestamp;
             _tmpTimestamp = _cursor.getLong(_cursorIndexOfTimestamp);
-            _item = new Booking(_tmpId,_tmpUserId,_tmpPlayId,_tmpSeats,_tmpTotalPrice,_tmpTimestamp);
+            _item = new Booking(_tmpId,_tmpUserId,_tmpPlayId,_tmpSeats,_tmpTotalPrice,_tmpShowTime,_tmpTimestamp);
             _result.add(_item);
           }
           return _result;
@@ -178,6 +218,7 @@ public final class BookingDao_Impl implements BookingDao {
           final int _cursorIndexOfPlayId = CursorUtil.getColumnIndexOrThrow(_cursor, "playId");
           final int _cursorIndexOfSeats = CursorUtil.getColumnIndexOrThrow(_cursor, "seats");
           final int _cursorIndexOfTotalPrice = CursorUtil.getColumnIndexOrThrow(_cursor, "totalPrice");
+          final int _cursorIndexOfShowTime = CursorUtil.getColumnIndexOrThrow(_cursor, "showTime");
           final int _cursorIndexOfTimestamp = CursorUtil.getColumnIndexOrThrow(_cursor, "timestamp");
           final List<Booking> _result = new ArrayList<Booking>(_cursor.getCount());
           while (_cursor.moveToNext()) {
@@ -192,9 +233,63 @@ public final class BookingDao_Impl implements BookingDao {
             _tmpSeats = _cursor.getString(_cursorIndexOfSeats);
             final double _tmpTotalPrice;
             _tmpTotalPrice = _cursor.getDouble(_cursorIndexOfTotalPrice);
+            final String _tmpShowTime;
+            _tmpShowTime = _cursor.getString(_cursorIndexOfShowTime);
             final long _tmpTimestamp;
             _tmpTimestamp = _cursor.getLong(_cursorIndexOfTimestamp);
-            _item = new Booking(_tmpId,_tmpUserId,_tmpPlayId,_tmpSeats,_tmpTotalPrice,_tmpTimestamp);
+            _item = new Booking(_tmpId,_tmpUserId,_tmpPlayId,_tmpSeats,_tmpTotalPrice,_tmpShowTime,_tmpTimestamp);
+            _result.add(_item);
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
+  @Override
+  public Flow<List<Booking>> getBookingsForPlay(final int playId) {
+    final String _sql = "SELECT * FROM bookings WHERE playId = ?";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    _statement.bindLong(_argIndex, playId);
+    return CoroutinesRoom.createFlow(__db, false, new String[] {"bookings"}, new Callable<List<Booking>>() {
+      @Override
+      @NonNull
+      public List<Booking> call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfUserId = CursorUtil.getColumnIndexOrThrow(_cursor, "userId");
+          final int _cursorIndexOfPlayId = CursorUtil.getColumnIndexOrThrow(_cursor, "playId");
+          final int _cursorIndexOfSeats = CursorUtil.getColumnIndexOrThrow(_cursor, "seats");
+          final int _cursorIndexOfTotalPrice = CursorUtil.getColumnIndexOrThrow(_cursor, "totalPrice");
+          final int _cursorIndexOfShowTime = CursorUtil.getColumnIndexOrThrow(_cursor, "showTime");
+          final int _cursorIndexOfTimestamp = CursorUtil.getColumnIndexOrThrow(_cursor, "timestamp");
+          final List<Booking> _result = new ArrayList<Booking>(_cursor.getCount());
+          while (_cursor.moveToNext()) {
+            final Booking _item;
+            final int _tmpId;
+            _tmpId = _cursor.getInt(_cursorIndexOfId);
+            final int _tmpUserId;
+            _tmpUserId = _cursor.getInt(_cursorIndexOfUserId);
+            final int _tmpPlayId;
+            _tmpPlayId = _cursor.getInt(_cursorIndexOfPlayId);
+            final String _tmpSeats;
+            _tmpSeats = _cursor.getString(_cursorIndexOfSeats);
+            final double _tmpTotalPrice;
+            _tmpTotalPrice = _cursor.getDouble(_cursorIndexOfTotalPrice);
+            final String _tmpShowTime;
+            _tmpShowTime = _cursor.getString(_cursorIndexOfShowTime);
+            final long _tmpTimestamp;
+            _tmpTimestamp = _cursor.getLong(_cursorIndexOfTimestamp);
+            _item = new Booking(_tmpId,_tmpUserId,_tmpPlayId,_tmpSeats,_tmpTotalPrice,_tmpShowTime,_tmpTimestamp);
             _result.add(_item);
           }
           return _result;
@@ -230,6 +325,7 @@ public final class BookingDao_Impl implements BookingDao {
             final int _cursorIndexOfPlayId = CursorUtil.getColumnIndexOrThrow(_cursor, "playId");
             final int _cursorIndexOfSeats = CursorUtil.getColumnIndexOrThrow(_cursor, "seats");
             final int _cursorIndexOfTotalPrice = CursorUtil.getColumnIndexOrThrow(_cursor, "totalPrice");
+            final int _cursorIndexOfShowTime = CursorUtil.getColumnIndexOrThrow(_cursor, "showTime");
             final int _cursorIndexOfTimestamp = CursorUtil.getColumnIndexOrThrow(_cursor, "timestamp");
             final LongSparseArray<Play> _collectionPlay = new LongSparseArray<Play>();
             while (_cursor.moveToNext()) {
@@ -253,9 +349,11 @@ public final class BookingDao_Impl implements BookingDao {
               _tmpSeats = _cursor.getString(_cursorIndexOfSeats);
               final double _tmpTotalPrice;
               _tmpTotalPrice = _cursor.getDouble(_cursorIndexOfTotalPrice);
+              final String _tmpShowTime;
+              _tmpShowTime = _cursor.getString(_cursorIndexOfShowTime);
               final long _tmpTimestamp;
               _tmpTimestamp = _cursor.getLong(_cursorIndexOfTimestamp);
-              _tmpBooking = new Booking(_tmpId,_tmpUserId,_tmpPlayId,_tmpSeats,_tmpTotalPrice,_tmpTimestamp);
+              _tmpBooking = new Booking(_tmpId,_tmpUserId,_tmpPlayId,_tmpSeats,_tmpTotalPrice,_tmpShowTime,_tmpTimestamp);
               final Play _tmpPlay;
               final long _tmpKey_1;
               _tmpKey_1 = _cursor.getLong(_cursorIndexOfPlayId);
@@ -300,6 +398,7 @@ public final class BookingDao_Impl implements BookingDao {
             final int _cursorIndexOfPlayId = CursorUtil.getColumnIndexOrThrow(_cursor, "playId");
             final int _cursorIndexOfSeats = CursorUtil.getColumnIndexOrThrow(_cursor, "seats");
             final int _cursorIndexOfTotalPrice = CursorUtil.getColumnIndexOrThrow(_cursor, "totalPrice");
+            final int _cursorIndexOfShowTime = CursorUtil.getColumnIndexOrThrow(_cursor, "showTime");
             final int _cursorIndexOfTimestamp = CursorUtil.getColumnIndexOrThrow(_cursor, "timestamp");
             final LongSparseArray<Play> _collectionPlay = new LongSparseArray<Play>();
             while (_cursor.moveToNext()) {
@@ -322,9 +421,11 @@ public final class BookingDao_Impl implements BookingDao {
               _tmpSeats = _cursor.getString(_cursorIndexOfSeats);
               final double _tmpTotalPrice;
               _tmpTotalPrice = _cursor.getDouble(_cursorIndexOfTotalPrice);
+              final String _tmpShowTime;
+              _tmpShowTime = _cursor.getString(_cursorIndexOfShowTime);
               final long _tmpTimestamp;
               _tmpTimestamp = _cursor.getLong(_cursorIndexOfTimestamp);
-              _tmpBooking = new Booking(_tmpId,_tmpUserId,_tmpPlayId,_tmpSeats,_tmpTotalPrice,_tmpTimestamp);
+              _tmpBooking = new Booking(_tmpId,_tmpUserId,_tmpPlayId,_tmpSeats,_tmpTotalPrice,_tmpShowTime,_tmpTimestamp);
               final Play _tmpPlay;
               final long _tmpKey_1;
               _tmpKey_1 = _cursor.getLong(_cursorIndexOfPlayId);
@@ -368,7 +469,7 @@ public final class BookingDao_Impl implements BookingDao {
       return;
     }
     final StringBuilder _stringBuilder = StringUtil.newStringBuilder();
-    _stringBuilder.append("SELECT `id`,`title`,`duration`,`description`,`genre`,`posterUrl`,`rating`,`showTime`,`timestamp`,`isActive` FROM `plays` WHERE `id` IN (");
+    _stringBuilder.append("SELECT `id`,`title`,`duration`,`description`,`genre`,`posterUrl`,`rating`,`showTime`,`ticketPrice`,`timestamp`,`isActive` FROM `plays` WHERE `id` IN (");
     final int _inputSize = _map.size();
     StringUtil.appendPlaceholders(_stringBuilder, _inputSize);
     _stringBuilder.append(")");
@@ -395,8 +496,9 @@ public final class BookingDao_Impl implements BookingDao {
       final int _cursorIndexOfPosterUrl = 5;
       final int _cursorIndexOfRating = 6;
       final int _cursorIndexOfShowTime = 7;
-      final int _cursorIndexOfTimestamp = 8;
-      final int _cursorIndexOfIsActive = 9;
+      final int _cursorIndexOfTicketPrice = 8;
+      final int _cursorIndexOfTimestamp = 9;
+      final int _cursorIndexOfIsActive = 10;
       while (_cursor.moveToNext()) {
         final long _tmpKey;
         _tmpKey = _cursor.getLong(_itemKeyIndex);
@@ -422,13 +524,15 @@ public final class BookingDao_Impl implements BookingDao {
           _tmpRating = _cursor.getFloat(_cursorIndexOfRating);
           final String _tmpShowTime;
           _tmpShowTime = _cursor.getString(_cursorIndexOfShowTime);
+          final double _tmpTicketPrice;
+          _tmpTicketPrice = _cursor.getDouble(_cursorIndexOfTicketPrice);
           final long _tmpTimestamp;
           _tmpTimestamp = _cursor.getLong(_cursorIndexOfTimestamp);
           final boolean _tmpIsActive;
           final int _tmp;
           _tmp = _cursor.getInt(_cursorIndexOfIsActive);
           _tmpIsActive = _tmp != 0;
-          _item_1 = new Play(_tmpId,_tmpTitle,_tmpDuration,_tmpDescription,_tmpGenre,_tmpPosterUrl,_tmpRating,_tmpShowTime,_tmpTimestamp,_tmpIsActive);
+          _item_1 = new Play(_tmpId,_tmpTitle,_tmpDuration,_tmpDescription,_tmpGenre,_tmpPosterUrl,_tmpRating,_tmpShowTime,_tmpTicketPrice,_tmpTimestamp,_tmpIsActive);
           _map.put(_tmpKey, _item_1);
         }
       }

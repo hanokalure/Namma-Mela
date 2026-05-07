@@ -7,6 +7,8 @@ import androidx.room.PrimaryKey
 data class Notification(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
+    /** Owning user; only this user should see the notification in-app. */
+    val userId: Int = 0,
     val title: String,
     val message: String,
     val type: String, // "BOOKING", "INFO", "ALERT"

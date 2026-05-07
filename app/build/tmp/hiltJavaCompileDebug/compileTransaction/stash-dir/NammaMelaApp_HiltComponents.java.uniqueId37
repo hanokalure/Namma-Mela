@@ -12,8 +12,11 @@ import com.nammamela.app.viewmodel.MyBookingsViewModel_HiltModules;
 import com.nammamela.app.viewmodel.NotificationViewModel_HiltModules;
 import com.nammamela.app.viewmodel.PlayDetailViewModel_HiltModules;
 import com.nammamela.app.viewmodel.ProfileViewModel_HiltModules;
+import com.nammamela.app.viewmodel.ReviewViewModel_HiltModules;
 import com.nammamela.app.viewmodel.SearchViewModel_HiltModules;
 import com.nammamela.app.viewmodel.SeatBookingViewModel_HiltModules;
+import com.nammamela.app.viewmodel.SessionUserViewModel_HiltModules;
+import com.nammamela.app.viewmodel.SplashViewModel_HiltModules;
 import com.nammamela.app.viewmodel.TicketConfirmationViewModel_HiltModules;
 import dagger.Binds;
 import dagger.Component;
@@ -179,8 +182,11 @@ public final class NammaMelaApp_HiltComponents {
           NotificationViewModel_HiltModules.KeyModule.class,
           PlayDetailViewModel_HiltModules.KeyModule.class,
           ProfileViewModel_HiltModules.KeyModule.class,
+          ReviewViewModel_HiltModules.KeyModule.class,
           SearchViewModel_HiltModules.KeyModule.class,
           SeatBookingViewModel_HiltModules.KeyModule.class,
+          SessionUserViewModel_HiltModules.KeyModule.class,
+          SplashViewModel_HiltModules.KeyModule.class,
           TicketConfirmationViewModel_HiltModules.KeyModule.class
       }
   )
@@ -229,8 +235,11 @@ public final class NammaMelaApp_HiltComponents {
           NotificationViewModel_HiltModules.BindsModule.class,
           PlayDetailViewModel_HiltModules.BindsModule.class,
           ProfileViewModel_HiltModules.BindsModule.class,
+          ReviewViewModel_HiltModules.BindsModule.class,
           SearchViewModel_HiltModules.BindsModule.class,
           SeatBookingViewModel_HiltModules.BindsModule.class,
+          SessionUserViewModel_HiltModules.BindsModule.class,
+          SplashViewModel_HiltModules.BindsModule.class,
           TicketConfirmationViewModel_HiltModules.BindsModule.class
       }
   )

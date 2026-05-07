@@ -6,6 +6,7 @@ import com.nammamela.app.data.local.dao.CategoryDao;
 import com.nammamela.app.data.local.dao.CommentDao;
 import com.nammamela.app.data.local.dao.NotificationDao;
 import com.nammamela.app.data.local.dao.PlayDao;
+import com.nammamela.app.data.local.dao.PlayReviewDao;
 import com.nammamela.app.data.local.dao.SeatDao;
 import com.nammamela.app.data.local.dao.UserDao;
 import dagger.internal.DaggerGenerated;
@@ -45,11 +46,13 @@ public final class AppRepositoryImpl_Factory implements Factory<AppRepositoryImp
 
   private final Provider<CategoryDao> categoryDaoProvider;
 
+  private final Provider<PlayReviewDao> playReviewDaoProvider;
+
   public AppRepositoryImpl_Factory(Provider<PlayDao> playDaoProvider,
       Provider<ActorDao> actorDaoProvider, Provider<SeatDao> seatDaoProvider,
       Provider<CommentDao> commentDaoProvider, Provider<BookingDao> bookingDaoProvider,
       Provider<UserDao> userDaoProvider, Provider<NotificationDao> notificationDaoProvider,
-      Provider<CategoryDao> categoryDaoProvider) {
+      Provider<CategoryDao> categoryDaoProvider, Provider<PlayReviewDao> playReviewDaoProvider) {
     this.playDaoProvider = playDaoProvider;
     this.actorDaoProvider = actorDaoProvider;
     this.seatDaoProvider = seatDaoProvider;
@@ -58,24 +61,25 @@ public final class AppRepositoryImpl_Factory implements Factory<AppRepositoryImp
     this.userDaoProvider = userDaoProvider;
     this.notificationDaoProvider = notificationDaoProvider;
     this.categoryDaoProvider = categoryDaoProvider;
+    this.playReviewDaoProvider = playReviewDaoProvider;
   }
 
   @Override
   public AppRepositoryImpl get() {
-    return newInstance(playDaoProvider.get(), actorDaoProvider.get(), seatDaoProvider.get(), commentDaoProvider.get(), bookingDaoProvider.get(), userDaoProvider.get(), notificationDaoProvider.get(), categoryDaoProvider.get());
+    return newInstance(playDaoProvider.get(), actorDaoProvider.get(), seatDaoProvider.get(), commentDaoProvider.get(), bookingDaoProvider.get(), userDaoProvider.get(), notificationDaoProvider.get(), categoryDaoProvider.get(), playReviewDaoProvider.get());
   }
 
   public static AppRepositoryImpl_Factory create(Provider<PlayDao> playDaoProvider,
       Provider<ActorDao> actorDaoProvider, Provider<SeatDao> seatDaoProvider,
       Provider<CommentDao> commentDaoProvider, Provider<BookingDao> bookingDaoProvider,
       Provider<UserDao> userDaoProvider, Provider<NotificationDao> notificationDaoProvider,
-      Provider<CategoryDao> categoryDaoProvider) {
-    return new AppRepositoryImpl_Factory(playDaoProvider, actorDaoProvider, seatDaoProvider, commentDaoProvider, bookingDaoProvider, userDaoProvider, notificationDaoProvider, categoryDaoProvider);
+      Provider<CategoryDao> categoryDaoProvider, Provider<PlayReviewDao> playReviewDaoProvider) {
+    return new AppRepositoryImpl_Factory(playDaoProvider, actorDaoProvider, seatDaoProvider, commentDaoProvider, bookingDaoProvider, userDaoProvider, notificationDaoProvider, categoryDaoProvider, playReviewDaoProvider);
   }
 
   public static AppRepositoryImpl newInstance(PlayDao playDao, ActorDao actorDao, SeatDao seatDao,
       CommentDao commentDao, BookingDao bookingDao, UserDao userDao,
-      NotificationDao notificationDao, CategoryDao categoryDao) {
-    return new AppRepositoryImpl(playDao, actorDao, seatDao, commentDao, bookingDao, userDao, notificationDao, categoryDao);
+      NotificationDao notificationDao, CategoryDao categoryDao, PlayReviewDao playReviewDao) {
+    return new AppRepositoryImpl(playDao, actorDao, seatDao, commentDao, bookingDao, userDao, notificationDao, categoryDao, playReviewDao);
   }
 }

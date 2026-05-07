@@ -1,5 +1,8 @@
 package com.nammamela.app.ui.screens
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -13,14 +16,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nammamela.app.ui.components.UserAvatar
 import com.nammamela.app.ui.theme.*
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.nammamela.app.viewmodel.AdminViewModel
 import com.nammamela.app.viewmodel.AuthViewModel
+import com.nammamela.app.viewmodel.SessionUserViewModel
 import androidx.compose.ui.platform.LocalContext
 import com.nammamela.app.util.findActivity
 
@@ -39,11 +45,15 @@ fun AdminDashboardScreen(
     val bookedCount by adminViewModel.bookedCount.collectAsState()
     val revenue by adminViewModel.revenue.collectAsState()
     val currentUser by authViewModel.currentUser.collectAsState()
-    val allPlays by adminViewModel.allPlays.collectAsState()
-    
+    val sessionUserVm: SessionUserViewModel = hiltViewModel(LocalContext.current.findActivity()!!)
+    val sessionUser by sessionUserVm.user.collectAsState()
+    val profilePhotoPicker = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia()
+    ) { uri ->
+        uri?.let { adminViewModel.saveProfilePhoto(it) }
+    }
+
     val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
-    var showPlaySelectionDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         adminViewModel.errorEvent.collect { message ->
@@ -51,52 +61,51 @@ fun AdminDashboardScreen(
         }
     }
 
-    if (showPlaySelectionDialog) {
-        AlertDialog(
-            onDismissRequest = { showPlaySelectionDialog = false },
-            title = { Text("Select Play to Manage Cast", color = NammaGold) },
-            text = {
-                Column(modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
-                    if (allPlays.isEmpty()) {
-                        Text("No plays found. Upload one first!", color = NammaWarmWhite.copy(0.5f))
-                    }
-                    allPlays.forEach { play ->
-                        Surface(
-                            onClick = { 
-                                showPlaySelectionDialog = false
-                                onNavigateToManageCast(play.id) 
-                            },
-                            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-                            color = NammaSurfaceLow,
-                            shape = RoundedCornerShape(8.dp)
-                        ) {
-                            Text(play.title, modifier = Modifier.padding(16.dp), color = NammaWarmWhite)
-                        }
-                    }
-                }
-            },
-            confirmButton = {
-                TextButton(onClick = { showPlaySelectionDialog = false }) {
-                    Text("Close", color = NammaGold)
-                }
-            },
-            containerColor = NammaSurfaceHigh
-        )
-    }
+    val dramaCompanyName = sessionUser?.companyName?.takeIf { it.isNotBlank() }
+        ?: currentUser?.companyName?.takeIf { it.isNotBlank() }
+        ?: "Drama Company"
 
     Scaffold(
         containerColor = NammaDarkBrown,
         snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("MANAGER'S CONSOLE", color = NammaGold, style = MaterialTheme.typography.labelLarge.copy(letterSpacing = 2.sp)) },
+                title = {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            "MANAGER'S CONSOLE",
+                            color = NammaGold,
+                            style = MaterialTheme.typography.labelLarge.copy(letterSpacing = 2.sp)
+                        )
+                        Text(
+                            dramaCompanyName,
+                            color = NammaGold.copy(0.72f),
+                            style = MaterialTheme.typography.labelSmall,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(Icons.Default.ArrowBack, null, tint = NammaGold)
                     }
                 },
                 actions = {
-                    IconButton(onClick = { 
+                    IconButton(
+                        onClick = {
+                            profilePhotoPicker.launch(
+                                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                            )
+                        }
+                    ) {
+                        UserAvatar(
+                            imageUrl = sessionUser?.imageUrl ?: currentUser?.imageUrl,
+                            displayName = sessionUser?.name ?: currentUser?.name,
+                            size = 32.dp
+                        )
+                    }
+                    IconButton(onClick = {
                         authViewModel.logout()
                         onNavigateBack()
                     }) {
@@ -123,9 +132,11 @@ fun AdminDashboardScreen(
             ) {
                 Column(modifier = Modifier.padding(24.dp)) {
                     Text(
-                        text = currentUser?.companyName ?: "Drama Company", 
-                        color = NammaWarmWhite, 
-                        style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold)
+                        text = dramaCompanyName,
+                        color = NammaWarmWhite,
+                        style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
                     )
                     Text(
                         text = if (activePlay != null) "Tonight's Play: ${activePlay?.title}" else "No active play tonight", 
@@ -141,23 +152,17 @@ fun AdminDashboardScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             AdminToolCard(
-                title = "Upload Tonight's Play",
-                subtitle = "Set poster, name, timing, and duration",
+                title = "Manage plays",
+                subtitle = "Create, edit, delete, or set tonight’s show",
                 icon = Icons.Default.AddPhotoAlternate,
                 onClick = onNavigateToUploadPlay
             )
             Spacer(modifier = Modifier.height(16.dp))
             AdminToolCard(
                 title = "Manage Tonight's Cast",
-                subtitle = "Update Lead Actor, Comedian, Singer",
+                subtitle = "Pick a play and assign performers",
                 icon = Icons.Default.Groups,
-                onClick = { 
-                    if (activePlay != null) {
-                        onNavigateToManageCast(activePlay!!.id)
-                    } else {
-                        showPlaySelectionDialog = true
-                    }
-                }
+                onClick = { onNavigateToManageCast(0) }
             )
             Spacer(modifier = Modifier.height(16.dp))
             AdminToolCard(
@@ -169,7 +174,8 @@ fun AdminDashboardScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            Text("QUICK STATS", color = NammaWarmWhite.copy(0.4f), style = MaterialTheme.typography.labelSmall, letterSpacing = 2.sp)
+            val dateStr = java.text.SimpleDateFormat("MMM dd", java.util.Locale.getDefault()).format(java.util.Date())
+            Text("QUICK STATS - $dateStr", color = NammaWarmWhite.copy(0.4f), style = MaterialTheme.typography.labelSmall, letterSpacing = 2.sp)
             Spacer(modifier = Modifier.height(16.dp))
             
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {

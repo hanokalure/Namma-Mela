@@ -40,6 +40,8 @@ public final class SeatDao_Impl implements SeatDao {
 
   private final SharedSQLiteStatement __preparedStmtOfDeleteSeatsForPlay;
 
+  private final SharedSQLiteStatement __preparedStmtOfDeleteAllSeats;
+
   public SeatDao_Impl(@NonNull final RoomDatabase __db) {
     this.__db = __db;
     this.__insertionAdapterOfSeat = new EntityInsertionAdapter<Seat>(__db) {
@@ -82,6 +84,14 @@ public final class SeatDao_Impl implements SeatDao {
       @NonNull
       public String createQuery() {
         final String _query = "DELETE FROM seats WHERE playId = ?";
+        return _query;
+      }
+    };
+    this.__preparedStmtOfDeleteAllSeats = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "DELETE FROM seats";
         return _query;
       }
     };
@@ -161,6 +171,29 @@ public final class SeatDao_Impl implements SeatDao {
           }
         } finally {
           __preparedStmtOfDeleteSeatsForPlay.release(_stmt);
+        }
+      }
+    }, $completion);
+  }
+
+  @Override
+  public Object deleteAllSeats(final Continuation<? super Unit> $completion) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfDeleteAllSeats.acquire();
+        try {
+          __db.beginTransaction();
+          try {
+            _stmt.executeUpdateDelete();
+            __db.setTransactionSuccessful();
+            return Unit.INSTANCE;
+          } finally {
+            __db.endTransaction();
+          }
+        } finally {
+          __preparedStmtOfDeleteAllSeats.release(_stmt);
         }
       }
     }, $completion);

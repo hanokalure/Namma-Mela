@@ -10,4 +10,6 @@ drawable namma_mela_logo
 mipmap ic_launcher
 mipmap ic_launcher_round
 string app_name
+string manager_registration_secret
+string show_times_hint
 style Theme.NammaMela

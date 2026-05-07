@@ -17,6 +17,9 @@ interface BookingDao {
     @Query("SELECT * FROM bookings ORDER BY timestamp DESC")
     fun getAllBookings(): Flow<List<Booking>>
 
+    @Query("SELECT * FROM bookings WHERE playId = :playId")
+    fun getBookingsForPlay(playId: Int): Flow<List<Booking>>
+
     @Transaction
     @Query("SELECT * FROM bookings WHERE userId = :userId ORDER BY timestamp DESC")
     fun getBookingsWithPlayForUser(userId: Int): Flow<List<BookingWithPlay>>
@@ -30,4 +33,7 @@ interface BookingDao {
 
     @Query("DELETE FROM bookings")
     suspend fun deleteAllBookings()
+
+    @Query("DELETE FROM bookings WHERE playId = :playId")
+    suspend fun deleteBookingsForPlay(playId: Int)
 }

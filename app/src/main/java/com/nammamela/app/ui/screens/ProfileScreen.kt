@@ -1,5 +1,8 @@
 package com.nammamela.app.ui.screens
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -24,6 +27,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.nammamela.app.domain.model.UserRole
+import com.nammamela.app.ui.components.UserAvatar
 import com.nammamela.app.ui.theme.*
 import com.nammamela.app.viewmodel.ProfileViewModel
 
@@ -36,6 +41,14 @@ fun ProfileScreen(
 ) {
     val user by viewModel.user.collectAsState()
     val bookings by viewModel.bookings.collectAsState()
+    val reviewCount by viewModel.reviewCount.collectAsState()
+    val shoutoutCount by viewModel.shoutoutCount.collectAsState()
+
+    val photoPicker = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia()
+    ) { uri ->
+        uri?.let { viewModel.updateProfilePhoto(it) }
+    }
 
     Column(
         modifier = Modifier
@@ -57,20 +70,23 @@ fun ProfileScreen(
             contentAlignment = Alignment.Center
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                // Profile Avatar (Clean Frost Border)
-                Box(contentAlignment = Alignment.Center) {
-                    Box(
-                        modifier = Modifier
-                            .size(110.dp)
-                            .clip(CircleShape)
-                            .background(Color.White.copy(0.05f))
-                            .border(2.dp, NammaGold, CircleShape)
-                    )
-                    Box(
-                        modifier = Modifier
-                            .size(96.dp)
-                            .clip(CircleShape)
-                            .background(Color.Gray)
+                Box(
+                    modifier = Modifier
+                        .size(110.dp)
+                        .clip(CircleShape)
+                        .border(2.dp, NammaGold, CircleShape)
+                        .clickable {
+                            photoPicker.launch(
+                                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                            )
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    UserAvatar(
+                        imageUrl = user?.imageUrl,
+                        displayName = user?.name,
+                        size = 96.dp,
+                        borderWidth = 0.dp
                     )
                     Surface(
                         color = NammaGold,
@@ -88,12 +104,12 @@ fun ProfileScreen(
 
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = user?.name ?: "Basavaraj Patil",
+                    text = user?.name.orEmpty().ifBlank { "Your profile" },
                     color = NammaWarmWhite,
                     style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold)
                 )
                 Text(
-                    text = user?.email ?: "basu@nammamela.com",
+                    text = user?.email.orEmpty(),
                     color = NammaGold.copy(0.7f),
                     style = MaterialTheme.typography.bodySmall
                 )
@@ -117,9 +133,9 @@ fun ProfileScreen(
             ) {
                 ProfileStat("Bookings", "${bookings.size}")
                 Divider(modifier = Modifier.height(40.dp).width(1.dp), color = NammaWarmWhite.copy(0.1f))
-                ProfileStat("Reviews", "12")
+                ProfileStat("Reviews", "$reviewCount")
                 Divider(modifier = Modifier.height(40.dp).width(1.dp), color = NammaWarmWhite.copy(0.1f))
-                ProfileStat("Favorites", "4")
+                ProfileStat("Shoutouts", "$shoutoutCount")
             }
         }
 
@@ -148,8 +164,14 @@ fun ProfileScreen(
                     ProfileMenuItem(Icons.Outlined.Payment, "Payment Methods", "Manage your saved cards and wallets") {}
                     Divider(modifier = Modifier.padding(horizontal = 20.dp), color = NammaWarmWhite.copy(0.05f))
                     ProfileMenuItem(Icons.Outlined.Settings, "Preferences", "App theme, notifications and language") {}
-                    Divider(modifier = Modifier.padding(horizontal = 20.dp), color = NammaWarmWhite.copy(0.05f))
-                    ProfileMenuItem(Icons.Outlined.AdminPanelSettings, "Manager Console", "Access insights and control theater map") { onAdminDashboardClick() }
+                    if (user?.role == UserRole.ADMIN) {
+                        Divider(modifier = Modifier.padding(horizontal = 20.dp), color = NammaWarmWhite.copy(0.05f))
+                        ProfileMenuItem(
+                            Icons.Outlined.AdminPanelSettings,
+                            "Manager Console",
+                            "Access insights and control theater map"
+                        ) { onAdminDashboardClick() }
+                    }
                 }
             }
 
@@ -157,7 +179,10 @@ fun ProfileScreen(
 
             // Logout Button
             OutlinedButton(
-                onClick = onLogoutClick,
+                onClick = {
+                    viewModel.logout()
+                    onLogoutClick()
+                },
                 modifier = Modifier.fillMaxWidth().height(56.dp),
                 shape = RoundedCornerShape(16.dp),
                 border = BorderStroke(1.dp, NammaError.copy(0.3f)),

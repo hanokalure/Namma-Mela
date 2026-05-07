@@ -17,9 +17,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -27,7 +29,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.nammamela.app.navigation.Screen
+import com.nammamela.app.ui.components.UserAvatarIconSlot
 import com.nammamela.app.ui.theme.*
+import com.nammamela.app.util.findActivity
+import com.nammamela.app.viewmodel.SessionUserViewModel
 
 sealed class BottomNavItem(val screen: Screen, val icon: ImageVector, val label: String) {
     object Home : BottomNavItem(Screen.Home, Icons.Default.Home, "Home")
@@ -47,6 +52,9 @@ fun MainScreen(
     onLogoutClick: () -> Unit
 ) {
     val navController = rememberNavController()
+    val activity = LocalContext.current.findActivity()
+    val sessionUserVm: SessionUserViewModel = if (activity != null) hiltViewModel(activity) else hiltViewModel()
+    val sessionUser by sessionUserVm.user.collectAsState()
 
     Scaffold(
         containerColor = NammaDarkBrown,
@@ -75,12 +83,20 @@ fun MainScreen(
                         val isSelected = currentDestination?.hierarchy?.any { it.route == item.screen.route } == true
                         
                         NavigationBarItem(
-                            icon = { 
-                                Icon(
-                                    item.icon, 
-                                    contentDescription = item.label,
-                                    modifier = Modifier.size(24.dp)
-                                ) 
+                            icon = {
+                                if (item == BottomNavItem.Profile) {
+                                    UserAvatarIconSlot(
+                                        imageUrl = sessionUser?.imageUrl,
+                                        displayName = sessionUser?.name,
+                                        size = 26.dp
+                                    )
+                                } else {
+                                    Icon(
+                                        item.icon,
+                                        contentDescription = item.label,
+                                        modifier = Modifier.size(24.dp)
+                                    )
+                                }
                             },
                             label = { 
                                 Text(

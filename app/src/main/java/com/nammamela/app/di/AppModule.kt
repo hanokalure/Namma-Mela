@@ -1,6 +1,9 @@
 package com.nammamela.app.di
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.room.Room
 import com.nammamela.app.data.local.dao.*
 import com.nammamela.app.data.local.database.AppDatabase
@@ -13,9 +16,19 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+private val Context.sessionDataStore: DataStore<Preferences> by preferencesDataStore(
+    name = "user_session"
+)
+
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+    @Provides
+    @Singleton
+    fun provideSessionDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
+        return context.sessionDataStore
+    }
 
     @Provides
     @Singleton
@@ -61,6 +74,10 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun providePlayReviewDao(db: AppDatabase): PlayReviewDao = db.playReviewDao
+
+    @Provides
+    @Singleton
     fun provideAppRepository(
         playDao: PlayDao,
         actorDao: ActorDao,
@@ -69,8 +86,19 @@ object AppModule {
         bookingDao: BookingDao,
         userDao: UserDao,
         notificationDao: NotificationDao,
-        categoryDao: CategoryDao
+        categoryDao: CategoryDao,
+        playReviewDao: PlayReviewDao
     ): AppRepository {
-        return AppRepositoryImpl(playDao, actorDao, seatDao, commentDao, bookingDao, userDao, notificationDao, categoryDao)
+        return AppRepositoryImpl(
+            playDao,
+            actorDao,
+            seatDao,
+            commentDao,
+            bookingDao,
+            userDao,
+            notificationDao,
+            categoryDao,
+            playReviewDao
+        )
     }
 }

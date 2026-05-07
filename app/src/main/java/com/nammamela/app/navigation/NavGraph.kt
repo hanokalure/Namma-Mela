@@ -15,11 +15,18 @@ fun NammaMelaNavGraph(navController: NavHostController) {
         startDestination = Screen.Splash.route
     ) {
         composable(Screen.Splash.route) {
-            SplashScreen(onAnimationFinished = {
-                navController.navigate(Screen.Login.route) {
-                    popUpTo(Screen.Splash.route) { inclusive = true }
+            SplashScreen(
+                onNavigateToMain = {
+                    navController.navigate(Screen.Main.route) {
+                        popUpTo(Screen.Splash.route) { inclusive = true }
+                    }
+                },
+                onNavigateToLogin = {
+                    navController.navigate(Screen.Login.route) {
+                        popUpTo(Screen.Splash.route) { inclusive = true }
+                    }
                 }
-            })
+            )
         }
 
         composable(Screen.Login.route) {
@@ -36,8 +43,8 @@ fun NammaMelaNavGraph(navController: NavHostController) {
         
         composable(Screen.SignUp.route) {
             SignUpScreen(
-                onSignUpClick = { 
-                    navController.navigate(Screen.Main.route) {
+                onRegistrationCompleteNavigateToLogin = {
+                    navController.navigate(Screen.Login.route) {
                         popUpTo(Screen.SignUp.route) { inclusive = true }
                     }
                 },
@@ -120,12 +127,8 @@ fun NammaMelaNavGraph(navController: NavHostController) {
         composable(
             route = Screen.Review.route,
             arguments = listOf(navArgument("playId") { type = NavType.IntType })
-        ) { backStackEntry ->
-            val playId = backStackEntry.arguments?.getInt("playId") ?: 0
-            ReviewScreen(
-                playId = playId,
-                onNavigateBack = { navController.popBackStack() }
-            )
+        ) {
+            ReviewScreen(onNavigateBack = { navController.popBackStack() })
         }
         
         composable(
@@ -181,7 +184,12 @@ fun NammaMelaNavGraph(navController: NavHostController) {
         }
 
         composable(Screen.UploadPlay.route) {
-            AdminPlayManagementScreen(onNavigateBack = { navController.popBackStack() })
+            AdminPlayManagementScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToManageCast = { playId ->
+                    navController.navigate(Screen.ManageCast.createRoute(playId))
+                }
+            )
         }
 
         composable(

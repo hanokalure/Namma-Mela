@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.nammamela.app.ui.components.NammaMelaButton
 import com.nammamela.app.ui.theme.*
+import com.nammamela.app.viewmodel.SeatBookingViewModel
 import com.nammamela.app.viewmodel.TicketConfirmationViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -34,7 +35,6 @@ fun TicketConfirmationScreen(
     val bookingWithPlay by viewModel.booking.collectAsState()
     
     val dateFormatter = remember { SimpleDateFormat("dd MMM, yyyy", Locale.getDefault()) }
-    val timeFormatter = remember { SimpleDateFormat("hh:mm a", Locale.getDefault()) }
 
     Box(
         modifier = Modifier
@@ -48,7 +48,10 @@ fun TicketConfirmationScreen(
         } else {
             val booking = bookingWithPlay!!.booking
             val play = bookingWithPlay!!.play
-            
+            val timeDisplay = booking.showTime.trim().ifEmpty {
+                SeatBookingViewModel.parseShowTimes(play.showTime).firstOrNull()?.trim().orEmpty()
+            }.ifBlank { "—" }
+
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Icon(
                     Icons.Default.CheckCircle,
@@ -85,7 +88,7 @@ fun TicketConfirmationScreen(
                             
                             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                                 TicketInfoItem("DATE", dateFormatter.format(Date(booking.timestamp)))
-                                TicketInfoItem("TIME", "06:30 PM") // Defaulting time for now as not in entity
+                                TicketInfoItem("TIME", timeDisplay)
                             }
                             
                             Spacer(modifier = Modifier.height(20.dp))

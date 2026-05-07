@@ -124,6 +124,14 @@ fun BookingItem(bookingWithPlay: BookingWithPlay, onClick: () -> Unit) {
                 }
                 Spacer(modifier = Modifier.height(4.dp))
                 Text("Seats: ${booking.seats}", color = NammaGold, style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold)
+                if (booking.showTime.isNotBlank()) {
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        "Show: ${booking.showTime}",
+                        color = NammaWarmWhite.copy(0.45f),
+                        style = MaterialTheme.typography.labelSmall
+                    )
+                }
             }
             
             Column(horizontalAlignment = Alignment.End) {

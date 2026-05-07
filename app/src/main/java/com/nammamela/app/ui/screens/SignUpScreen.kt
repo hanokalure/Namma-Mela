@@ -32,7 +32,7 @@ import com.nammamela.app.viewmodel.AuthViewModel
 
 @Composable
 fun SignUpScreen(
-    onSignUpClick: () -> Unit,
+    onRegistrationCompleteNavigateToLogin: () -> Unit,
     onLoginClick: () -> Unit,
     onClose: () -> Unit,
     viewModel: AuthViewModel = hiltViewModel()
@@ -51,7 +51,7 @@ fun SignUpScreen(
 
     LaunchedEffect(Unit) {
         viewModel.loginSuccess.collect { success ->
-            if (success) onSignUpClick()
+            if (success) onRegistrationCompleteNavigateToLogin()
         }
     }
 
@@ -132,8 +132,15 @@ fun SignUpScreen(
                         Spacer(modifier = Modifier.height(32.dp))
 
                         NammaMelaButton(
-                            text = "CREATE ACCOUNT", 
-                            onClick = { viewModel.signUp(fullName, email, password) }
+                            text = "CREATE ACCOUNT",
+                            onClick = {
+                                viewModel.signUp(
+                                    name = fullName,
+                                    email = email,
+                                    pass = password,
+                                    autoLogin = false
+                                )
+                            }
                         )
 
                         Spacer(modifier = Modifier.height(20.dp))

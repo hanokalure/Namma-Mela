@@ -3,6 +3,8 @@ package com.nammamela.app;
 import android.app.Activity;
 import android.app.Service;
 import android.view.View;
+import androidx.datastore.core.DataStore;
+import androidx.datastore.preferences.core.Preferences;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
@@ -12,9 +14,11 @@ import com.nammamela.app.data.local.dao.CategoryDao;
 import com.nammamela.app.data.local.dao.CommentDao;
 import com.nammamela.app.data.local.dao.NotificationDao;
 import com.nammamela.app.data.local.dao.PlayDao;
+import com.nammamela.app.data.local.dao.PlayReviewDao;
 import com.nammamela.app.data.local.dao.SeatDao;
 import com.nammamela.app.data.local.dao.UserDao;
 import com.nammamela.app.data.local.database.AppDatabase;
+import com.nammamela.app.data.session.UserSession;
 import com.nammamela.app.di.AppModule;
 import com.nammamela.app.di.AppModule_ProvideActorDaoFactory;
 import com.nammamela.app.di.AppModule_ProvideAppDatabaseFactory;
@@ -24,7 +28,9 @@ import com.nammamela.app.di.AppModule_ProvideCategoryDaoFactory;
 import com.nammamela.app.di.AppModule_ProvideCommentDaoFactory;
 import com.nammamela.app.di.AppModule_ProvideNotificationDaoFactory;
 import com.nammamela.app.di.AppModule_ProvidePlayDaoFactory;
+import com.nammamela.app.di.AppModule_ProvidePlayReviewDaoFactory;
 import com.nammamela.app.di.AppModule_ProvideSeatDaoFactory;
+import com.nammamela.app.di.AppModule_ProvideSessionDataStoreFactory;
 import com.nammamela.app.di.AppModule_ProvideUserDaoFactory;
 import com.nammamela.app.domain.repository.AppRepository;
 import com.nammamela.app.viewmodel.AdminViewModel;
@@ -49,10 +55,16 @@ import com.nammamela.app.viewmodel.PlayDetailViewModel;
 import com.nammamela.app.viewmodel.PlayDetailViewModel_HiltModules_KeyModule_ProvideFactory;
 import com.nammamela.app.viewmodel.ProfileViewModel;
 import com.nammamela.app.viewmodel.ProfileViewModel_HiltModules_KeyModule_ProvideFactory;
+import com.nammamela.app.viewmodel.ReviewViewModel;
+import com.nammamela.app.viewmodel.ReviewViewModel_HiltModules_KeyModule_ProvideFactory;
 import com.nammamela.app.viewmodel.SearchViewModel;
 import com.nammamela.app.viewmodel.SearchViewModel_HiltModules_KeyModule_ProvideFactory;
 import com.nammamela.app.viewmodel.SeatBookingViewModel;
 import com.nammamela.app.viewmodel.SeatBookingViewModel_HiltModules_KeyModule_ProvideFactory;
+import com.nammamela.app.viewmodel.SessionUserViewModel;
+import com.nammamela.app.viewmodel.SessionUserViewModel_HiltModules_KeyModule_ProvideFactory;
+import com.nammamela.app.viewmodel.SplashViewModel;
+import com.nammamela.app.viewmodel.SplashViewModel_HiltModules_KeyModule_ProvideFactory;
 import com.nammamela.app.viewmodel.TicketConfirmationViewModel;
 import com.nammamela.app.viewmodel.TicketConfirmationViewModel_HiltModules_KeyModule_ProvideFactory;
 import dagger.hilt.android.ActivityRetainedLifecycle;
@@ -422,7 +434,7 @@ public final class DaggerNammaMelaApp_HiltComponents_SingletonC {
 
     @Override
     public Set<String> getViewModelKeys() {
-      return SetBuilder.<String>newSetBuilder(14).add(AdminViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(AuthViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(CastViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(FanWallViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(HomeViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(ManageCastViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(ManagerViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(MyBookingsViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(NotificationViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(PlayDetailViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(ProfileViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(SearchViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(SeatBookingViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(TicketConfirmationViewModel_HiltModules_KeyModule_ProvideFactory.provide()).build();
+      return SetBuilder.<String>newSetBuilder(17).add(AdminViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(AuthViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(CastViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(FanWallViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(HomeViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(ManageCastViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(ManagerViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(MyBookingsViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(NotificationViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(PlayDetailViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(ProfileViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(ReviewViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(SearchViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(SeatBookingViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(SessionUserViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(SplashViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(TicketConfirmationViewModel_HiltModules_KeyModule_ProvideFactory.provide()).build();
     }
 
     @Override
@@ -442,6 +454,8 @@ public final class DaggerNammaMelaApp_HiltComponents_SingletonC {
 
     private MainActivity injectMainActivity2(MainActivity instance) {
       MainActivity_MembersInjector.injectRepository(instance, singletonCImpl.provideAppRepositoryProvider.get());
+      MainActivity_MembersInjector.injectUserSession(instance, singletonCImpl.userSessionProvider.get());
+      MainActivity_MembersInjector.injectDataStore(instance, singletonCImpl.provideSessionDataStoreProvider.get());
       return instance;
     }
   }
@@ -477,9 +491,15 @@ public final class DaggerNammaMelaApp_HiltComponents_SingletonC {
 
     private Provider<ProfileViewModel> profileViewModelProvider;
 
+    private Provider<ReviewViewModel> reviewViewModelProvider;
+
     private Provider<SearchViewModel> searchViewModelProvider;
 
     private Provider<SeatBookingViewModel> seatBookingViewModelProvider;
+
+    private Provider<SessionUserViewModel> sessionUserViewModelProvider;
+
+    private Provider<SplashViewModel> splashViewModelProvider;
 
     private Provider<TicketConfirmationViewModel> ticketConfirmationViewModelProvider;
 
@@ -507,14 +527,17 @@ public final class DaggerNammaMelaApp_HiltComponents_SingletonC {
       this.notificationViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 8);
       this.playDetailViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 9);
       this.profileViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 10);
-      this.searchViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 11);
-      this.seatBookingViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 12);
-      this.ticketConfirmationViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 13);
+      this.reviewViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 11);
+      this.searchViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 12);
+      this.seatBookingViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 13);
+      this.sessionUserViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 14);
+      this.splashViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 15);
+      this.ticketConfirmationViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 16);
     }
 
     @Override
     public Map<String, Provider<ViewModel>> getHiltViewModelMap() {
-      return MapBuilder.<String, Provider<ViewModel>>newMapBuilder(14).put("com.nammamela.app.viewmodel.AdminViewModel", ((Provider) adminViewModelProvider)).put("com.nammamela.app.viewmodel.AuthViewModel", ((Provider) authViewModelProvider)).put("com.nammamela.app.viewmodel.CastViewModel", ((Provider) castViewModelProvider)).put("com.nammamela.app.viewmodel.FanWallViewModel", ((Provider) fanWallViewModelProvider)).put("com.nammamela.app.viewmodel.HomeViewModel", ((Provider) homeViewModelProvider)).put("com.nammamela.app.viewmodel.ManageCastViewModel", ((Provider) manageCastViewModelProvider)).put("com.nammamela.app.viewmodel.ManagerViewModel", ((Provider) managerViewModelProvider)).put("com.nammamela.app.viewmodel.MyBookingsViewModel", ((Provider) myBookingsViewModelProvider)).put("com.nammamela.app.viewmodel.NotificationViewModel", ((Provider) notificationViewModelProvider)).put("com.nammamela.app.viewmodel.PlayDetailViewModel", ((Provider) playDetailViewModelProvider)).put("com.nammamela.app.viewmodel.ProfileViewModel", ((Provider) profileViewModelProvider)).put("com.nammamela.app.viewmodel.SearchViewModel", ((Provider) searchViewModelProvider)).put("com.nammamela.app.viewmodel.SeatBookingViewModel", ((Provider) seatBookingViewModelProvider)).put("com.nammamela.app.viewmodel.TicketConfirmationViewModel", ((Provider) ticketConfirmationViewModelProvider)).build();
+      return MapBuilder.<String, Provider<ViewModel>>newMapBuilder(17).put("com.nammamela.app.viewmodel.AdminViewModel", ((Provider) adminViewModelProvider)).put("com.nammamela.app.viewmodel.AuthViewModel", ((Provider) authViewModelProvider)).put("com.nammamela.app.viewmodel.CastViewModel", ((Provider) castViewModelProvider)).put("com.nammamela.app.viewmodel.FanWallViewModel", ((Provider) fanWallViewModelProvider)).put("com.nammamela.app.viewmodel.HomeViewModel", ((Provider) homeViewModelProvider)).put("com.nammamela.app.viewmodel.ManageCastViewModel", ((Provider) manageCastViewModelProvider)).put("com.nammamela.app.viewmodel.ManagerViewModel", ((Provider) managerViewModelProvider)).put("com.nammamela.app.viewmodel.MyBookingsViewModel", ((Provider) myBookingsViewModelProvider)).put("com.nammamela.app.viewmodel.NotificationViewModel", ((Provider) notificationViewModelProvider)).put("com.nammamela.app.viewmodel.PlayDetailViewModel", ((Provider) playDetailViewModelProvider)).put("com.nammamela.app.viewmodel.ProfileViewModel", ((Provider) profileViewModelProvider)).put("com.nammamela.app.viewmodel.ReviewViewModel", ((Provider) reviewViewModelProvider)).put("com.nammamela.app.viewmodel.SearchViewModel", ((Provider) searchViewModelProvider)).put("com.nammamela.app.viewmodel.SeatBookingViewModel", ((Provider) seatBookingViewModelProvider)).put("com.nammamela.app.viewmodel.SessionUserViewModel", ((Provider) sessionUserViewModelProvider)).put("com.nammamela.app.viewmodel.SplashViewModel", ((Provider) splashViewModelProvider)).put("com.nammamela.app.viewmodel.TicketConfirmationViewModel", ((Provider) ticketConfirmationViewModelProvider)).build();
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -539,45 +562,54 @@ public final class DaggerNammaMelaApp_HiltComponents_SingletonC {
       public T get() {
         switch (id) {
           case 0: // com.nammamela.app.viewmodel.AdminViewModel 
-          return (T) new AdminViewModel(singletonCImpl.provideAppRepositoryProvider.get());
+          return (T) new AdminViewModel(singletonCImpl.provideAppRepositoryProvider.get(), singletonCImpl.userSessionProvider.get(), ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule));
 
           case 1: // com.nammamela.app.viewmodel.AuthViewModel 
-          return (T) new AuthViewModel(singletonCImpl.provideAppRepositoryProvider.get());
+          return (T) new AuthViewModel(singletonCImpl.provideAppRepositoryProvider.get(), singletonCImpl.userSessionProvider.get());
 
           case 2: // com.nammamela.app.viewmodel.CastViewModel 
           return (T) new CastViewModel(singletonCImpl.provideAppRepositoryProvider.get());
 
           case 3: // com.nammamela.app.viewmodel.FanWallViewModel 
-          return (T) new FanWallViewModel(singletonCImpl.provideAppRepositoryProvider.get());
+          return (T) new FanWallViewModel(singletonCImpl.provideAppRepositoryProvider.get(), singletonCImpl.userSessionProvider.get());
 
           case 4: // com.nammamela.app.viewmodel.HomeViewModel 
           return (T) new HomeViewModel(singletonCImpl.provideAppRepositoryProvider.get());
 
           case 5: // com.nammamela.app.viewmodel.ManageCastViewModel 
-          return (T) new ManageCastViewModel(singletonCImpl.provideAppRepositoryProvider.get(), viewModelCImpl.savedStateHandle);
+          return (T) new ManageCastViewModel(singletonCImpl.provideAppRepositoryProvider.get(), ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule), viewModelCImpl.savedStateHandle);
 
           case 6: // com.nammamela.app.viewmodel.ManagerViewModel 
           return (T) new ManagerViewModel(singletonCImpl.provideAppRepositoryProvider.get());
 
           case 7: // com.nammamela.app.viewmodel.MyBookingsViewModel 
-          return (T) new MyBookingsViewModel(singletonCImpl.provideAppRepositoryProvider.get());
+          return (T) new MyBookingsViewModel(singletonCImpl.provideAppRepositoryProvider.get(), singletonCImpl.userSessionProvider.get());
 
           case 8: // com.nammamela.app.viewmodel.NotificationViewModel 
-          return (T) new NotificationViewModel(singletonCImpl.provideAppRepositoryProvider.get());
+          return (T) new NotificationViewModel(singletonCImpl.provideAppRepositoryProvider.get(), singletonCImpl.userSessionProvider.get());
 
           case 9: // com.nammamela.app.viewmodel.PlayDetailViewModel 
           return (T) new PlayDetailViewModel(singletonCImpl.provideAppRepositoryProvider.get(), viewModelCImpl.savedStateHandle);
 
           case 10: // com.nammamela.app.viewmodel.ProfileViewModel 
-          return (T) new ProfileViewModel(singletonCImpl.provideAppRepositoryProvider.get());
+          return (T) new ProfileViewModel(singletonCImpl.provideAppRepositoryProvider.get(), singletonCImpl.userSessionProvider.get(), ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule));
 
-          case 11: // com.nammamela.app.viewmodel.SearchViewModel 
+          case 11: // com.nammamela.app.viewmodel.ReviewViewModel 
+          return (T) new ReviewViewModel(singletonCImpl.provideAppRepositoryProvider.get(), singletonCImpl.userSessionProvider.get(), viewModelCImpl.savedStateHandle);
+
+          case 12: // com.nammamela.app.viewmodel.SearchViewModel 
           return (T) new SearchViewModel(singletonCImpl.provideAppRepositoryProvider.get());
 
-          case 12: // com.nammamela.app.viewmodel.SeatBookingViewModel 
-          return (T) new SeatBookingViewModel(singletonCImpl.provideAppRepositoryProvider.get(), viewModelCImpl.savedStateHandle);
+          case 13: // com.nammamela.app.viewmodel.SeatBookingViewModel 
+          return (T) new SeatBookingViewModel(singletonCImpl.provideAppRepositoryProvider.get(), singletonCImpl.userSessionProvider.get(), viewModelCImpl.savedStateHandle);
 
-          case 13: // com.nammamela.app.viewmodel.TicketConfirmationViewModel 
+          case 14: // com.nammamela.app.viewmodel.SessionUserViewModel 
+          return (T) new SessionUserViewModel(singletonCImpl.provideAppRepositoryProvider.get(), singletonCImpl.userSessionProvider.get());
+
+          case 15: // com.nammamela.app.viewmodel.SplashViewModel 
+          return (T) new SplashViewModel(singletonCImpl.userSessionProvider.get());
+
+          case 16: // com.nammamela.app.viewmodel.TicketConfirmationViewModel 
           return (T) new TicketConfirmationViewModel(singletonCImpl.provideAppRepositoryProvider.get(), viewModelCImpl.savedStateHandle);
 
           default: throw new AssertionError(id);
@@ -677,7 +709,13 @@ public final class DaggerNammaMelaApp_HiltComponents_SingletonC {
 
     private Provider<CategoryDao> provideCategoryDaoProvider;
 
+    private Provider<PlayReviewDao> providePlayReviewDaoProvider;
+
     private Provider<AppRepository> provideAppRepositoryProvider;
+
+    private Provider<DataStore<Preferences>> provideSessionDataStoreProvider;
+
+    private Provider<UserSession> userSessionProvider;
 
     private SingletonCImpl(ApplicationContextModule applicationContextModuleParam) {
       this.applicationContextModule = applicationContextModuleParam;
@@ -696,7 +734,10 @@ public final class DaggerNammaMelaApp_HiltComponents_SingletonC {
       this.provideUserDaoProvider = DoubleCheck.provider(new SwitchingProvider<UserDao>(singletonCImpl, 7));
       this.provideNotificationDaoProvider = DoubleCheck.provider(new SwitchingProvider<NotificationDao>(singletonCImpl, 8));
       this.provideCategoryDaoProvider = DoubleCheck.provider(new SwitchingProvider<CategoryDao>(singletonCImpl, 9));
+      this.providePlayReviewDaoProvider = DoubleCheck.provider(new SwitchingProvider<PlayReviewDao>(singletonCImpl, 10));
       this.provideAppRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<AppRepository>(singletonCImpl, 0));
+      this.provideSessionDataStoreProvider = DoubleCheck.provider(new SwitchingProvider<DataStore<Preferences>>(singletonCImpl, 12));
+      this.userSessionProvider = DoubleCheck.provider(new SwitchingProvider<UserSession>(singletonCImpl, 11));
     }
 
     @Override
@@ -733,7 +774,7 @@ public final class DaggerNammaMelaApp_HiltComponents_SingletonC {
       public T get() {
         switch (id) {
           case 0: // com.nammamela.app.domain.repository.AppRepository 
-          return (T) AppModule_ProvideAppRepositoryFactory.provideAppRepository(singletonCImpl.providePlayDaoProvider.get(), singletonCImpl.provideActorDaoProvider.get(), singletonCImpl.provideSeatDaoProvider.get(), singletonCImpl.provideCommentDaoProvider.get(), singletonCImpl.provideBookingDaoProvider.get(), singletonCImpl.provideUserDaoProvider.get(), singletonCImpl.provideNotificationDaoProvider.get(), singletonCImpl.provideCategoryDaoProvider.get());
+          return (T) AppModule_ProvideAppRepositoryFactory.provideAppRepository(singletonCImpl.providePlayDaoProvider.get(), singletonCImpl.provideActorDaoProvider.get(), singletonCImpl.provideSeatDaoProvider.get(), singletonCImpl.provideCommentDaoProvider.get(), singletonCImpl.provideBookingDaoProvider.get(), singletonCImpl.provideUserDaoProvider.get(), singletonCImpl.provideNotificationDaoProvider.get(), singletonCImpl.provideCategoryDaoProvider.get(), singletonCImpl.providePlayReviewDaoProvider.get());
 
           case 1: // com.nammamela.app.data.local.dao.PlayDao 
           return (T) AppModule_ProvidePlayDaoFactory.providePlayDao(singletonCImpl.provideAppDatabaseProvider.get());
@@ -761,6 +802,15 @@ public final class DaggerNammaMelaApp_HiltComponents_SingletonC {
 
           case 9: // com.nammamela.app.data.local.dao.CategoryDao 
           return (T) AppModule_ProvideCategoryDaoFactory.provideCategoryDao(singletonCImpl.provideAppDatabaseProvider.get());
+
+          case 10: // com.nammamela.app.data.local.dao.PlayReviewDao 
+          return (T) AppModule_ProvidePlayReviewDaoFactory.providePlayReviewDao(singletonCImpl.provideAppDatabaseProvider.get());
+
+          case 11: // com.nammamela.app.data.session.UserSession 
+          return (T) new UserSession(singletonCImpl.provideSessionDataStoreProvider.get());
+
+          case 12: // androidx.datastore.core.DataStore<androidx.datastore.preferences.core.Preferences> 
+          return (T) AppModule_ProvideSessionDataStoreFactory.provideSessionDataStore(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule));
 
           default: throw new AssertionError(id);
         }

@@ -40,7 +40,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             repository.getAllPlays()
                 .map { list ->
-                    list.sortedByDescending { it.timestamp }.take(3)
+                    list.filter { it.isActive }
                 }
                 .catch { 
                     _errorEvent.emit("Failed to load plays")

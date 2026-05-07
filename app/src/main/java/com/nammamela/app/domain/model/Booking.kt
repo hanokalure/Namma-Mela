@@ -11,5 +11,7 @@ data class Booking(
     val playId: Int,
     val seats: String, // Comma separated e.g. "A1,A2"
     val totalPrice: Double,
+    /** Selected slot from the play's advertised show times */
+    val showTime: String = "",
     val timestamp: Long
 )

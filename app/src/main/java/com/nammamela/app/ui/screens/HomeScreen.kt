@@ -27,13 +27,18 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.nammamela.app.domain.model.Play
+import com.nammamela.app.ui.components.ActorDetailsDialog
 import com.nammamela.app.ui.components.NammaMelaButton
+import com.nammamela.app.ui.components.UserAvatar
 import com.nammamela.app.ui.theme.*
+import com.nammamela.app.util.findActivity
 import com.nammamela.app.viewmodel.HomeViewModel
+import com.nammamela.app.viewmodel.SessionUserViewModel
 
 @Composable
 fun HomeScreen(
@@ -48,11 +53,27 @@ fun HomeScreen(
     val fanFavorites by viewModel.fanFavorites.collectAsState()
     val scrollState = rememberScrollState()
     val snackbarHostState = remember { SnackbarHostState() }
+    var selectedActor by remember { mutableStateOf<com.nammamela.app.domain.model.Actor?>(null) }
+
+    val activity = LocalContext.current.findActivity()
+    val sessionUserVm: SessionUserViewModel = if (activity != null) {
+        hiltViewModel(activity)
+    } else {
+        hiltViewModel()
+    }
+    val sessionUser by sessionUserVm.user.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.errorEvent.collect { message ->
             snackbarHostState.showSnackbar(message)
         }
+    }
+
+    selectedActor?.let { actor ->
+        ActorDetailsDialog(
+            actor = actor,
+            onDismiss = { selectedActor = null }
+        )
     }
 
     Scaffold(
@@ -83,16 +104,11 @@ fun HomeScreen(
                         Icon(Icons.Default.Notifications, null, tint = NammaGold)
                     }
                     Spacer(modifier = Modifier.width(8.dp))
-                    Box(
-                        modifier = Modifier
-                            .size(40.dp)
-                            .clip(CircleShape)
-                            .background(NammaSurfaceLow)
-                            .border(1.dp, NammaGold.copy(0.3f), CircleShape),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text("B", color = NammaGold, fontWeight = FontWeight.Bold)
-                    }
+                    UserAvatar(
+                        imageUrl = sessionUser?.imageUrl,
+                        displayName = sessionUser?.name,
+                        size = 40.dp
+                    )
                 }
             }
 
@@ -159,7 +175,10 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.spacedBy(24.dp)
             ) {
                 items(fanFavorites) { actor ->
-                    FanFavoriteAvatar(name = actor.name)
+                    FanFavoriteAvatar(
+                        actor = actor,
+                        onClick = { selectedActor = actor }
+                    )
                 }
             }
             
@@ -310,9 +329,13 @@ fun CategoryChip(text: String, isSelected: Boolean) {
     }
 }
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun FanFavoriteAvatar(name: String) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+fun FanFavoriteAvatar(actor: com.nammamela.app.domain.model.Actor, onClick: () -> Unit) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.clickable(onClick = onClick)
+    ) {
         Box(
             modifier = Modifier
                 .size(70.dp)
@@ -321,14 +344,14 @@ fun FanFavoriteAvatar(name: String) {
                 .border(2.dp, NammaGold.copy(0.3f), CircleShape),
             contentAlignment = Alignment.Center
         ) {
-            Box(
-                modifier = Modifier
-                    .size(60.dp)
-                    .clip(CircleShape)
-                    .background(Color.Gray)
+            GlideImage(
+                model = actor.imageUrl,
+                contentDescription = actor.name,
+                modifier = Modifier.size(60.dp).clip(CircleShape),
+                contentScale = ContentScale.Crop
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
-        Text(text = name, color = NammaWarmWhite.copy(0.6f), style = MaterialTheme.typography.labelLarge)
+        Text(text = actor.name, color = NammaWarmWhite.copy(0.6f), style = MaterialTheme.typography.labelLarge)
     }
 }

@@ -17,11 +17,15 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.nammamela.app.R
 import com.nammamela.app.ui.components.NammaMelaButton
 import com.nammamela.app.ui.components.AdminInputField
 import com.nammamela.app.ui.theme.*
 import com.nammamela.app.viewmodel.AuthViewModel
+import com.nammamela.app.util.findActivity
+import androidx.compose.ui.platform.LocalContext
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,7 +34,7 @@ fun AdminSignUpScreen(
     onSignUpClick: () -> Unit,
     onLoginClick: () -> Unit,
     onClose: () -> Unit,
-    viewModel: AuthViewModel = hiltViewModel()
+    viewModel: AuthViewModel = hiltViewModel(LocalContext.current.findActivity()!!)
 ) {
     var managerName by remember { mutableStateOf("") }
     var companyName by remember { mutableStateOf("") }
@@ -54,6 +58,7 @@ fun AdminSignUpScreen(
     }
 
     val scope = rememberCoroutineScope()
+    val managerSecret = stringResource(R.string.manager_registration_secret)
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -115,7 +120,7 @@ fun AdminSignUpScreen(
             NammaMelaButton(
                 text = "REGISTER COMPANY 🎟",
                 onClick = {
-                    if (secretKey != "MELA2026") {
+                    if (secretKey.trim() != managerSecret) {
                         scope.launch { snackbarHostState.showSnackbar("Invalid Secret Manager Key!") }
                     } else {
                         viewModel.signUp(

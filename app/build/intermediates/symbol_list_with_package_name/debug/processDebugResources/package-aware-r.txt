@@ -262,6 +262,7 @@ string expanded
 string in_progress
 string indeterminate
 string m3c_bottom_sheet_pane_title
+string manager_registration_secret
 string navigation_menu
 string not_selected
 string off
@@ -270,6 +271,7 @@ string range_end
 string range_start
 string search_bar_search
 string selected
+string show_times_hint
 string snackbar_dismiss
 string status_bar_notification_info_overflow
 string suggestions_available

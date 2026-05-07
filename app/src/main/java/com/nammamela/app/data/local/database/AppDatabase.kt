@@ -6,8 +6,11 @@ import com.nammamela.app.data.local.dao.*
 import com.nammamela.app.domain.model.*
 
 @Database(
-    entities = [Play::class, Actor::class, Seat::class, Comment::class, Booking::class, User::class, Notification::class, Category::class],
-    version = 5,
+    entities = [
+        Play::class, Actor::class, Seat::class, Comment::class, Booking::class, User::class,
+        Notification::class, Category::class, PlayReview::class
+    ],
+    version = 7,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -19,6 +22,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val userDao: UserDao
     abstract val notificationDao: NotificationDao
     abstract val categoryDao: CategoryDao
+    abstract val playReviewDao: PlayReviewDao
 
     companion object {
         const val DATABASE_NAME = "nammamela_db"

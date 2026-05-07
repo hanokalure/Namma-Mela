@@ -18,7 +18,7 @@ interface ActorDao {
     fun getAllActors(): Flow<List<Actor>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertActor(actor: Actor)
+    suspend fun insertActor(actor: Actor): Long
 
     @Update
     suspend fun updateActor(actor: Actor)
@@ -28,4 +28,7 @@ interface ActorDao {
 
     @Query("DELETE FROM actors")
     suspend fun deleteAllActors()
+
+    @Query("DELETE FROM actors WHERE playId = :playId")
+    suspend fun deleteActorsForPlay(playId: Int)
 }

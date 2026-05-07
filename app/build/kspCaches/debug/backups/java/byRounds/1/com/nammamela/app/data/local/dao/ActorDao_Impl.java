@@ -14,6 +14,7 @@ import androidx.sqlite.db.SupportSQLiteStatement;
 import com.nammamela.app.domain.model.Actor;
 import java.lang.Class;
 import java.lang.Exception;
+import java.lang.Long;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -39,6 +40,8 @@ public final class ActorDao_Impl implements ActorDao {
   private final EntityDeletionOrUpdateAdapter<Actor> __updateAdapterOfActor;
 
   private final SharedSQLiteStatement __preparedStmtOfDeleteAllActors;
+
+  private final SharedSQLiteStatement __preparedStmtOfDeleteActorsForPlay;
 
   public ActorDao_Impl(@NonNull final RoomDatabase __db) {
     this.__db = __db;
@@ -108,19 +111,27 @@ public final class ActorDao_Impl implements ActorDao {
         return _query;
       }
     };
+    this.__preparedStmtOfDeleteActorsForPlay = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "DELETE FROM actors WHERE playId = ?";
+        return _query;
+      }
+    };
   }
 
   @Override
-  public Object insertActor(final Actor actor, final Continuation<? super Unit> $completion) {
-    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+  public Object insertActor(final Actor actor, final Continuation<? super Long> $completion) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Long>() {
       @Override
       @NonNull
-      public Unit call() throws Exception {
+      public Long call() throws Exception {
         __db.beginTransaction();
         try {
-          __insertionAdapterOfActor.insert(actor);
+          final Long _result = __insertionAdapterOfActor.insertAndReturnId(actor);
           __db.setTransactionSuccessful();
-          return Unit.INSTANCE;
+          return _result;
         } finally {
           __db.endTransaction();
         }
@@ -182,6 +193,32 @@ public final class ActorDao_Impl implements ActorDao {
           }
         } finally {
           __preparedStmtOfDeleteAllActors.release(_stmt);
+        }
+      }
+    }, $completion);
+  }
+
+  @Override
+  public Object deleteActorsForPlay(final int playId,
+      final Continuation<? super Unit> $completion) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfDeleteActorsForPlay.acquire();
+        int _argIndex = 1;
+        _stmt.bindLong(_argIndex, playId);
+        try {
+          __db.beginTransaction();
+          try {
+            _stmt.executeUpdateDelete();
+            __db.setTransactionSuccessful();
+            return Unit.INSTANCE;
+          } finally {
+            __db.endTransaction();
+          }
+        } finally {
+          __preparedStmtOfDeleteActorsForPlay.release(_stmt);
         }
       }
     }, $completion);

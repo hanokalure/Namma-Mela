@@ -1,6 +1,7 @@
 package com.nammamela.app.viewmodel;
 
 import androidx.lifecycle.SavedStateHandle;
+import com.nammamela.app.data.session.UserSession;
 import com.nammamela.app.domain.repository.AppRepository;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
@@ -25,26 +26,31 @@ import javax.inject.Provider;
 public final class SeatBookingViewModel_Factory implements Factory<SeatBookingViewModel> {
   private final Provider<AppRepository> repositoryProvider;
 
+  private final Provider<UserSession> userSessionProvider;
+
   private final Provider<SavedStateHandle> savedStateHandleProvider;
 
   public SeatBookingViewModel_Factory(Provider<AppRepository> repositoryProvider,
+      Provider<UserSession> userSessionProvider,
       Provider<SavedStateHandle> savedStateHandleProvider) {
     this.repositoryProvider = repositoryProvider;
+    this.userSessionProvider = userSessionProvider;
     this.savedStateHandleProvider = savedStateHandleProvider;
   }
 
   @Override
   public SeatBookingViewModel get() {
-    return newInstance(repositoryProvider.get(), savedStateHandleProvider.get());
+    return newInstance(repositoryProvider.get(), userSessionProvider.get(), savedStateHandleProvider.get());
   }
 
   public static SeatBookingViewModel_Factory create(Provider<AppRepository> repositoryProvider,
+      Provider<UserSession> userSessionProvider,
       Provider<SavedStateHandle> savedStateHandleProvider) {
-    return new SeatBookingViewModel_Factory(repositoryProvider, savedStateHandleProvider);
+    return new SeatBookingViewModel_Factory(repositoryProvider, userSessionProvider, savedStateHandleProvider);
   }
 
-  public static SeatBookingViewModel newInstance(AppRepository repository,
+  public static SeatBookingViewModel newInstance(AppRepository repository, UserSession userSession,
       SavedStateHandle savedStateHandle) {
-    return new SeatBookingViewModel(repository, savedStateHandle);
+    return new SeatBookingViewModel(repository, userSession, savedStateHandle);
   }
 }

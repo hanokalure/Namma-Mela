@@ -23,6 +23,8 @@ import com.nammamela.app.data.local.dao.NotificationDao;
 import com.nammamela.app.data.local.dao.NotificationDao_Impl;
 import com.nammamela.app.data.local.dao.PlayDao;
 import com.nammamela.app.data.local.dao.PlayDao_Impl;
+import com.nammamela.app.data.local.dao.PlayReviewDao;
+import com.nammamela.app.data.local.dao.PlayReviewDao_Impl;
 import com.nammamela.app.data.local.dao.SeatDao;
 import com.nammamela.app.data.local.dao.SeatDao_Impl;
 import com.nammamela.app.data.local.dao.UserDao;
@@ -32,6 +34,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -58,22 +61,26 @@ public final class AppDatabase_Impl extends AppDatabase {
 
   private volatile CategoryDao _categoryDao;
 
+  private volatile PlayReviewDao _playReviewDao;
+
   @Override
   @NonNull
   protected SupportSQLiteOpenHelper createOpenHelper(@NonNull final DatabaseConfiguration config) {
-    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(5) {
+    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(7) {
       @Override
       public void createAllTables(@NonNull final SupportSQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS `plays` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `duration` TEXT NOT NULL, `description` TEXT NOT NULL, `genre` TEXT NOT NULL, `posterUrl` TEXT, `rating` REAL NOT NULL, `showTime` TEXT NOT NULL, `timestamp` INTEGER NOT NULL, `isActive` INTEGER NOT NULL)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `plays` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `duration` TEXT NOT NULL, `description` TEXT NOT NULL, `genre` TEXT NOT NULL, `posterUrl` TEXT, `rating` REAL NOT NULL, `showTime` TEXT NOT NULL, `ticketPrice` REAL NOT NULL, `timestamp` INTEGER NOT NULL, `isActive` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `actors` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `playId` INTEGER NOT NULL, `name` TEXT NOT NULL, `role` TEXT NOT NULL, `imageUrl` TEXT, `category` TEXT NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `seats` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `playId` INTEGER NOT NULL, `row` TEXT NOT NULL, `column` INTEGER NOT NULL, `status` TEXT NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `comments` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `userId` INTEGER NOT NULL, `username` TEXT NOT NULL, `userHandle` TEXT NOT NULL, `content` TEXT NOT NULL, `timestamp` INTEGER NOT NULL, `likes` INTEGER NOT NULL, `fires` INTEGER NOT NULL, `replies` INTEGER NOT NULL, `imageUrl` TEXT)");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `bookings` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `userId` INTEGER NOT NULL, `playId` INTEGER NOT NULL, `seats` TEXT NOT NULL, `totalPrice` REAL NOT NULL, `timestamp` INTEGER NOT NULL)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `bookings` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `userId` INTEGER NOT NULL, `playId` INTEGER NOT NULL, `seats` TEXT NOT NULL, `totalPrice` REAL NOT NULL, `showTime` TEXT NOT NULL, `timestamp` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `users` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `handle` TEXT NOT NULL, `email` TEXT NOT NULL, `password` TEXT NOT NULL, `role` TEXT NOT NULL, `imageUrl` TEXT, `companyName` TEXT, `location` TEXT, `phone` TEXT)");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `notifications` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `message` TEXT NOT NULL, `type` TEXT NOT NULL, `timestamp` INTEGER NOT NULL, `isRead` INTEGER NOT NULL)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `notifications` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `userId` INTEGER NOT NULL, `title` TEXT NOT NULL, `message` TEXT NOT NULL, `type` TEXT NOT NULL, `timestamp` INTEGER NOT NULL, `isRead` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `categories` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `isSelected` INTEGER NOT NULL)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `play_reviews` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `playId` INTEGER NOT NULL, `userId` INTEGER NOT NULL, `rating` INTEGER NOT NULL, `text` TEXT NOT NULL, `timestamp` INTEGER NOT NULL)");
+        db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_play_reviews_playId_userId` ON `play_reviews` (`playId`, `userId`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dad44b2962f78c94cd8f74156e5373c8')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4720b196ac4e2e6968120f847be38a25')");
       }
 
       @Override
@@ -86,6 +93,7 @@ public final class AppDatabase_Impl extends AppDatabase {
         db.execSQL("DROP TABLE IF EXISTS `users`");
         db.execSQL("DROP TABLE IF EXISTS `notifications`");
         db.execSQL("DROP TABLE IF EXISTS `categories`");
+        db.execSQL("DROP TABLE IF EXISTS `play_reviews`");
         final List<? extends RoomDatabase.Callback> _callbacks = mCallbacks;
         if (_callbacks != null) {
           for (RoomDatabase.Callback _callback : _callbacks) {
@@ -129,7 +137,7 @@ public final class AppDatabase_Impl extends AppDatabase {
       @NonNull
       public RoomOpenHelper.ValidationResult onValidateSchema(
           @NonNull final SupportSQLiteDatabase db) {
-        final HashMap<String, TableInfo.Column> _columnsPlays = new HashMap<String, TableInfo.Column>(10);
+        final HashMap<String, TableInfo.Column> _columnsPlays = new HashMap<String, TableInfo.Column>(11);
         _columnsPlays.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsPlays.put("title", new TableInfo.Column("title", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsPlays.put("duration", new TableInfo.Column("duration", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
@@ -138,6 +146,7 @@ public final class AppDatabase_Impl extends AppDatabase {
         _columnsPlays.put("posterUrl", new TableInfo.Column("posterUrl", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsPlays.put("rating", new TableInfo.Column("rating", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsPlays.put("showTime", new TableInfo.Column("showTime", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPlays.put("ticketPrice", new TableInfo.Column("ticketPrice", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsPlays.put("timestamp", new TableInfo.Column("timestamp", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsPlays.put("isActive", new TableInfo.Column("isActive", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysPlays = new HashSet<TableInfo.ForeignKey>(0);
@@ -200,12 +209,13 @@ public final class AppDatabase_Impl extends AppDatabase {
                   + " Expected:\n" + _infoComments + "\n"
                   + " Found:\n" + _existingComments);
         }
-        final HashMap<String, TableInfo.Column> _columnsBookings = new HashMap<String, TableInfo.Column>(6);
+        final HashMap<String, TableInfo.Column> _columnsBookings = new HashMap<String, TableInfo.Column>(7);
         _columnsBookings.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsBookings.put("userId", new TableInfo.Column("userId", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsBookings.put("playId", new TableInfo.Column("playId", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsBookings.put("seats", new TableInfo.Column("seats", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsBookings.put("totalPrice", new TableInfo.Column("totalPrice", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsBookings.put("showTime", new TableInfo.Column("showTime", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsBookings.put("timestamp", new TableInfo.Column("timestamp", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysBookings = new HashSet<TableInfo.ForeignKey>(0);
         final HashSet<TableInfo.Index> _indicesBookings = new HashSet<TableInfo.Index>(0);
@@ -236,8 +246,9 @@ public final class AppDatabase_Impl extends AppDatabase {
                   + " Expected:\n" + _infoUsers + "\n"
                   + " Found:\n" + _existingUsers);
         }
-        final HashMap<String, TableInfo.Column> _columnsNotifications = new HashMap<String, TableInfo.Column>(6);
+        final HashMap<String, TableInfo.Column> _columnsNotifications = new HashMap<String, TableInfo.Column>(7);
         _columnsNotifications.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsNotifications.put("userId", new TableInfo.Column("userId", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsNotifications.put("title", new TableInfo.Column("title", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsNotifications.put("message", new TableInfo.Column("message", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsNotifications.put("type", new TableInfo.Column("type", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
@@ -265,9 +276,26 @@ public final class AppDatabase_Impl extends AppDatabase {
                   + " Expected:\n" + _infoCategories + "\n"
                   + " Found:\n" + _existingCategories);
         }
+        final HashMap<String, TableInfo.Column> _columnsPlayReviews = new HashMap<String, TableInfo.Column>(6);
+        _columnsPlayReviews.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPlayReviews.put("playId", new TableInfo.Column("playId", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPlayReviews.put("userId", new TableInfo.Column("userId", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPlayReviews.put("rating", new TableInfo.Column("rating", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPlayReviews.put("text", new TableInfo.Column("text", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPlayReviews.put("timestamp", new TableInfo.Column("timestamp", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysPlayReviews = new HashSet<TableInfo.ForeignKey>(0);
+        final HashSet<TableInfo.Index> _indicesPlayReviews = new HashSet<TableInfo.Index>(1);
+        _indicesPlayReviews.add(new TableInfo.Index("index_play_reviews_playId_userId", true, Arrays.asList("playId", "userId"), Arrays.asList("ASC", "ASC")));
+        final TableInfo _infoPlayReviews = new TableInfo("play_reviews", _columnsPlayReviews, _foreignKeysPlayReviews, _indicesPlayReviews);
+        final TableInfo _existingPlayReviews = TableInfo.read(db, "play_reviews");
+        if (!_infoPlayReviews.equals(_existingPlayReviews)) {
+          return new RoomOpenHelper.ValidationResult(false, "play_reviews(com.nammamela.app.domain.model.PlayReview).\n"
+                  + " Expected:\n" + _infoPlayReviews + "\n"
+                  + " Found:\n" + _existingPlayReviews);
+        }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "dad44b2962f78c94cd8f74156e5373c8", "a2b5c08d8621e5bab2010dc1fdc999ed");
+    }, "4720b196ac4e2e6968120f847be38a25", "dbcb71e7e45eddbade41842476146822");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;
@@ -278,7 +306,7 @@ public final class AppDatabase_Impl extends AppDatabase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     final HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "plays","actors","seats","comments","bookings","users","notifications","categories");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "plays","actors","seats","comments","bookings","users","notifications","categories","play_reviews");
   }
 
   @Override
@@ -295,6 +323,7 @@ public final class AppDatabase_Impl extends AppDatabase {
       _db.execSQL("DELETE FROM `users`");
       _db.execSQL("DELETE FROM `notifications`");
       _db.execSQL("DELETE FROM `categories`");
+      _db.execSQL("DELETE FROM `play_reviews`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();
@@ -317,6 +346,7 @@ public final class AppDatabase_Impl extends AppDatabase {
     _typeConvertersMap.put(UserDao.class, UserDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(NotificationDao.class, NotificationDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(CategoryDao.class, CategoryDao_Impl.getRequiredConverters());
+    _typeConvertersMap.put(PlayReviewDao.class, PlayReviewDao_Impl.getRequiredConverters());
     return _typeConvertersMap;
   }
 
@@ -443,6 +473,20 @@ public final class AppDatabase_Impl extends AppDatabase {
           _categoryDao = new CategoryDao_Impl(this);
         }
         return _categoryDao;
+      }
+    }
+  }
+
+  @Override
+  public PlayReviewDao getPlayReviewDao() {
+    if (_playReviewDao != null) {
+      return _playReviewDao;
+    } else {
+      synchronized(this) {
+        if(_playReviewDao == null) {
+          _playReviewDao = new PlayReviewDao_Impl(this);
+        }
+        return _playReviewDao;
       }
     }
   }

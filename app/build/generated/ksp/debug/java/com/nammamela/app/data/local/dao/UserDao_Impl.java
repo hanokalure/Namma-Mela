@@ -18,6 +18,7 @@ import com.nammamela.app.domain.model.UserRole;
 import java.lang.Class;
 import java.lang.Exception;
 import java.lang.IllegalArgumentException;
+import java.lang.Long;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -131,16 +132,16 @@ public final class UserDao_Impl implements UserDao {
   }
 
   @Override
-  public Object insertUser(final User user, final Continuation<? super Unit> $completion) {
-    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+  public Object insertUser(final User user, final Continuation<? super Long> $completion) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Long>() {
       @Override
       @NonNull
-      public Unit call() throws Exception {
+      public Long call() throws Exception {
         __db.beginTransaction();
         try {
-          __insertionAdapterOfUser.insert(user);
+          final Long _result = __insertionAdapterOfUser.insertAndReturnId(user);
           __db.setTransactionSuccessful();
-          return Unit.INSTANCE;
+          return _result;
         } finally {
           __db.endTransaction();
         }
@@ -264,6 +265,80 @@ public final class UserDao_Impl implements UserDao {
         _statement.release();
       }
     });
+  }
+
+  @Override
+  public Object getUserByIdOnce(final int userId, final Continuation<? super User> $completion) {
+    final String _sql = "SELECT * FROM users WHERE id = ? LIMIT 1";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    _statement.bindLong(_argIndex, userId);
+    final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
+    return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<User>() {
+      @Override
+      @Nullable
+      public User call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
+          final int _cursorIndexOfHandle = CursorUtil.getColumnIndexOrThrow(_cursor, "handle");
+          final int _cursorIndexOfEmail = CursorUtil.getColumnIndexOrThrow(_cursor, "email");
+          final int _cursorIndexOfPassword = CursorUtil.getColumnIndexOrThrow(_cursor, "password");
+          final int _cursorIndexOfRole = CursorUtil.getColumnIndexOrThrow(_cursor, "role");
+          final int _cursorIndexOfImageUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "imageUrl");
+          final int _cursorIndexOfCompanyName = CursorUtil.getColumnIndexOrThrow(_cursor, "companyName");
+          final int _cursorIndexOfLocation = CursorUtil.getColumnIndexOrThrow(_cursor, "location");
+          final int _cursorIndexOfPhone = CursorUtil.getColumnIndexOrThrow(_cursor, "phone");
+          final User _result;
+          if (_cursor.moveToFirst()) {
+            final int _tmpId;
+            _tmpId = _cursor.getInt(_cursorIndexOfId);
+            final String _tmpName;
+            _tmpName = _cursor.getString(_cursorIndexOfName);
+            final String _tmpHandle;
+            _tmpHandle = _cursor.getString(_cursorIndexOfHandle);
+            final String _tmpEmail;
+            _tmpEmail = _cursor.getString(_cursorIndexOfEmail);
+            final String _tmpPassword;
+            _tmpPassword = _cursor.getString(_cursorIndexOfPassword);
+            final UserRole _tmpRole;
+            _tmpRole = __UserRole_stringToEnum(_cursor.getString(_cursorIndexOfRole));
+            final String _tmpImageUrl;
+            if (_cursor.isNull(_cursorIndexOfImageUrl)) {
+              _tmpImageUrl = null;
+            } else {
+              _tmpImageUrl = _cursor.getString(_cursorIndexOfImageUrl);
+            }
+            final String _tmpCompanyName;
+            if (_cursor.isNull(_cursorIndexOfCompanyName)) {
+              _tmpCompanyName = null;
+            } else {
+              _tmpCompanyName = _cursor.getString(_cursorIndexOfCompanyName);
+            }
+            final String _tmpLocation;
+            if (_cursor.isNull(_cursorIndexOfLocation)) {
+              _tmpLocation = null;
+            } else {
+              _tmpLocation = _cursor.getString(_cursorIndexOfLocation);
+            }
+            final String _tmpPhone;
+            if (_cursor.isNull(_cursorIndexOfPhone)) {
+              _tmpPhone = null;
+            } else {
+              _tmpPhone = _cursor.getString(_cursorIndexOfPhone);
+            }
+            _result = new User(_tmpId,_tmpName,_tmpHandle,_tmpEmail,_tmpPassword,_tmpRole,_tmpImageUrl,_tmpCompanyName,_tmpLocation,_tmpPhone);
+          } else {
+            _result = null;
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+          _statement.release();
+        }
+      }
+    }, $completion);
   }
 
   @Override
