@@ -71,6 +71,7 @@ MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2] C:\Users\hano
 MERGED from [androidx.compose.ui:ui-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\eea4befc6d364c3b684c7292dbdd8123\transformed\ui-release\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.runtime:runtime-saveable-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\59c24b9bc643e441438a36136fe70089\transformed\runtime-saveable-release\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.runtime:runtime-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\2ccaf0617c0748e6e1a5736e90f097f1\transformed\runtime-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.core:core-splashscreen:1.0.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\f5c5a3bba626ac3adca72a048220f2fa\transformed\core-splashscreen-1.0.1\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.sqlite:sqlite-framework:2.4.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\67216e81c60709434c65a4c9a525706c\transformed\sqlite-framework-2.4.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.sqlite:sqlite:2.4.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\0c2b5f57e0bc9092c862b9a5864c1af6\transformed\sqlite-2.4.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.annotation:annotation-experimental:1.3.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\a708e3b45374e994ea92d2a0b7d604b2\transformed\annotation-experimental-1.3.0\AndroidManifest.xml:17:1-22:12
@@ -137,7 +138,7 @@ ADDED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:14:9-22:20
 	android:exported
 		ADDED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:16:13-36
 	android:theme
-		ADDED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:17:13-51
+		ADDED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:17:13-60
 	android:name
 		ADDED from C:\Namma-Mela\app\src\main\AndroidManifest.xml:15:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
@@ -288,6 +289,8 @@ MERGED from [androidx.compose.runtime:runtime-saveable-android:1.5.4] C:\Users\h
 MERGED from [androidx.compose.runtime:runtime-saveable-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\59c24b9bc643e441438a36136fe70089\transformed\runtime-saveable-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.runtime:runtime-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\2ccaf0617c0748e6e1a5736e90f097f1\transformed\runtime-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.runtime:runtime-android:1.5.4] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\2ccaf0617c0748e6e1a5736e90f097f1\transformed\runtime-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-splashscreen:1.0.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\f5c5a3bba626ac3adca72a048220f2fa\transformed\core-splashscreen-1.0.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core-splashscreen:1.0.1] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\f5c5a3bba626ac3adca72a048220f2fa\transformed\core-splashscreen-1.0.1\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.sqlite:sqlite-framework:2.4.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\67216e81c60709434c65a4c9a525706c\transformed\sqlite-framework-2.4.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.sqlite:sqlite-framework:2.4.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\67216e81c60709434c65a4c9a525706c\transformed\sqlite-framework-2.4.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.sqlite:sqlite:2.4.0] C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\0c2b5f57e0bc9092c862b9a5864c1af6\transformed\sqlite-2.4.0\AndroidManifest.xml:20:5-44

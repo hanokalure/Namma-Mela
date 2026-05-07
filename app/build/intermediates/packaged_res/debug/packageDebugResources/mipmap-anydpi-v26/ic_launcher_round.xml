@@ -3,7 +3,7 @@
     <background android:drawable="@drawable/ic_launcher_background" />
     <foreground>
         <inset android:inset="14%">
-            <item android:drawable="@drawable/ic_launcher_foreground" />
+            <item android:drawable="@drawable/namma_mela_logo" />
         </inset>
     </foreground>
 </adaptive-icon>

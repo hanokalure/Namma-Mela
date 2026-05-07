@@ -3,6 +3,7 @@ package com.nammamela.app.ui.screens
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -10,12 +11,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.nammamela.app.R
 import com.nammamela.app.ui.theme.*
 import com.nammamela.app.viewmodel.SplashViewModel
 import kotlinx.coroutines.delay
@@ -53,6 +56,7 @@ fun SplashScreen(
         val titleFontSize = min(maxWidth.value / 8.5f, 42f).sp
         val subtitleFontSize = min(maxWidth.value / 28f, 14f).sp
         val letterSpacing = (maxWidth.value / 45).sp
+        val logoSize = (maxWidth.value / 3.5f).coerceAtMost(120f).dp
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -61,6 +65,12 @@ fun SplashScreen(
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp)
         ) {
+            Image(
+                painter = painterResource(id = R.drawable.namma_mela_logo),
+                contentDescription = "Namma Mela logo",
+                modifier = Modifier.size(logoSize)
+            )
+            Spacer(modifier = Modifier.height(20.dp))
             Text(
                 text = "NAMMA-MELA",
                 color = NammaGold,

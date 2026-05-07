@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="Theme.NammaMela.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenAnimatedIcon">@drawable/namma_mela_logo</item>
+        <item name="windowSplashScreenBackground">#1A0F0F</item>
+        <item name="postSplashScreenTheme">@style/Theme.NammaMela</item>
+    </style>
+
     <style name="Theme.NammaMela" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>

@@ -62,5 +62,6 @@ com.nammamela.app-hilt-navigation-compose-1.1.0-60 C:\Users\hanok\.gradle\caches
 com.nammamela.app-navigation-runtime-2.7.6-61 C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\ea6d91ad007b2b8c154c1d14b3921501\transformed\navigation-runtime-2.7.6\res
 com.nammamela.app-lifecycle-runtime-2.6.2-62 C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\eca569bf2403bc8ef4379622792c5dcf\transformed\lifecycle-runtime-2.6.2\res
 com.nammamela.app-ui-release-63 C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\eea4befc6d364c3b684c7292dbdd8123\transformed\ui-release\res
-com.nammamela.app-foundation-layout-release-64 C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\f752b95f5bbb6ab625bb980f4589f0e3\transformed\foundation-layout-release\res
-com.nammamela.app-savedstate-ktx-1.2.1-65 C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\fce3419f64fad1b404ad8830714d1e13\transformed\savedstate-ktx-1.2.1\res
+com.nammamela.app-core-splashscreen-1.0.1-64 C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\f5c5a3bba626ac3adca72a048220f2fa\transformed\core-splashscreen-1.0.1\res
+com.nammamela.app-foundation-layout-release-65 C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\f752b95f5bbb6ab625bb980f4589f0e3\transformed\foundation-layout-release\res
+com.nammamela.app-savedstate-ktx-1.2.1-66 C:\Users\hanok\.gradle\caches\9.0-milestone-1\transforms\fce3419f64fad1b404ad8830714d1e13\transformed\savedstate-ktx-1.2.1\res
