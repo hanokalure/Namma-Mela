@@ -27,6 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.nammamela.app.viewmodel.AdminViewModel
 import com.nammamela.app.viewmodel.AuthViewModel
 import com.nammamela.app.viewmodel.SessionUserViewModel
+import kotlinx.coroutines.launch
 import androidx.compose.ui.platform.LocalContext
 import com.nammamela.app.util.findActivity
 
@@ -54,6 +55,7 @@ fun AdminDashboardScreen(
     }
 
     val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
         adminViewModel.errorEvent.collect { message ->
@@ -163,6 +165,22 @@ fun AdminDashboardScreen(
                 subtitle = "Pick a play and assign performers",
                 icon = Icons.Default.Groups,
                 onClick = { onNavigateToManageCast(0) }
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            AdminToolCard(
+                title = "Manage hall seats",
+                subtitle = "Update seat map for tonight’s active play",
+                icon = Icons.Default.EventSeat,
+                onClick = {
+                    val id = activePlay?.id
+                    if (id != null && id > 0) {
+                        onNavigateToManageSeats(id)
+                    } else {
+                        scope.launch {
+                            snackbarHostState.showSnackbar("Set an active play under Manage plays first.")
+                        }
+                    }
+                }
             )
             Spacer(modifier = Modifier.height(16.dp))
             AdminToolCard(

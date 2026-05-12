@@ -109,12 +109,13 @@ fun ReviewScreen(
                 onValueChange = { reviewText = it },
                 placeholder = { Text("Write your review here...", color = Color.White.copy(0.2f)) },
                 modifier = Modifier.fillMaxWidth().height(160.dp),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
+                colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = NammaSaffron,
                     unfocusedBorderColor = Color.White.copy(0.1f),
-                    containerColor = NammaDeepTeal,
                     focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White
+                    unfocusedTextColor = Color.White,
+                    focusedContainerColor = NammaDeepTeal,
+                    unfocusedContainerColor = NammaDeepTeal
                 ),
                 shape = RoundedCornerShape(20.dp)
             )

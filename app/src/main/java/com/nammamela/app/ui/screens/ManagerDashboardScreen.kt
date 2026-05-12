@@ -9,9 +9,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,6 +31,27 @@ fun ManagerDashboardScreen(
     val insights by viewModel.insights.collectAsState()
     val totalBookings by viewModel.totalBookings.collectAsState()
     val totalRevenue by viewModel.totalRevenue.collectAsState()
+    var showSettings by remember { mutableStateOf(false) }
+
+    if (showSettings) {
+        AlertDialog(
+            onDismissRequest = { showSettings = false },
+            title = { Text("Insights settings", color = NammaGold) },
+            text = {
+                Text(
+                    "Charts and export are not configured yet. Numbers below reflect this device only.",
+                    color = NammaWarmWhite.copy(0.85f),
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = { showSettings = false }) {
+                    Text("OK", color = NammaGold)
+                }
+            },
+            containerColor = NammaSurfaceLow
+        )
+    }
 
     Scaffold(
         containerColor = NammaDarkBrown,
@@ -45,7 +64,7 @@ fun ManagerDashboardScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = { showSettings = true }) {
                         Icon(Icons.Default.Settings, null, tint = NammaGold)
                     }
                 },

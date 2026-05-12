@@ -1,6 +1,7 @@
 package com.nammamela.app.ui.screens
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,13 +14,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.nammamela.app.ui.components.NammaMelaButton
 import com.nammamela.app.ui.theme.*
+import com.nammamela.app.util.QrCodeBitmap
 import com.nammamela.app.viewmodel.SeatBookingViewModel
 import com.nammamela.app.viewmodel.TicketConfirmationViewModel
 import java.text.SimpleDateFormat
@@ -28,12 +32,11 @@ import java.util.Locale
 
 @Composable
 fun TicketConfirmationScreen(
-    bookingId: Int,
     viewModel: TicketConfirmationViewModel = hiltViewModel(),
     onNavigateHome: () -> Unit
 ) {
     val bookingWithPlay by viewModel.booking.collectAsState()
-    
+
     val dateFormatter = remember { SimpleDateFormat("dd MMM, yyyy", Locale.getDefault()) }
 
     Box(
@@ -52,6 +55,13 @@ fun TicketConfirmationScreen(
                 SeatBookingViewModel.parseShowTimes(play.showTime).firstOrNull()?.trim().orEmpty()
             }.ifBlank { "—" }
 
+            val qrPayload = remember(booking.id, play.id, booking.timestamp) {
+                "NammaMela|booking=${booking.id}|play=${play.id}|ts=${booking.timestamp}"
+            }
+            val qrBitmap: ImageBitmap? = remember(qrPayload) {
+                QrCodeBitmap.encodeToImageBitmap(qrPayload, 512)
+            }
+
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Icon(
                     Icons.Default.CheckCircle,
@@ -67,7 +77,6 @@ fun TicketConfirmationScreen(
                 )
                 Spacer(modifier = Modifier.height(32.dp))
 
-                // Digital Ticket
                 Surface(
                     color = NammaSurfaceLow,
                     shape = RoundedCornerShape(24.dp),
@@ -75,7 +84,6 @@ fun TicketConfirmationScreen(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column {
-                        // Top Section
                         Column(modifier = Modifier.padding(24.dp)) {
                             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                                 Text(play.title, color = NammaGold, style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.ExtraBold))
@@ -83,42 +91,65 @@ fun TicketConfirmationScreen(
                             }
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(play.genre, color = NammaWarmWhite.copy(0.5f), style = MaterialTheme.typography.bodySmall)
-                            
+
                             Spacer(modifier = Modifier.height(24.dp))
-                            
+
                             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                                 TicketInfoItem("DATE", dateFormatter.format(Date(booking.timestamp)))
                                 TicketInfoItem("TIME", timeDisplay)
                             }
-                            
+
                             Spacer(modifier = Modifier.height(20.dp))
-                            
+
                             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                                 TicketInfoItem("SEATS", booking.seats)
                                 TicketInfoItem("PRICE", "₹${booking.totalPrice.toInt()}")
                             }
                         }
 
-                        // Perforated Line
                         DashedDivider()
 
-                        // QR/Barcode Placeholder
-                        Box(
+                        Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(24.dp)
-                                .height(80.dp)
-                                .clip(RoundedCornerShape(8.dp))
-                                .background(Color.White.copy(0.05f)),
-                            contentAlignment = Alignment.Center
+                                .padding(24.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            Text("SCAN AT ENTRANCE", color = NammaGold.copy(0.3f), style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 4.sp))
+                            if (qrBitmap != null) {
+                                Image(
+                                    bitmap = qrBitmap,
+                                    contentDescription = "Booking QR code",
+                                    modifier = Modifier
+                                        .size(160.dp)
+                                        .clip(RoundedCornerShape(8.dp))
+                                        .background(Color.White)
+                                        .padding(8.dp),
+                                    contentScale = ContentScale.Fit
+                                )
+                            } else {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(80.dp)
+                                        .clip(RoundedCornerShape(8.dp))
+                                        .background(Color.White.copy(0.05f)),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text("QR unavailable", color = NammaGold.copy(0.3f), style = MaterialTheme.typography.labelSmall)
+                                }
+                            }
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(
+                                "SCAN AT ENTRANCE",
+                                color = NammaGold.copy(0.5f),
+                                style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 2.sp)
+                            )
                         }
                     }
                 }
 
                 Spacer(modifier = Modifier.height(40.dp))
-                
+
                 NammaMelaButton(
                     text = "BACK TO HOME",
                     onClick = onNavigateHome,

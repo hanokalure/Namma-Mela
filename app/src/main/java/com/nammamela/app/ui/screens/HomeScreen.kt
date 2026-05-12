@@ -46,10 +46,13 @@ fun HomeScreen(
     onNavigateToSeatBooking: (Int) -> Unit,
     onNavigateToPlayDetail: (Int) -> Unit,
     onNavigateToSearch: () -> Unit,
-    onNavigateToNotifications: () -> Unit
+    onNavigateToNotifications: () -> Unit,
+    onNavigateToProfile: () -> Unit,
+    onViewAllFanFavorites: () -> Unit
 ) {
-    val plays by viewModel.plays.collectAsState()
+    val plays by viewModel.filteredPlays.collectAsState()
     val categories by viewModel.categories.collectAsState()
+    val selectedCategoryId by viewModel.selectedCategoryId.collectAsState()
     val fanFavorites by viewModel.fanFavorites.collectAsState()
     val scrollState = rememberScrollState()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -107,6 +110,7 @@ fun HomeScreen(
                     UserAvatar(
                         imageUrl = sessionUser?.imageUrl,
                         displayName = sessionUser?.name,
+                        modifier = Modifier.clickable { onNavigateToProfile() },
                         size = 40.dp
                     )
                 }
@@ -151,7 +155,11 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 items(categories) { category ->
-                    CategoryChip(text = category.name, isSelected = category.isSelected)
+                    CategoryChip(
+                        text = category.name,
+                        isSelected = category.id == selectedCategoryId,
+                        onClick = { viewModel.onCategoryChipClicked(category) }
+                    )
                 }
             }
             
@@ -167,7 +175,12 @@ fun HomeScreen(
                     color = NammaWarmWhite,
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold, letterSpacing = 2.sp)
                 )
-                Text("View All", color = NammaGold, style = MaterialTheme.typography.labelSmall)
+                Text(
+                    "View All",
+                    color = NammaGold,
+                    style = MaterialTheme.typography.labelSmall,
+                    modifier = Modifier.clickable { onViewAllFanFavorites() }
+                )
             }
             Spacer(modifier = Modifier.height(20.dp))
             LazyRow(
@@ -312,17 +325,17 @@ fun FeaturedPlayBanner(play: Play, onBannerClick: () -> Unit, onBookClick: () ->
 }
 
 @Composable
-fun CategoryChip(text: String, isSelected: Boolean) {
+fun CategoryChip(text: String, isSelected: Boolean, onClick: () -> Unit) {
     val backgroundColor = if (isSelected) NammaGold else NammaSurfaceLow
     val textColor = if (isSelected) NammaDarkBrown else NammaWarmWhite.copy(alpha = 0.3f)
     val border = if (isSelected) 1.dp to NammaGold else 1.dp to NammaWarmWhite.copy(0.05f)
-    
+
     Box(
         modifier = Modifier
             .clip(RoundedCornerShape(12.dp))
             .background(backgroundColor)
             .border(border.first, border.second, RoundedCornerShape(12.dp))
-            .clickable { }
+            .clickable(onClick = onClick)
             .padding(horizontal = 24.dp, vertical = 14.dp)
     ) {
         Text(text = text, color = textColor, fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium)

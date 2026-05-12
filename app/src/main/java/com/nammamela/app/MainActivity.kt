@@ -12,6 +12,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import com.nammamela.app.BuildConfig
 import com.nammamela.app.data.session.UserSession
 import com.nammamela.app.domain.repository.AppRepository
 import com.nammamela.app.navigation.NammaMelaNavGraph
@@ -41,7 +42,7 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             val freshStartDone =
                 dataStore.data.first()[booleanPreferencesKey(FRESH_START_PREFS_KEY)] == true
-            if (!freshStartDone) {
+            if (BuildConfig.DEBUG && !freshStartDone) {
                 repository.wipeDatabase()
                 userSession.clearSessionAfterDatabaseWipe()
                 dataStore.edit { prefs ->
@@ -49,7 +50,13 @@ class MainActivity : ComponentActivity() {
                 }
             } else {
                 userSession.restore()
+                if (!freshStartDone) {
+                    dataStore.edit { prefs ->
+                        prefs[booleanPreferencesKey(FRESH_START_PREFS_KEY)] = true
+                    }
+                }
             }
+            repository.seedDatabase()
         }
 
         setContent {
@@ -66,7 +73,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private companion object {
-        /** One-time full reset; after first run, session restores normally. */
+        /** Debug: one-time DB reset. Release: session restore only; no automatic wipe. */
         const val FRESH_START_PREFS_KEY = "nammamela_fresh_db_reset_v1"
     }
 }

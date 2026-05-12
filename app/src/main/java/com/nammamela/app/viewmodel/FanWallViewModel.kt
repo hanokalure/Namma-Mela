@@ -4,8 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nammamela.app.data.session.UserSession
 import com.nammamela.app.domain.model.Comment
+import com.nammamela.app.domain.model.User
 import com.nammamela.app.domain.repository.AppRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,9 +16,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -32,13 +33,14 @@ class FanWallViewModel @Inject constructor(
     private val _inputText = MutableStateFlow("")
     val inputText: StateFlow<String> = _inputText.asStateFlow()
 
-    private val _currentUser = MutableStateFlow<com.nammamela.app.domain.model.User?>(null)
+    private val _currentUser = MutableStateFlow<User?>(null)
+    val currentUser: StateFlow<User?> = _currentUser.asStateFlow()
 
-    private val _errorEvent = kotlinx.coroutines.flow.MutableSharedFlow<String>()
+    private val _pendingImageUri = MutableStateFlow<String?>(null)
+    val pendingImageUri: StateFlow<String?> = _pendingImageUri.asStateFlow()
+
+    private val _errorEvent = MutableSharedFlow<String>()
     val errorEvent = _errorEvent.asSharedFlow()
-
-    private val _onlineCount = MutableStateFlow("12.4k")
-    val onlineCount: StateFlow<String> = _onlineCount.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -56,24 +58,24 @@ class FanWallViewModel @Inject constructor(
                     _comments.value = list
                 }
         }
-        viewModelScope.launch {
-            val random = java.util.Random()
-            while (true) {
-                val base = 15800
-                val fluctuation = random.nextInt(600) - 300 // +/- 300
-                val total = base + fluctuation
-                _onlineCount.value = String.format("%.1fk", total / 1000.0)
-                delay(2000)
-            }
-        }
     }
 
-    fun onInputChanged(text: String) { _inputText.value = text }
+    fun onInputChanged(text: String) {
+        _inputText.value = text
+    }
+
+    fun setPendingImageUri(uri: String?) {
+        _pendingImageUri.value = uri
+    }
+
+    fun appendEmoji(emoji: String) {
+        _inputText.update { it + emoji }
+    }
 
     fun postComment() {
         val text = _inputText.value.trim()
-        if (text.isBlank()) {
-            viewModelScope.launch { _errorEvent.emit("Cannot post an empty shoutout!") }
+        if (text.isBlank() && _pendingImageUri.value == null) {
+            viewModelScope.launch { _errorEvent.emit("Add text or a photo before posting.") }
             return
         }
         val user = _currentUser.value
@@ -85,19 +87,22 @@ class FanWallViewModel @Inject constructor(
         }
         viewModelScope.launch {
             try {
+                val body = text.ifBlank { "📷" }
                 repository.insertComment(
                     Comment(
                         userId = user.id,
                         username = user.name,
                         userHandle = user.handle.ifBlank { "@${user.email.substringBefore("@")}" },
-                        content = text,
+                        content = body,
                         timestamp = System.currentTimeMillis(),
                         likes = 0,
                         fires = 0,
-                        replies = 0
+                        replies = 0,
+                        imageUrl = _pendingImageUri.value
                     )
                 )
                 _inputText.value = ""
+                _pendingImageUri.value = null
             } catch (e: Exception) {
                 _errorEvent.emit("Failed to post: ${e.localizedMessage}")
             }

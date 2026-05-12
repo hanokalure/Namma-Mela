@@ -14,7 +14,7 @@ data class User(
     val name: String,
     val handle: String,
     val email: String,
-    val password: String = "123456", // Default for demo, but needed for DB structure
+    val password: String = "",
     val role: UserRole = UserRole.USER,
     val imageUrl: String? = null,
     

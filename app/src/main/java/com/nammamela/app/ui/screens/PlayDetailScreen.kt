@@ -84,22 +84,37 @@ fun PlayDetailScreen(
                     tonalElevation = 16.dp,
                     border = BorderStroke(1.dp, Color.White.copy(0.05f))
                 ) {
-                    Row(
-                        modifier = Modifier.padding(24.dp),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 12.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
-                        OutlinedButton(
-                            onClick = { showRatingDialog = true },
-                            modifier = Modifier.weight(1f).height(56.dp),
-                            shape = RoundedCornerShape(16.dp),
-                            border = BorderStroke(1.dp, NammaGold.copy(0.3f))
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
-                            Text("Rate Show", color = NammaGold)
+                            OutlinedButton(
+                                onClick = { showRatingDialog = true },
+                                modifier = Modifier.weight(1f).height(52.dp),
+                                shape = RoundedCornerShape(16.dp),
+                                border = BorderStroke(1.dp, NammaGold.copy(0.3f))
+                            ) {
+                                Text("Rate Show", color = NammaGold)
+                            }
+                            OutlinedButton(
+                                onClick = onReviewClick,
+                                modifier = Modifier.weight(1f).height(52.dp),
+                                shape = RoundedCornerShape(16.dp),
+                                border = BorderStroke(1.dp, NammaGold.copy(0.3f))
+                            ) {
+                                Text("Write review", color = NammaGold, style = MaterialTheme.typography.labelLarge)
+                            }
                         }
                         NammaMelaButton(
                             text = "Reserve Seat 🎟",
                             onClick = onBookClick,
-                            modifier = Modifier.weight(2f)
+                            modifier = Modifier.fillMaxWidth()
                         )
                     }
                 }

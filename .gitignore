@@ -1,1 +1,37 @@
+# Project-specific
 photos/
+
+# Gradle
+.gradle/
+**/build/
+build/
+
+# Local SDK path — machine-specific
+local.properties
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+.navigation/
+captures/
+
+# Kotlin
+.kotlin/
+
+# Built artifacts (often under build/, but explicit if ever loose)
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# Keystore — never commit signing keys
+*.jks
+*.keystore
+
+# OS
+.DS_Store
+Thumbs.db
+
+# NDK / CMake
+.externalNativeBuild/
+.cxx/

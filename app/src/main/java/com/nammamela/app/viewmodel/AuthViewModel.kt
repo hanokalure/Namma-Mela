@@ -6,6 +6,7 @@ import com.nammamela.app.data.session.UserSession
 import com.nammamela.app.domain.model.User
 import com.nammamela.app.domain.model.UserRole
 import com.nammamela.app.domain.repository.AppRepository
+import com.nammamela.app.util.PasswordHasher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -45,13 +46,22 @@ class AuthViewModel @Inject constructor(
             val normalized = normalizeEmail(email)
             val user = repository.getUserByEmail(normalized)
             if (user != null) {
-                if (user.password == pass) {
-                    userSession.setUserId(user.id)
-                    _currentUser.value = user
-                    _isLoggedIn.value = true
-                    _loginSuccess.emit(true)
-                } else {
-                    _errorEvent.emit("Incorrect password!")
+                when (PasswordHasher.verify(user.password, pass)) {
+                    PasswordHasher.VerifyResult.NoMatch ->
+                        _errorEvent.emit("Incorrect password!")
+                    PasswordHasher.VerifyResult.LegacyPlaintextMatch -> {
+                        repository.updateUser(user.copy(password = PasswordHasher.hash(pass)))
+                        userSession.setUserId(user.id)
+                        _currentUser.value = user.copy(password = PasswordHasher.hash(pass))
+                        _isLoggedIn.value = true
+                        _loginSuccess.emit(true)
+                    }
+                    PasswordHasher.VerifyResult.Match -> {
+                        userSession.setUserId(user.id)
+                        _currentUser.value = user
+                        _isLoggedIn.value = true
+                        _loginSuccess.emit(true)
+                    }
                 }
             } else {
                 _errorEvent.emit("Account not found. Please register first.")
@@ -84,7 +94,7 @@ class AuthViewModel @Inject constructor(
             val newUser = User(
                 name = name.trim(),
                 email = normalizedEmail,
-                password = pass,
+                password = PasswordHasher.hash(pass),
                 role = role,
                 companyName = companyName?.trim()?.takeIf { it.isNotBlank() },
                 location = location?.trim()?.takeIf { it.isNotBlank() },
@@ -117,13 +127,23 @@ class AuthViewModel @Inject constructor(
             val user = repository.getUserByEmail(normalized)
             if (user != null) {
                 if (user.role == UserRole.ADMIN) {
-                    if (user.password == pass) {
-                        userSession.setUserId(user.id)
-                        _currentUser.value = user
-                        _isLoggedIn.value = true
-                        _loginSuccess.emit(true)
-                    } else {
-                        _errorEvent.emit("Incorrect Manager Password!")
+                    when (PasswordHasher.verify(user.password, pass)) {
+                        PasswordHasher.VerifyResult.NoMatch ->
+                            _errorEvent.emit("Incorrect Manager Password!")
+                        PasswordHasher.VerifyResult.LegacyPlaintextMatch -> {
+                            val hashed = PasswordHasher.hash(pass)
+                            repository.updateUser(user.copy(password = hashed))
+                            userSession.setUserId(user.id)
+                            _currentUser.value = user.copy(password = hashed)
+                            _isLoggedIn.value = true
+                            _loginSuccess.emit(true)
+                        }
+                        PasswordHasher.VerifyResult.Match -> {
+                            userSession.setUserId(user.id)
+                            _currentUser.value = user
+                            _isLoggedIn.value = true
+                            _loginSuccess.emit(true)
+                        }
                     }
                 } else {
                     _errorEvent.emit("This email is not registered as a Manager.")

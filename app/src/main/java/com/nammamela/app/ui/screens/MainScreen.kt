@@ -139,7 +139,25 @@ fun MainScreen(
                     onNavigateToSeatBooking = onNavigateToSeatBooking,
                     onNavigateToPlayDetail = onNavigateToPlayDetail,
                     onNavigateToSearch = onNavigateToSearch,
-                    onNavigateToNotifications = onNavigateToNotifications
+                    onNavigateToNotifications = onNavigateToNotifications,
+                    onNavigateToProfile = {
+                        navController.navigate(Screen.Profile.route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    },
+                    onViewAllFanFavorites = {
+                        navController.navigate(Screen.Cast.route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    }
                 )
             }
             composable(Screen.Cast.route) {

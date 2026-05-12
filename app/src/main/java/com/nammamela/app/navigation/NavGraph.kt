@@ -134,10 +134,8 @@ fun NammaMelaNavGraph(navController: NavHostController) {
         composable(
             route = Screen.TicketConfirmation.route,
             arguments = listOf(navArgument("bookingId") { type = NavType.IntType })
-        ) { backStackEntry ->
-            val bookingId = backStackEntry.arguments?.getInt("bookingId") ?: 0
+        ) {
             TicketConfirmationScreen(
-                bookingId = bookingId,
                 onNavigateHome = { 
                     navController.navigate(Screen.Main.route) {
                         popUpTo(Screen.Main.route) { inclusive = true }

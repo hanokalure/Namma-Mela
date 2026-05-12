@@ -109,6 +109,15 @@ class AppRepositoryImpl @Inject constructor(
     }
 
     override suspend fun seedDatabase() {
-        // Intentionally empty: managers and fans add plays, users, and company data in-app.
+        if (categoryDao.getAllCategoriesOnce().isNotEmpty()) return
+        insertCategories(
+            listOf(
+                Category(name = "Drama"),
+                Category(name = "Music"),
+                Category(name = "Comedy"),
+                Category(name = "Musical"),
+                Category(name = "Classical")
+            )
+        )
     }
 }
